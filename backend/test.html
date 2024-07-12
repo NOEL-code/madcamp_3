@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Upload Test</title>
+  </head>
+  <body>
+    <h1>Upload Photos</h1>
+    <form
+      id="uploadForm"
+      enctype="multipart/form-data"
+      method="POST"
+      action="http://localhost:3000/travel/create"
+    >
+      <label for="month">Month:</label>
+      <input
+        type="text"
+        id="month"
+        name="month"
+        value="July"
+        required
+      /><br /><br />
+
+      <label for="totalPeople">Total People:</label>
+      <input
+        type="number"
+        id="totalPeople"
+        name="totalPeople"
+        value="4"
+        required
+      /><br /><br />
+
+      <label for="duration">Duration:</label>
+      <input
+        type="number"
+        id="duration"
+        name="duration"
+        value="4"
+        required
+      /><br /><br />
+
+      <label for="budget">Budget:</label>
+      <input
+        type="text"
+        id="budget"
+        name="budget"
+        value="General"
+        required
+      /><br /><br />
+
+      <label for="type">Type:</label>
+      <input
+        type="text"
+        id="type"
+        name="type"
+        value="Healing"
+        required
+      /><br /><br />
+
+      <label for="people">People (JSON format):</label><br />
+      <textarea id="people" name="people" rows="5" cols="50">
+[
+            {"name": "stev", "image": "image1.jpg"},
+            {"name": "john", "image": "image2.jpg"},
+            {"name": "doe", "image": "image3.jpg"},
+            {"name": "jane", "image": "image4.jpg"}
+        ]</textarea
+      ><br /><br />
+
+      <label for="images">Images:</label><br />
+      <input
+        type="file"
+        id="images"
+        name="images"
+        multiple
+        required
+      /><br /><br />
+
+      <button type="submit">Upload</button>
+    </form>
+  </body>
+</html>

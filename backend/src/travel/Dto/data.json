@@ -1,0 +1,13 @@
+{
+  "month": "July",
+  "numberOfPeople": 4,
+  "duration": 4,
+  "budget": "General",
+  "type": "Healing",
+  "people": [
+    {
+      "name": "stev",
+      "image": "image"
+    }
+  ]
+}
