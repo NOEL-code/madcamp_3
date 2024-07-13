@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TravelModule } from './travel/travel.module';
 import { GptModule } from './gpt/gpt.module';
+import { PersonModule } from './person/person.module';
 import * as mongoose from 'mongoose';
 
 @Module({
@@ -19,6 +20,7 @@ import * as mongoose from 'mongoose';
     }),
     TravelModule,
     GptModule,
+    PersonModule, // PersonModule 임포트
   ],
   controllers: [],
   providers: [],

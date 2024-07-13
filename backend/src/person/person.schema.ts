@@ -1,13 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema()
 export class Person {
+  _id: Types.ObjectId; // _id 속성 추가
+
+  @Prop({ type: Types.ObjectId, required: true })
+  travelId: Types.ObjectId;
+
   @Prop({ required: true })
   name: string;
 
   @Prop({ required: true })
-  image: string; // 이미지 URL을 저장할 필드
+  profileImage: string;
+
+  @Prop({ required: false })
+  travelImage: string;
 }
 
 export type PersonDocument = Person & Document;

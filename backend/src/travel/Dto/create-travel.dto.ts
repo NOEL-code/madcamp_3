@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsArray } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateTravelDto {
   @IsNotEmpty()
@@ -22,6 +23,19 @@ export class CreateTravelDto {
   type: string;
 
   @IsNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
+  people: string[];
+}
+
+export class CreatePersonDto {
+  @IsNotEmpty()
   @IsString()
-  people: string; // JSON 문자열로 받기
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  profileImage: string;
+
+  travelId?: Types.ObjectId; // travelId 추가
 }

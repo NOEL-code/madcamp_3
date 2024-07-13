@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Person, PersonSchema } from './person.schema';
+import { Document, Types } from 'mongoose';
 
 @Schema()
 export class Travel {
+  _id: Types.ObjectId; // _id 속성 추가
+
   @Prop({ required: true })
   month: string;
 
@@ -19,8 +20,8 @@ export class Travel {
   @Prop({ required: true })
   type: string;
 
-  @Prop({ type: [PersonSchema], required: true })
-  people: Person[];
+  @Prop({ type: [Types.ObjectId], ref: 'Person', required: true })
+  people: Types.ObjectId[];
 }
 
 export type TravelDocument = Travel & Document;
