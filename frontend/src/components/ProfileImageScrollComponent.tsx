@@ -80,8 +80,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     color: '#fff',
     textAlign: 'center',
-    borderBottomColor: '#fff',
-    borderBottomWidth: 1,
   },
   scrollViewContent: {
     flexGrow: 1,
