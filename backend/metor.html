@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000; /* Set background color to black */
+      }
+      #meteor {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 200px;
+        height: 200px;
+        transform: translateX(-50%);
+        cursor: pointer;
+        transition:
+          transform 1s linear,
+          opacity 0.5s ease;
+        opacity: 0;
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <img
+      id="meteor"
+      src="https://htmltest1.s3.ap-northeast-2.amazonaws.com/metor.png"
+      alt="Meteor"
+      style="visibility: hidden; opacity: 0"
+    />
+
+    <script>
+      document.body.addEventListener('click', function () {
+        const meteor = document.getElementById('meteor');
+        if (meteor.style.visibility === 'hidden' || meteor.style.opacity == 0) {
+          meteor.style.visibility = 'visible';
+          meteor.style.opacity = 1;
+        } else {
+          meteor.style.transform = 'translate(-50%, -60vh)';
+          setTimeout(() => {
+            meteor.style.visibility = 'hidden';
+            meteor.style.opacity = 0;
+            meteor.style.transform = 'translate(-50%, 0)';
+          }, 1000); // 1 second (1000ms) delay to match the transition duration
+        }
+      });
+    </script>
+  </body>
+</html>

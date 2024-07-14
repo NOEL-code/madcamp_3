@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginLeft: 10,
     marginRight: 60,
-    fontSize: 24,
+    fontSize: 18,
   },
   picker: {
     flex: 1,
@@ -73,6 +73,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: '#000',
     elevation: 3,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowRadius: 10,
   },
   dropdownPlaceholder: {
     color: '#000',
@@ -83,22 +87,31 @@ const styles = StyleSheet.create({
   dropdownSelectedText: {
     marginLeft: 20,
     color: '#fff',
-    fontSize: 24,
+    fontSize: 16,
   },
   dropdownContainer: {
     backgroundColor: 'rgba(196, 196, 196, 0.62)',
     shadowColor: 'rgba(255, 255, 255, 0.1)',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowRadius: 10,
+    elevation: 3,
     borderRadius: 25,
   },
   dropdownItemContainer: {
     backgroundColor: 'rgba(196, 196, 196, 0.8)', // 불투명한 배경색
     paddingHorizontal: 10,
     paddingVertical: 2,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowRadius: 10,
+    elevation: 3,
   },
   dropdownItemText: {
     color: '#fff',
     fontWeight: '400',
-    fontSize: 20,
+    fontSize: 15,
   },
   placeholderStyle: {
     color: '#fff',

@@ -186,7 +186,9 @@ const styles = StyleSheet.create({
   },
   shadowWhen: {
     shadowColor: 'rgba(224, 45, 48, 0.68)',
-    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 3,
   },
   pickerContainerDuration: {
@@ -194,7 +196,9 @@ const styles = StyleSheet.create({
   },
   shadowDuration: {
     shadowColor: 'rgba(255, 197, 6, 0.69)',
-    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 3,
   },
   pickerContainerBudget: {
@@ -202,7 +206,9 @@ const styles = StyleSheet.create({
   },
   shadowBudget: {
     shadowColor: 'rgba(16, 242, 31, 0.8)',
-    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 3,
   },
   pickerContainerType: {
@@ -210,7 +216,9 @@ const styles = StyleSheet.create({
   },
   shadowType: {
     shadowColor: 'rgba(19, 45, 241, 0.8)',
-    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 3,
   },
   pickerStyleWhen: {
@@ -241,7 +249,9 @@ const styles = StyleSheet.create({
   },
   shadowSubmit: {
     shadowColor: 'rgba(112, 32, 196, 0.8)',
-    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 3,
   },
   submitButtonText: {
@@ -250,7 +260,9 @@ const styles = StyleSheet.create({
   },
   shadowPeople: {
     shadowColor: 'rgba(244, 100, 23, 0.8)',
-    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
     elevation: 3,
   },
 });
