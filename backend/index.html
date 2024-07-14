@@ -7,6 +7,12 @@
         overflow: hidden;
         width: 100vw;
         height: 100vh;
+        background: url('https://htmltest1.s3.ap-northeast-2.amazonaws.com/background.png')
+          no-repeat center center fixed;
+        background-size: cover;
+      }
+      #globeViz canvas {
+        background-color: transparent !important;
       }
     </style>
 
@@ -60,7 +66,7 @@
           globe.camera().position.z = 600; // Increase the distance of the camera to make the globe smaller
 
           // Move globe to top of the screen
-          globe.scene().position.y = 140; // Adjust this value as needed to move the globe up
+          globe.scene().position.y = 0; // Adjust this value as needed to move the globe up
 
           // Create a meteor
           const meteorGeometry = new THREE.SphereGeometry(10, 50, 50);
