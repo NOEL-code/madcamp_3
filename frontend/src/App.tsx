@@ -1,22 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
   TouchableOpacity,
-  Modal,
-  ImageBackground,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import Icon from './assets/images/back-arrow-icon.png'; // Ensure this path is correct
 import backGroundImage from './assets/images/background.png';
+import brazilFlag from './assets/images/brazil-flag.png'; // Ensure this path is correct
+import australiaFlag from './assets/images/australia-flag.png'; // Ensure this path is correct
+import singaporeFlag from './assets/images/singapore-flag.png'; // Ensure this path is correct
+import cameraIcon from './assets/images/camera-icon.png'; // Ensure this path is correct
+import penIcon from './assets/images/pen-icon.png'; // Ensure this path is correct
+import heartIcon from './assets/images/heart-icon.png'; // Ensure this path is correct
 
-const TripPlanner = () => {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-
-  const toggleFullScreen = () => {
-    setIsFullScreen(!isFullScreen);
+const Collection = ({navigation}) => {
+  const goBack = () => {
+    if (navigation) {
+      navigation.goBack(); // Navigate back if navigation is available
+    }
   };
 
   return (
@@ -24,105 +29,53 @@ const TripPlanner = () => {
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <TouchableOpacity style={styles.backButton}></TouchableOpacity>
-            <Text style={styles.screenTitle}>Planned</Text>
+            <TouchableOpacity style={styles.backButton} onPress={goBack}>
+              <Image source={Icon} style={styles.icon} />
+            </TouchableOpacity>
+            <Text style={styles.screenTitle}>Collection</Text>
           </View>
-          <View style={styles.scheduleContainer}>
-            <View style={styles.schedule}>
-              <Image
-                source={{
-                  uri: 'https://htmltest1.s3.ap-northeast-2.amazonaws.com/download.png',
-                }}
-                style={styles.flag}
-              />
-              <View style={styles.scheduleText}>
-                <Text style={styles.title}>Brazil</Text>
-                <Text style={styles.subtitle}>4 Days in July,</Text>
-                <Text style={styles.subtitle}>4 People,</Text>
-                <Text style={styles.subtitle}>General budget,</Text>
-                <Text style={styles.subtitle}>Healing type</Text>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Planned</Text>
+            <View style={styles.tripBox}>
+              <View style={styles.tripInfo}>
+                <View style={styles.tripActions}>
+                  <Text style={styles.tripTitle}>Brazil</Text>
+                  <TouchableOpacity style={styles.iconButton}>
+                    <Image source={cameraIcon} style={styles.actionIcon} />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.iconButton}>
+                    <Image source={penIcon} style={styles.actionIcon} />
+                  </TouchableOpacity>
+                </View>
+                <Image source={brazilFlag} style={styles.flag} />
+              </View>
+            </View>
+            <View style={styles.tripBox}>
+              <View style={styles.tripInfo}>
+                <View style={styles.tripActions}>
+                  <Text style={styles.tripTitle}>Australia</Text>
+                  <TouchableOpacity style={styles.iconButton}>
+                    <Image source={cameraIcon} style={styles.actionIcon} />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.iconButton}>
+                    <Image source={penIcon} style={styles.actionIcon} />
+                  </TouchableOpacity>
+                </View>
+                <Image source={australiaFlag} style={styles.flag} />
               </View>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.mapContainer}
-            onPress={toggleFullScreen}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: -23.5505,
-                longitude: -46.6333,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}>
-              <Marker
-                coordinate={{latitude: -23.5505, longitude: -46.6333}}
-                title={'São Paulo'}
-                description={'Arrival point'}
-              />
-            </MapView>
-          </TouchableOpacity>
-          <Modal visible={isFullScreen} animationType="slide">
-            <View style={styles.fullScreenContainer}>
-              <MapView
-                style={styles.fullScreenMap}
-                initialRegion={{
-                  latitude: -23.5505,
-                  longitude: -46.6333,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                }}>
-                <Marker
-                  coordinate={{latitude: -23.5505, longitude: -46.6333}}
-                  title={'São Paulo'}
-                  description={'Arrival point'}
-                />
-              </MapView>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={toggleFullScreen}>
-                <Text style={styles.closeButtonText}>Close</Text>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>History</Text>
+            <View style={styles.historyBox}>
+              <View style={styles.historyInfo}>
+                <Text style={styles.historyTitle}>Singapore</Text>
+                <Text style={styles.historyDate}>2024.01.10-2024.01.13</Text>
+              </View>
+              <Image source={singaporeFlag} style={styles.flag} />
+              <TouchableOpacity style={styles.memoryButton}>
+                <Text style={styles.memoryText}>Memory</Text>
               </TouchableOpacity>
-            </View>
-          </Modal>
-          <View style={styles.itinerary}>
-            <View style={styles.daysContainer}>
-              {['Day 1', 'Day 2', 'Day 3', 'Day 4'].map((day, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={index === 0 ? styles.activeDay : styles.day}>
-                  <Text
-                    style={index === 0 ? styles.activeDayText : styles.dayText}>
-                    {day}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <View style={styles.itineraryDetails}>
-              <Text style={styles.dayTitle}>
-                Day 1: Arrival in Rio de Janeiro
-              </Text>
-              <View style={styles.activity}>
-                <Image
-                  source={require('./assets/images/morning.png')}
-                  style={styles.activityIcon}
-                />
-                <Text>Arrival at the airport followed by hotel check-in.</Text>
-              </View>
-              <View style={styles.activity}>
-                <Image
-                  source={require('./assets/images/afternoon.png')}
-                  style={styles.activityIcon}
-                />
-                <Text>Visit Copacabana Beach and Ipanema Beach.</Text>
-              </View>
-              <View style={styles.activity}>
-                <Image
-                  source={require('./assets/images/evening.png')}
-                  style={styles.activityIcon}
-                />
-                <Text>Enjoy local cuisine at Leftover Restaurant.</Text>
-              </View>
             </View>
           </View>
         </View>
@@ -134,7 +87,7 @@ const TripPlanner = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 15,
   },
   backgroundImage: {
     flex: 1,
@@ -143,126 +96,104 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 10,
+    justifyContent: 'flex-start',
   },
   backButton: {
     padding: 10,
+    marginRight: 20,
+  },
+  icon: {
+    width: 40,
+    height: 30,
+    tintColor: '#fff', // Optional: Change the icon color
   },
   screenTitle: {
     fontSize: 30,
+    marginLeft: 40,
     fontWeight: 'bold',
     color: '#fff',
-    flex: 1,
     textAlign: 'center',
-    marginRight: 27,
   },
-  scheduleContainer: {
-    borderRadius: 35,
+  section: {
+    marginTop: 20,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  tripBox: {
+    backgroundColor: '#344675',
+    borderRadius: 15,
     marginVertical: 10,
-    marginBottom: -20, // 음수 마진으로 위치 조정
-    zIndex: 1,
-  },
-  schedule: {
+    padding: 15,
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderRadius: 35,
-    padding: 20,
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  tripInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tripTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
   },
   flag: {
-    width: 162,
-    height: 114,
+    width: 131,
+    height: 92,
     resizeMode: 'contain',
-    borderRadius: 17,
+    marginLeft: 10,
   },
-  scheduleText: {
-    marginLeft: 20,
+  tripActions: {
+    flexDirection: 'row',
   },
-  title: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: '#142148',
-    textAlign: 'center',
+  iconButton: {
+    marginHorizontal: 5,
   },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
+  actionIcon: {
+    width: 30,
+    height: 30,
   },
-  mapContainer: {
-    borderRadius: 35,
-    overflow: 'hidden',
-    zIndex: 0,
-  },
-  map: {
-    height: 200,
-  },
-  itinerary: {
+  historyBox: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
-  },
-  daysContainer: {
+    borderRadius: 15,
+    marginVertical: 10,
+    padding: 15,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
   },
-  day: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
+  historyInfo: {
+    flex: 1,
   },
-  activeDay: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    backgroundColor: '#3B3B98',
-    borderRadius: 5,
-  },
-  dayText: {
-    color: '#000',
-  },
-  activeDayText: {
-    color: '#fff',
-  },
-  itineraryDetails: {
-    paddingHorizontal: 10,
-  },
-  dayTitle: {
+  historyTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
+    color: '#344675',
   },
-  activity: {
+  historyDate: {
+    fontSize: 14,
+    color: '#344675',
+  },
+  memoryButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    backgroundColor: '#ff6347',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 20,
   },
-  activityIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  fullScreenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  fullScreenMap: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    padding: 10,
-    borderRadius: 5,
-  },
-  closeButtonText: {
+  memoryText: {
     color: '#fff',
-    fontSize: 18,
+    marginRight: 5,
+  },
+  heartIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#fff',
   },
 });
 
-export default TripPlanner;
+export default Collection;
