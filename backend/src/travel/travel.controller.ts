@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  Get,
   Body,
   UploadedFiles,
   UseInterceptors,
@@ -11,6 +12,8 @@ import { TravelService } from './travel.service';
 import { multerOptions } from '../../upload.config';
 import { PersonService } from '../person/person.service';
 import { Types } from 'mongoose';
+import { Param } from '@nestjs/common';
+import { Delete } from '@nestjs/common';
 
 @Controller('travel')
 export class TravelController {
@@ -46,4 +49,24 @@ export class TravelController {
 
     return createdTravel;
   }
+
+  @Get(':travelId')
+  async getTravel(
+    @Param('travelId') travelId: Types.ObjectId
+  ) {
+    return await this.travelService.getTravel(travelId);
+  }
+
+  @Delete(':travelId')
+  async deleteTravel(
+    @Param('travelId') travelId: Types.ObjectId
+  ) {
+    return await this.travelService.deleteTravel(travelId);
+  }
+
+  @Get()
+  async getTravels() {
+    return await this.travelService.getTravels();
+  }
+
 }

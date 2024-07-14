@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString, IsArray } from 'class-validator';
+import { Json } from 'aws-sdk/clients/robomaker';
+import { IsNotEmpty, IsNumber, IsString, IsArray, IsJSON } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class CreateTravelDto {
@@ -26,6 +27,14 @@ export class CreateTravelDto {
   @IsArray()
   @IsString({ each: true })
   people: string[];
+
+  @IsNotEmpty()
+  @IsString()
+  country: string;
+
+  @IsNotEmpty()
+  @IsJSON()
+  location: Json;
 }
 
 export class CreatePersonDto {
