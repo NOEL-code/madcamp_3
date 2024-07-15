@@ -1,19 +1,28 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import WebViewScreen from './screens/WebView';
+import SurveyScreen from './screens/Survey';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <WebViewScreen />
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="WebView">
+        <Stack.Screen
+          name="WebView"
+          component={WebViewScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Survey"
+          component={SurveyScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;

@@ -8,13 +8,25 @@ import {
   Dimensions,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../navigationTypes';
+import brazil from '../assets/images/brazil-flag.png';
 
 const {width, height} = Dimensions.get('window');
 
+type WebViewScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'WebView'
+>;
+
 const WebViewScreen = () => {
+  const navigation = useNavigation<WebViewScreenNavigationProp>();
   const shakeAnim = useRef(new Animated.Value(0)).current;
   const dartX = useRef(new Animated.Value(0)).current;
   const dartY = useRef(new Animated.Value(0)).current;
+  const flagScale = useRef(new Animated.Value(0)).current;
+  const flagOpacity = useRef(new Animated.Value(0)).current;
 
   const startAnimation = () => {
     Animated.sequence([
@@ -45,17 +57,41 @@ const WebViewScreen = () => {
       }),
       Animated.parallel([
         Animated.timing(dartX, {
-          toValue: 130, // Center of the screen horizontally
+          toValue: 130,
           duration: 1000,
           useNativeDriver: true,
         }),
         Animated.timing(dartY, {
-          toValue: -200, // Center of the screen vertically
+          toValue: -200,
           duration: 1000,
           useNativeDriver: true,
         }),
       ]),
-    ]).start();
+      Animated.parallel([
+        Animated.timing(flagScale, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(flagOpacity, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start(() => {
+      setTimeout(() => {
+        navigation.navigate('Survey', {
+          country: 'Brazil',
+          location: {
+            label: 'R',
+            name: 'Rio de Janeiro',
+            lat: -22.9068,
+            lng: -43.1729,
+          },
+        });
+      }, 1000);
+    });
   };
 
   return (
@@ -89,6 +125,17 @@ const WebViewScreen = () => {
           />
         </Animated.View>
       </TouchableWithoutFeedback>
+      <Animated.Image
+        source={brazil}
+        style={[
+          styles.image,
+          styles.flag,
+          {
+            opacity: flagOpacity,
+            transform: [{scale: flagScale}],
+          },
+        ]}
+      />
     </View>
   );
 };
@@ -114,6 +161,12 @@ const styles = StyleSheet.create({
     height: 125,
     top: '61%',
     left: '9.7%',
+  },
+  flag: {
+    width: 250,
+    height: 150,
+    left: width / 2 - 125, // 중앙에 위치
+    top: height / 2 - 75, // 중앙에 위치
   },
 });
 
