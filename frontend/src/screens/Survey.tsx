@@ -89,12 +89,12 @@ const App = () => {
             data={months}
             value={month}
             onChange={item => setMonth(item.value)}
-            containerStyle={[styles.pickerContainerWhen, styles.shadowWhen]}
-            pickerStyle={styles.pickerStyleWhen}
+            containerStyle={[styles.pickerContainerWhen, styles.shadow]}
+            pickerStyle={styles.pickerStyle}
             imageIcon={whenIcon}
           />
-
-          <View style={[styles.peopleContainer, styles.shadowPeople]}>
+          
+          <View style={[styles.peopleContainer]}>
             <DropdownComponent
               label="People"
               data={people}
@@ -103,8 +103,7 @@ const App = () => {
                 const newPeopleCount = parseInt(item.value);
                 setPeopleCount(newPeopleCount);
               }}
-              containerStyle={styles.shadowPeople}
-              pickerStyle={styles.pickerStylePeople}
+              pickerStyle={styles.pickerStyle}
               imageIcon={peopleIcon}
             />
 
@@ -113,7 +112,7 @@ const App = () => {
               onUpdateProfile={handleUpdateProfile}
             />
           </View>
-
+          
           <DropdownComponent
             label="Duration"
             data={durations}
@@ -121,9 +120,9 @@ const App = () => {
             onChange={item => setDuration(item.value)}
             containerStyle={[
               styles.pickerContainerDuration,
-              styles.shadowDuration,
+              styles.shadow,
             ]}
-            pickerStyle={styles.pickerStyleDuration}
+            pickerStyle={styles.pickerStyle}
             imageIcon={durationIcon}
           />
 
@@ -132,8 +131,8 @@ const App = () => {
             data={budgets}
             value={budget}
             onChange={item => setBudget(item.value)}
-            containerStyle={[styles.pickerContainerBudget, styles.shadowBudget]}
-            pickerStyle={styles.pickerStyleBudget}
+            containerStyle={[styles.pickerContainerBudget, styles.shadow]}
+            pickerStyle={styles.pickerStyle}
             imageIcon={budgetIcon}
           />
 
@@ -142,7 +141,7 @@ const App = () => {
             data={types}
             value={type}
             onChange={item => setType(item.value)}
-            containerStyle={[styles.pickerContainerType, styles.shadowType]}
+            containerStyle={[styles.pickerContainerType, styles.shadow]}
             pickerStyle={styles.pickerStyleType}
             imageIcon={typeIcon}
           />
@@ -177,64 +176,34 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   peopleContainer: {
-    height: 229,
+    height: 200,
     backgroundColor: 'rgba(244, 100, 23, 0.71)',
     borderRadius: 35,
+    marginTop:8,
+    marginBottom:8,
+  },
+  
+  shadow: {
+    //shadowColor: 'rgba(224, 45, 48, 0.68)',
+    shadowOffset: {width: 0, height: 5},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3,
   },
   pickerContainerWhen: {
     backgroundColor: 'rgba(224, 45, 48, 0.68)',
   },
-  shadowWhen: {
-    shadowColor: 'rgba(224, 45, 48, 0.68)',
-    shadowOffset: {width: 0, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-  },
   pickerContainerDuration: {
     backgroundColor: 'rgba(255, 197, 6, 0.69)',
-  },
-  shadowDuration: {
-    shadowColor: 'rgba(255, 197, 6, 0.69)',
-    shadowOffset: {width: 0, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
   },
   pickerContainerBudget: {
     backgroundColor: 'rgba(16, 242, 31, 0.55)', // Custom color for Budget
   },
-  shadowBudget: {
-    shadowColor: 'rgba(16, 242, 31, 0.8)',
-    shadowOffset: {width: 0, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-  },
   pickerContainerType: {
     backgroundColor: 'rgba(19, 45, 241, 0.8)', // Custom color for Type
   },
-  shadowType: {
-    shadowColor: 'rgba(19, 45, 241, 0.8)',
-    shadowOffset: {width: 0, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  pickerStyleWhen: {
-    backgroundColor: 'rgba(196, 196, 196, 0.1)', // Custom color for When
-  },
-  pickerStylePeople: {
-    backgroundColor: 'rgba(196, 196, 196, 0.1)', // Custom color for People
-  },
-  pickerStyleDuration: {
-    backgroundColor: 'rgba(196, 196, 196, 0.1)', // Custom color for Duration
-  },
-  pickerStyleBudget: {
-    backgroundColor: 'rgba(196, 196, 196, 0.1)', // Custom color for Budget
-  },
-  pickerStyleType: {
-    backgroundColor: 'rgba(196, 196, 196, 0.1)', // Custom color for Type
+  pickerStyle: {
+    backgroundColor: 'rgba(200,200,200, 0.2)',
   },
   submitButton: {
     alignSelf: 'center',
@@ -258,13 +227,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  shadowPeople: {
-    shadowColor: 'rgba(244, 100, 23, 0.8)',
-    shadowOffset: {width: 0, height: 5},
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-  },
+  
 });
 
 export default App;

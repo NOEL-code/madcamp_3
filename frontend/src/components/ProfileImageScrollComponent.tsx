@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   profileItem: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 4,
   },
   profileImage: {
     width: 60,
@@ -77,7 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   profileName: {
-    marginTop: 4,
     color: '#fff',
     textAlign: 'center',
   },
