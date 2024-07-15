@@ -26,7 +26,7 @@ export class TravelController {
   @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   async createTravel(
     @Body() createTravelDto: any,
-    @UploadedFiles() files: Express.Multer.File[]
+    @UploadedFiles() files: any[]
   ) {
     const { location, people, ...otherDto } = createTravelDto;
 
@@ -44,11 +44,11 @@ export class TravelController {
     // Create Person objects and add to Travel
     const personPromises = parsedPeople.map(async (person, index) => {
       const file = files[index];
-      if (!file || !file.path) {
-        console.error('File path is missing for file:', file);
-        throw new Error('File path is missing');
+      if (!file || !file.location) {
+        console.error('File location is missing for file:', file);
+        throw new Error('File location is missing');
       }
-      person.profileImage = file.path;
+      person.profileImage = file.location; // Use location instead of path
       person.travelId = createdTravel._id; // Add travelId
       const createdPerson = await this.personService.create(person);
       return createdPerson;
