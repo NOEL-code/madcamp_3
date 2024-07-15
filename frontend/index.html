@@ -1,62 +1,71 @@
 <head>
-  <style> body { margin: 0; } </style>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden; /* Prevent scrolling */
+    }
 
-  <script src="//unpkg.com/react/umd/react.production.min.js"></script>
-  <script src="//unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
-  <script src="//unpkg.com/@babel/standalone"></script>
-
-  <script src="//unpkg.com/react-globe.gl"></script>
-  <!--<script src="../../dist/react-globe.gl.js"></script>-->
+    #globeViz {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+  </style>
+  <script src="//unpkg.com/globe.gl"></script>
 </head>
-
 <body>
-<div id="globeViz"></div>
+  <div id="globeViz"></div>
 
-<script type="text/jsx" data-type="module">
-  import * as THREE from '//unpkg.com/three/build/three.module.js';
+  <script type="module">
+    import * as THREE from '//unpkg.com/three/build/three.module.js';
 
-  const { useEffect, useRef } = React;
+    const world = Globe({animateIn: false})(document.getElementById('globeViz'))
+      .globeImageUrl(
+        '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+      )
+      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
 
-  const World = () => {
-    const globeEl = useRef();
+    // Function to set camera position based on screen size
+    function setCameraPosition() {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const aspectRatio = screenWidth / screenHeight;
 
-    useEffect(() => {
-      const globe = globeEl.current;
+      // Adjust camera distance based on screen size
+      const cameraDistance = aspectRatio > 1 ? 600 : 800;
+      world.camera().position.set(0, 0, cameraDistance);
+    }
 
-      // Auto-rotate
-      globe.controls().autoRotate = true;
-      globe.controls().autoRotateSpeed = 0.35;
+    // Set initial camera position
+    setCameraPosition();
 
-      // Add clouds sphere
-      const CLOUDS_IMG_URL = './clouds.png'; // from https://github.com/turban/webgl-earth
-      const CLOUDS_ALT = 0.004;
-      const CLOUDS_ROTATION_SPEED = -0.006; // deg/frame
+    // Adjust camera position on window resize
+    window.addEventListener('resize', setCameraPosition);
 
-      new THREE.TextureLoader().load(CLOUDS_IMG_URL, cloudsTexture => {
-        const clouds = new THREE.Mesh(
-          new THREE.SphereGeometry(globe.getGlobeRadius() * (1 + CLOUDS_ALT), 75, 75),
-          new THREE.MeshPhongMaterial({ map: cloudsTexture, transparent: true })
-        );
-        globe.scene().add(clouds);
+    // Auto-rotate
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 0.35;
 
-        (function rotateClouds() {
-          clouds.rotation.y += CLOUDS_ROTATION_SPEED * Math.PI / 180;
-          requestAnimationFrame(rotateClouds);
-        })();
-      });
-    }, []);
+    // Add clouds sphere
+    const CLOUDS_IMG_URL = './clouds.png'; // from https://github.com/turban/webgl-earth
+    const CLOUDS_ALT = 0.004;
+    const CLOUDS_ROTATION_SPEED = -0.006; // deg/frame
 
-    return <Globe
-      ref={globeEl}
-      animateIn={false}
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-      bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-    />;
-  };
+    new THREE.TextureLoader().load(CLOUDS_IMG_URL, cloudsTexture => {
+      const clouds = new THREE.Mesh(
+        new THREE.SphereGeometry(
+          world.getGlobeRadius() * (1 + CLOUDS_ALT),
+          75,
+          75,
+        ),
+        new THREE.MeshPhongMaterial({map: cloudsTexture, transparent: true}),
+      );
+      world.scene().add(clouds);
 
-  ReactDOM.render(
-    <World />,
-    document.getElementById('globeViz')
-  );
-</script>
+      (function rotateClouds() {
+        clouds.rotation.y += (CLOUDS_ROTATION_SPEED * Math.PI) / 180;
+        requestAnimationFrame(rotateClouds);
+      })();
+    });
+  </script>
 </body>

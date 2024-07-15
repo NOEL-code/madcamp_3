@@ -16,10 +16,11 @@ const s3 = new S3Client({
 export const multerOptions = {
   storage: multerS3({
     s3: s3,
-    bucket: process.env.AWS_S3_BUCKET_NAME, // 버킷 이름이 환경 변수에서 올바르게 설정되었는지 확인
+    bucket: process.env.AWS_S3_BUCKET_NAME,
     acl: 'public-read',
     key: (req, file, cb) => {
       cb(null, `${Date.now().toString()}-${file.originalname}`);
     },
   }),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB file size limit
 };

@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Json } from 'aws-sdk/clients/robomaker';
 import { Document, Types } from 'mongoose';
+import { Person, PersonSchema } from '../../person/person.schema';
+import { Location, LocationSchema } from './location.schema';
 
 @Schema()
 export class Travel {
-  _id: Types.ObjectId; // _id 속성 추가
+  _id: Types.ObjectId;
 
   @Prop({ required: true })
   month: string;
@@ -21,18 +22,17 @@ export class Travel {
   @Prop({ required: true })
   type: string;
 
-  @Prop({ type: [Types.ObjectId], ref: 'Person', required: true })
-  people: Types.ObjectId[];
+  @Prop({ type: [PersonSchema], default: [] }) // Embedded array of Person objects
+  people: Person[];
 
   @Prop({ required: true })
   country: string;
 
-  @Prop({ required: true })
-  location: Json;
+  @Prop({ type: LocationSchema, required: true }) // Use Location schema
+  location: Location;
 
   @Prop({ type: Object }) // gptResponse를 객체 타입으로 추가
   gptResponse: Record<string, any>;
-
 }
 
 export type TravelDocument = Travel & Document;

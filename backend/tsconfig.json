@@ -17,8 +17,12 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "typeRoots": ["./node_modules/@types", "./@types"]
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings",
+      "./@types/express/index.d.ts"
+    ]
   },
-  "include": ["src/**/*.ts", "@types/**/*.ts"],
+  "include": ["src/**/*.ts", "./@types/express/index.d.ts"],
   "exclude": ["node_modules"]
 }

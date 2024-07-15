@@ -4,12 +4,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TravelModule } from './travel/travel.module';
 import { GptModule } from './gpt/gpt.module';
 import { PersonModule } from './person/person.module';
+import { PhotoModule } from './photo/photo.module';
 import * as mongoose from 'mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // 전역 모듈로 설정
+      isGlobal: true,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -20,7 +21,8 @@ import * as mongoose from 'mongoose';
     }),
     TravelModule,
     GptModule,
-    PersonModule, // PersonModule 임포트
+    PersonModule,
+    PhotoModule,
   ],
   controllers: [],
   providers: [],
