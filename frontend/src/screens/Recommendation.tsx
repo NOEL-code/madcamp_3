@@ -16,7 +16,16 @@ import backGroundImage from '../assets/images/background.png';
 import note from '../assets/images/note.png';
 
 const RecommendationScreen = ({route, navigation}) => {
-  const {data} = route.params || {}; // Get the passed data safely
+  const {data} = route.params;
+
+  if (!data) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>No data available</Text>
+      </View>
+    );
+  }
+
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleFullScreen = () => {
@@ -28,14 +37,6 @@ const RecommendationScreen = ({route, navigation}) => {
       navigation.goBack(); // Navigate back if navigation is available
     }
   };
-
-  if (!data) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>No data available.</Text>
-      </View>
-    );
-  }
 
   return (
     <ScrollView>
@@ -59,22 +60,13 @@ const RecommendationScreen = ({route, navigation}) => {
                 style={styles.flag}
               />
               <View style={styles.scheduleText}>
-                <Text style={styles.title}>
-                  {data.trip_details.destination}
-                </Text>
+                <Text style={styles.title}>{data.country}</Text>
                 <Text style={styles.subtitle}>
-                  {data.trip_details.duration} in{' '}
-                  {data.trip_details.travel_month},
+                  {data.duration} Days in {data.month},
                 </Text>
-                <Text style={styles.subtitle}>
-                  {data.trip_details.number_of_people} People,
-                </Text>
-                <Text style={styles.subtitle}>
-                  {data.trip_details.budget} budget,
-                </Text>
-                <Text style={styles.subtitle}>
-                  {data.trip_details.trip_style} type
-                </Text>
+                <Text style={styles.subtitle}>{data.totalPeople} People,</Text>
+                <Text style={styles.subtitle}>{data.budget} budget,</Text>
+                <Text style={styles.subtitle}>{data.type} type</Text>
               </View>
             </View>
           </View>
@@ -84,14 +76,17 @@ const RecommendationScreen = ({route, navigation}) => {
             <MapView
               style={styles.map}
               initialRegion={{
-                latitude: -23.5505,
-                longitude: -46.6333,
+                latitude: data.location.lat,
+                longitude: data.location.lng,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}>
               <Marker
-                coordinate={{latitude: -23.5505, longitude: -46.6333}}
-                title={'São Paulo'}
+                coordinate={{
+                  latitude: data.location.lat,
+                  longitude: data.location.lng,
+                }}
+                title={data.location.name}
                 description={'Arrival point'}
               />
             </MapView>
@@ -101,14 +96,17 @@ const RecommendationScreen = ({route, navigation}) => {
               <MapView
                 style={styles.fullScreenMap}
                 initialRegion={{
-                  latitude: -23.5505,
-                  longitude: -46.6333,
+                  latitude: data.location.lat,
+                  longitude: data.location.lng,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}>
                 <Marker
-                  coordinate={{latitude: -23.5505, longitude: -46.6333}}
-                  title={'São Paulo'}
+                  coordinate={{
+                    latitude: data.location.lat,
+                    longitude: data.location.lng,
+                  }}
+                  title={data.location.name}
                   description={'Arrival point'}
                 />
               </MapView>
@@ -123,7 +121,7 @@ const RecommendationScreen = ({route, navigation}) => {
             <Image source={note} style={styles.noteImage} />
 
             <View style={styles.daysContainer}>
-              {data.daily_plans.map((plan, index) => (
+              {data.gptResponse.daily_plan.map((plan, index) => (
                 <TouchableOpacity
                   key={index}
                   style={index === 0 ? styles.activeDay : styles.day}>
@@ -135,42 +133,34 @@ const RecommendationScreen = ({route, navigation}) => {
               ))}
             </View>
             <View style={styles.horizontalLine} />
-            <View style={styles.itineraryDetails}>
-              {data.daily_plans.map((plan, index) => (
-                <View key={index}>
-                  <Text style={styles.dayTitle}>
-                    Day {plan.day}: {plan.theme}
-                  </Text>
-                  <View style={styles.activity}>
-                    <Image
-                      source={require('../assets/images/morning.png')}
-                      style={styles.activityIcon}
-                    />
-                    <Text style={styles.scheduleDays}>
-                      {plan.morning_schedule}
-                    </Text>
-                  </View>
-                  <View style={styles.activity}>
-                    <Image
-                      source={require('../assets/images/afternoon.png')}
-                      style={styles.activityIcon}
-                    />
-                    <Text style={styles.scheduleDays}>
-                      {plan.afternoon_schedule}
-                    </Text>
-                  </View>
-                  <View style={styles.activity}>
-                    <Image
-                      source={require('../assets/images/evening.png')}
-                      style={styles.activityIcon}
-                    />
-                    <Text style={styles.scheduleDays}>
-                      {plan.evening_schedule}
-                    </Text>
-                  </View>
+            {data.gptResponse.daily_plan.map((plan, index) => (
+              <View key={index} style={styles.itineraryDetails}>
+                <Text style={styles.dayTitle}>
+                  Day {plan.day}: {plan.theme}
+                </Text>
+                <View style={styles.activity}>
+                  <Image
+                    source={require('../assets/images/morning.png')}
+                    style={styles.activityIcon}
+                  />
+                  <Text style={styles.scheduleDays}>{plan.morning}</Text>
                 </View>
-              ))}
-            </View>
+                <View style={styles.activity}>
+                  <Image
+                    source={require('../assets/images/afternoon.png')}
+                    style={styles.activityIcon}
+                  />
+                  <Text style={styles.scheduleDays}>{plan.afternoon}</Text>
+                </View>
+                <View style={styles.activity}>
+                  <Image
+                    source={require('../assets/images/evening.png')}
+                    style={styles.activityIcon}
+                  />
+                  <Text style={styles.scheduleDays}>{plan.evening}</Text>
+                </View>
+              </View>
+            ))}
           </View>
         </View>
       </ImageBackground>
@@ -343,8 +333,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   errorText: {
-    fontSize: 20,
     color: 'red',
+    fontSize: 20,
     textAlign: 'center',
     marginTop: 20,
   },

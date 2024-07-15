@@ -71,6 +71,7 @@ export class TravelController {
       }));
       await createdTravel.save();
 
+      console.log(createdTravel);
       return createdTravel;
     } catch (error) {
       console.error('Error creating travel:', error);
