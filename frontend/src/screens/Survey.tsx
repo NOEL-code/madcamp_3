@@ -53,43 +53,25 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
   };
 
   const handleSubmit = async () => {
-    const peopleData = profiles.map(profile => ({
-      name: profile.name,
-      profileImage: profile.imageUri,
-    }));
-
-    const data = {
-      month,
-      totalPeople: peopleCount,
-      duration: parseInt(duration.split(' ')[0], 10),
-      budget,
-      type,
-      people: peopleData,
-      country,
-      location,
-    };
-
-    console.log('post 시작');
-
     const formData = new FormData();
-    formData.append('month', data.month);
-    formData.append('totalPeople', data.totalPeople.toString());
-    formData.append('duration', data.duration.toString());
-    formData.append('budget', data.budget);
-    formData.append('type', data.type);
-    formData.append('country', data.country);
-    formData.append('location', JSON.stringify(data.location));
-    formData.append('people', JSON.stringify(data.people));
+    formData.append('month', month);
+    formData.append('totalPeople', peopleCount);
+    formData.append('duration', parseInt(duration.split(' ')[0], 10));
+    formData.append('budget', budget);
+    formData.append('type', type);
+    formData.append('country', country);
+    formData.append('location', JSON.stringify(location));
 
-    // Append each file to the formData
     profiles.forEach((profile, index) => {
-      formData.append(`images`, {
+      formData.append(`people[${index}][name]`, profile.name);
+      formData.append(`people[${index}][profileImage]`, {
         uri: profile.imageUri,
-        type: 'image/jpeg', // Adjust type based on your need
+        type: 'image/jpeg', // or the appropriate type based on your file
         name: `profile-${index}.jpg`,
       });
     });
 
+    console.log('post 시작');
     try {
       const response = await axios.post(
         'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel/create',
@@ -101,16 +83,14 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
         },
       );
       console.log('Travel created successfully:', response.data);
-      // Handle successful submission (e.g., navigate to another screen or show a success message)
+      // Navigate to RecommendationScreen and pass response data
+      navigation.navigate('Recommendation', {data: response.data});
     } catch (error) {
       if (error.response) {
-        // Server responded with a status other than 2xx
         console.error('Error response:', error.response);
       } else if (error.request) {
-        // Request was made but no response was received
         console.error('Error request:', error.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error('Error message:', error.message);
       }
       console.error('Error config:', error.config);

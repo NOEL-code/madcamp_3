@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   Param,
   Delete,
+  ParseArrayPipe,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { CreateTravelDto, CreatePersonDto } from './dto/create-travel.dto';
@@ -43,7 +44,9 @@ export class TravelController {
 
     // Create Person objects and add to Travel
     const personPromises = parsedPeople.map(async (person, index) => {
-      const file = files[index];
+      const file = files.find(
+        (f) => f.fieldname === `people[${index}][profileImage]`
+      );
       if (!file || !file.location) {
         console.error('File location is missing for file:', file);
         throw new Error('File location is missing');
