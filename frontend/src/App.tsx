@@ -9,7 +9,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import Icon from './assets/images/back-arrow-icon.png'; // Ensure this path is correct
-import backGroundImage from './assets/images/background.png';
+import backGroundImage from './assets/images/background-collection.png';
 import brazilFlag from './assets/images/brazil-flag.png'; // Ensure this path is correct
 import australiaFlag from './assets/images/australia-flag.png'; // Ensure this path is correct
 import singaporeFlag from './assets/images/singapore-flag.png'; // Ensure this path is correct
@@ -40,12 +40,14 @@ const Collection = ({navigation}) => {
               <View style={styles.tripInfo}>
                 <View style={styles.tripActions}>
                   <Text style={styles.tripTitle}>Brazil</Text>
-                  <TouchableOpacity style={styles.iconButton}>
-                    <Image source={cameraIcon} style={styles.actionIcon} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.iconButton}>
-                    <Image source={penIcon} style={styles.actionIcon} />
-                  </TouchableOpacity>
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.iconButton}>
+                      <Image source={cameraIcon} style={styles.actionIcon} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.iconButton}>
+                      <Image source={penIcon} style={styles.actionIcon} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 <Image source={brazilFlag} style={styles.flag} />
               </View>
@@ -54,12 +56,14 @@ const Collection = ({navigation}) => {
               <View style={styles.tripInfo}>
                 <View style={styles.tripActions}>
                   <Text style={styles.tripTitle}>Australia</Text>
-                  <TouchableOpacity style={styles.iconButton}>
-                    <Image source={cameraIcon} style={styles.actionIcon} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.iconButton}>
-                    <Image source={penIcon} style={styles.actionIcon} />
-                  </TouchableOpacity>
+                  <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.iconButton}>
+                      <Image source={cameraIcon} style={styles.actionIcon} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.iconButton}>
+                      <Image source={penIcon} style={styles.actionIcon} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 <Image source={australiaFlag} style={styles.flag} />
               </View>
@@ -71,11 +75,13 @@ const Collection = ({navigation}) => {
               <View style={styles.historyInfo}>
                 <Text style={styles.historyTitle}>Singapore</Text>
                 <Text style={styles.historyDate}>2024.01.10-2024.01.13</Text>
+                <TouchableOpacity style={styles.memoryButton}>
+                  <Text style={styles.memoryText}>Memory</Text>
+                  <Image source={heartIcon} style={styles.heartIcon} />
+                </TouchableOpacity>
               </View>
+
               <Image source={singaporeFlag} style={styles.flag} />
-              <TouchableOpacity style={styles.memoryButton}>
-                <Text style={styles.memoryText}>Memory</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -109,58 +115,70 @@ const styles = StyleSheet.create({
   },
   screenTitle: {
     fontSize: 30,
-    marginLeft: 40,
+    marginLeft: 35,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
   },
   section: {
-    marginTop: 20,
+    marginTop: 10,
+    elevation: 10,
+    shadowOpacity: 10,
+    shadowColor: 'rgba(196,196,196,0.3)',
+    shadowRadius: 10,
   },
   sectionTitle: {
     fontSize: 20,
+    marginTop: 10,
     fontWeight: 'bold',
     color: '#fff',
+    marginLeft: 13,
   },
   tripBox: {
-    backgroundColor: '#344675',
-    borderRadius: 15,
+    backgroundColor: 'rgba(196,196,196,0.3)',
+    borderRadius: 35,
     marginVertical: 10,
-    padding: 15,
+    padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
   },
   tripInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   tripTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 10,
+    marginLeft: 10,
   },
   flag: {
     width: 131,
-    height: 92,
+    height: 100,
     resizeMode: 'contain',
-    marginLeft: 10,
+    marginLeft: 20,
+    elevation: 10,
   },
   tripActions: {
-    flexDirection: 'row',
+    marginLeft: 10,
   },
   iconButton: {
     marginHorizontal: 5,
   },
   actionIcon: {
-    width: 30,
-    height: 30,
+    width: 50,
+    height: 50,
   },
   historyBox: {
-    backgroundColor: '#fff',
-    borderRadius: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.87)',
+    borderRadius: 35,
     marginVertical: 10,
-    padding: 15,
+    padding: 25,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -169,30 +187,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   historyTitle: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#344675',
   },
   historyDate: {
-    fontSize: 14,
+    marginTop: 4,
+    fontSize: 12,
     color: '#344675',
   },
   memoryButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ff6347',
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 20,
+    backgroundColor: 'rgba(233,32,32,0.75)',
+    borderRadius: 16,
+    padding: 7,
+    paddingTop: 10,
+    width: 110,
+    height: 40,
+    marginTop: 7,
   },
   memoryText: {
     color: '#fff',
-    marginRight: 5,
+    marginLeft: 10,
   },
   heartIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#fff',
+    width: 20, // Adjusted width
+    height: 20, // Adjusted height
+    marginLeft: 5, // Adjusted margin
   },
 });
 

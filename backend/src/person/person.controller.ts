@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { PersonService } from './person.service';
 
-@Controller('person')
+@Controller('api/person')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
