@@ -7,16 +7,27 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
-import DropdownComponent from './components/DropdownComponent';
-import ProfileImageScrollComponent from './components/ProfileImageScrollComponent';
-import whenIcon from './assets/images/when.png';
-import peopleIcon from './assets/images/people.png';
-import durationIcon from './assets/images/duration.png';
-import budgetIcon from './assets/images/budget.png';
-import typeIcon from './assets/images/type.png';
-import backGroundImage from './assets/images/background.png';
+import DropdownComponent from '../components/DropdownComponent';
+import ProfileImageScrollComponent from '../components/ProfileImageScrollComponent';
+import whenIcon from '../assets/images/when.png';
+import peopleIcon from '../assets/images/people.png';
+import durationIcon from '../assets/images/duration.png';
+import budgetIcon from '../assets/images/budget.png';
+import typeIcon from '../assets/images/type.png';
+import backGroundImage from '../assets/images/background.png';
+import axios from 'axios';
+import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../navigationTypes';
 
-const App = () => {
+type SurveyScreenRouteProp = RouteProp<RootStackParamList, 'Survey'>;
+
+type SurveyScreenProps = {
+  route: SurveyScreenRouteProp;
+  navigation: any;
+};
+
+const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
+  const {country, location} = route.params;
   const [month, setMonth] = useState<string>('January');
   const [peopleCount, setPeopleCount] = useState<number>(4);
   const [duration, setDuration] = useState<string>('1 Day');
@@ -39,6 +50,37 @@ const App = () => {
     const updatedProfiles = [...profiles];
     updatedProfiles[index] = newProfile;
     setProfiles(updatedProfiles);
+  };
+
+  const handleSubmit = async () => {
+    const peopleData = profiles.map(profile => ({
+      name: profile.name,
+      profileImage: profile.imageUri,
+    }));
+
+    const data = {
+      month,
+      totalPeople: peopleCount,
+      duration: parseInt(duration.split(' ')[0], 10),
+      budget,
+      type,
+      people: peopleData,
+      country,
+      location,
+    };
+
+    console.log('post 시작');
+    try {
+      const response = await axios.post(
+        'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel/create',
+        data,
+      );
+      console.log('Travel created successfully:', response.data);
+      // Handle successful submission (e.g., navigate to another screen or show a success message)
+    } catch (error) {
+      console.error('Error creating travel:', error);
+      // Handle error (e.g., show an error message)
+    }
   };
 
   const months = [
@@ -93,7 +135,7 @@ const App = () => {
             pickerStyle={styles.pickerStyle}
             imageIcon={whenIcon}
           />
-          
+
           <View style={[styles.peopleContainer]}>
             <DropdownComponent
               label="People"
@@ -112,16 +154,13 @@ const App = () => {
               onUpdateProfile={handleUpdateProfile}
             />
           </View>
-          
+
           <DropdownComponent
             label="Duration"
             data={durations}
             value={duration}
             onChange={item => setDuration(item.value)}
-            containerStyle={[
-              styles.pickerContainerDuration,
-              styles.shadow,
-            ]}
+            containerStyle={[styles.pickerContainerDuration, styles.shadow]}
             pickerStyle={styles.pickerStyle}
             imageIcon={durationIcon}
           />
@@ -148,9 +187,7 @@ const App = () => {
 
           <TouchableOpacity
             style={[styles.submitButton, styles.shadowSubmit]}
-            onPress={() => {
-              /* Handle submit */
-            }}>
+            onPress={handleSubmit}>
             <Text style={styles.submitButtonText}>Submit</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -179,10 +216,10 @@ const styles = StyleSheet.create({
     height: 200,
     backgroundColor: 'rgba(244, 100, 23, 0.71)',
     borderRadius: 35,
-    marginTop:8,
-    marginBottom:8,
+    marginTop: 8,
+    marginBottom: 8,
   },
-  
+
   shadow: {
     //shadowColor: 'rgba(224, 45, 48, 0.68)',
     shadowOffset: {width: 0, height: 5},
@@ -227,7 +264,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  
 });
 
-export default App;
+export default SurveyScreen;
