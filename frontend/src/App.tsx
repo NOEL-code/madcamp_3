@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  StyleSheet,
   View,
   Text,
-  Image,
+  StyleSheet,
   TouchableOpacity,
   ScrollView,
   ImageBackground,
@@ -23,6 +22,43 @@ const Collection = ({navigation}) => {
       navigation.goBack(); // Navigate back if navigation is available
     }
   };
+
+  const months = [
+    {label: 'January', value: 'January'},
+    {label: 'February', value: 'February'},
+    {label: 'March', value: 'March'},
+    {label: 'April', value: 'April'},
+    {label: 'May', value: 'May'},
+    {label: 'June', value: 'June'},
+    {label: 'July', value: 'July'},
+    {label: 'August', value: 'August'},
+    {label: 'September', value: 'September'},
+    {label: 'October', value: 'October'},
+    {label: 'November', value: 'November'},
+    {label: 'December', value: 'December'},
+  ];
+
+  const durations = Array.from({length: 10}, (_, i) => ({
+    label: `${i + 1} Day${i + 1 > 1 ? 's' : ''}`,
+    value: `${i + 1} Day${i + 1 > 1 ? 's' : ''}`,
+  }));
+
+  const budgets = [
+    {label: 'Poor', value: 'Poor'},
+    {label: 'General', value: 'General'},
+    {label: 'Rich', value: 'Rich'},
+  ];
+
+  const types = [
+    {label: 'Healing', value: 'Healing'},
+    {label: 'Tight', value: 'Tight'},
+    {label: 'Loose', value: 'Loose'},
+  ];
+
+  const people = Array.from({length: 10}, (_, i) => ({
+    label: (i + 1).toString(),
+    value: (i + 1).toString(),
+  }));
 
   return (
     <ScrollView>
@@ -84,17 +120,54 @@ const Collection = ({navigation}) => {
               <Image source={singaporeFlag} style={styles.flag} />
             </View>
           </View>
-        </View>
-      </ImageBackground>
-    </ScrollView>
+          
+          <DropdownComponent
+            label="Duration"
+            data={durations}
+            value={duration}
+            onChange={item => setDuration(item.value)}
+            containerStyle={[
+              styles.pickerContainerDuration,
+              styles.shadow,
+            ]}
+            pickerStyle={styles.pickerStyle}
+            imageIcon={durationIcon}
+          />
+
+          <DropdownComponent
+            label="Budget"
+            data={budgets}
+            value={budget}
+            onChange={item => setBudget(item.value)}
+            containerStyle={[styles.pickerContainerBudget, styles.shadow]}
+            pickerStyle={styles.pickerStyle}
+            imageIcon={budgetIcon}
+          />
+
+          <DropdownComponent
+            label="Type"
+            data={types}
+            value={type}
+            onChange={item => setType(item.value)}
+            containerStyle={[styles.pickerContainerType, styles.shadow]}
+            pickerStyle={styles.pickerStyleType}
+            imageIcon={typeIcon}
+          />
+
+          <TouchableOpacity
+            style={[styles.submitButton, styles.shadowSubmit]}
+            onPress={() => {
+              /* Handle submit */
+            }}>
+            <Text style={styles.submitButtonText}>Submit</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-  },
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
@@ -185,6 +258,7 @@ const styles = StyleSheet.create({
   },
   historyInfo: {
     flex: 1,
+    padding: 16,
   },
   historyTitle: {
     fontSize: 24,
@@ -216,6 +290,7 @@ const styles = StyleSheet.create({
     height: 20, // Adjusted height
     marginLeft: 5, // Adjusted margin
   },
+  
 });
 
-export default Collection;
+export default App;
