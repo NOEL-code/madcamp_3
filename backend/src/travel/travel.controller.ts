@@ -14,7 +14,6 @@ import { TravelService } from './travel.service';
 import { multerOptions } from '../../upload.config';
 import { PersonService } from '../person/person.service';
 import { Types } from 'mongoose';
-import * as AWS from 'aws-sdk';
 
 @Controller('api/travel')
 export class TravelController {
@@ -26,14 +25,14 @@ export class TravelController {
   @Post('create')
   @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   async createTravel(
-    @Body() createTravelDto: CreateTravelDto,
-    @UploadedFiles() files: any[]
+    @Body() createTravelDto: any,
+    @UploadedFiles() files: Express.Multer.File[]
   ) {
     const { location, people, ...otherDto } = createTravelDto;
 
     // Ensure location and people are correctly structured
-    const parsedLocation = location; // No need to parse if already an object
-    const parsedPeople = people as CreatePersonDto[]; // Ensure this is an array of CreatePersonDto
+    const parsedLocation = JSON.parse(location);
+    const parsedPeople = JSON.parse(people) as CreatePersonDto[];
 
     // Create Travel object
     const createdTravel = await this.travelService.create({
@@ -45,11 +44,11 @@ export class TravelController {
     // Create Person objects and add to Travel
     const personPromises = parsedPeople.map(async (person, index) => {
       const file = files[index];
-      if (!file || !file.location) {
-        console.error('File location is missing for file:', file);
-        throw new Error('File location is missing');
+      if (!file || !file.path) {
+        console.error('File path is missing for file:', file);
+        throw new Error('File path is missing');
       }
-      person.profileImage = file.location;
+      person.profileImage = file.path;
       person.travelId = createdTravel._id; // Add travelId
       const createdPerson = await this.personService.create(person);
       return createdPerson;

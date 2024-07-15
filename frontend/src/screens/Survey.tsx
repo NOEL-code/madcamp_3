@@ -70,10 +70,35 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
     };
 
     console.log('post 시작');
+
+    const formData = new FormData();
+    formData.append('month', data.month);
+    formData.append('totalPeople', data.totalPeople.toString());
+    formData.append('duration', data.duration.toString());
+    formData.append('budget', data.budget);
+    formData.append('type', data.type);
+    formData.append('country', data.country);
+    formData.append('location', JSON.stringify(data.location));
+    formData.append('people', JSON.stringify(data.people));
+
+    // Append each file to the formData
+    profiles.forEach((profile, index) => {
+      formData.append(`images`, {
+        uri: profile.imageUri,
+        type: 'image/jpeg', // Adjust type based on your need
+        name: `profile-${index}.jpg`,
+      });
+    });
+
     try {
       const response = await axios.post(
         'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel/create',
-        data,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
       );
       console.log('Travel created successfully:', response.data);
       // Handle successful submission (e.g., navigate to another screen or show a success message)
