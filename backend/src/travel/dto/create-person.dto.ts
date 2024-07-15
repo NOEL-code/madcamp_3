@@ -5,6 +5,7 @@ export class CreatePersonDto {
   @IsString()
   name: string;
 
+  //
   @IsNotEmpty()
   @IsString()
   profileImage: string;
