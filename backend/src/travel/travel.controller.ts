@@ -26,22 +26,24 @@ export class TravelController {
   @Post('create')
   @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   async createTravel(
-    @Body() createTravelDto: any,
+    @Body() createTravelDto: CreateTravelDto,
     @UploadedFiles() files: any[]
   ) {
-    // Parse JSON strings
-    const location = JSON.parse(createTravelDto.location);
-    const people = JSON.parse(createTravelDto.people) as CreatePersonDto[];
+    const { location, people, ...otherDto } = createTravelDto;
+
+    // Ensure location and people are correctly structured
+    const parsedLocation = location; // No need to parse if already an object
+    const parsedPeople = people as CreatePersonDto[]; // Ensure this is an array of CreatePersonDto
 
     // Create Travel object
     const createdTravel = await this.travelService.create({
-      ...createTravelDto,
-      location,
+      ...otherDto,
+      location: parsedLocation,
       people: [],
     });
 
     // Create Person objects and add to Travel
-    const personPromises = people.map(async (person, index) => {
+    const personPromises = parsedPeople.map(async (person, index) => {
       const file = files[index];
       if (!file || !file.location) {
         console.error('File location is missing for file:', file);

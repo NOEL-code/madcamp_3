@@ -78,8 +78,17 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
       console.log('Travel created successfully:', response.data);
       // Handle successful submission (e.g., navigate to another screen or show a success message)
     } catch (error) {
-      console.error('Error creating travel:', error);
-      // Handle error (e.g., show an error message)
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error('Error response:', error.response);
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.error('Error request:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
     }
   };
 
