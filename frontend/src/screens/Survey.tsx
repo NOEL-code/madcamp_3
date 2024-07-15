@@ -55,8 +55,11 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('month', month);
-    formData.append('totalPeople', peopleCount);
-    formData.append('duration', parseInt(duration.split(' ')[0], 10));
+    formData.append('totalPeople', peopleCount.toString());
+    formData.append(
+      'duration',
+      parseInt(duration.split(' ')[0], 10).toString(),
+    );
     formData.append('budget', budget);
     formData.append('type', type);
     formData.append('country', country);
@@ -65,7 +68,7 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
     profiles.forEach((profile, index) => {
       formData.append(`people[${index}][name]`, profile.name);
       formData.append(`people[${index}][profileImage]`, {
-        uri: profile.imageUri,
+        uri: profile.imageUri.replace('file://', ''), // Adjust file URI
         type: 'image/jpeg', // or the appropriate type based on your file
         name: `profile-${index}.jpg`,
       });
