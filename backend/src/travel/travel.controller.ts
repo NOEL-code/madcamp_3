@@ -5,6 +5,8 @@ import {
   Body,
   UploadedFiles,
   UseInterceptors,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { CreateTravelDto, CreatePersonDto } from './dto/create-travel.dto';
@@ -12,55 +14,67 @@ import { TravelService } from './travel.service';
 import { multerOptions } from '../../upload.config';
 import { PersonService } from '../person/person.service';
 import { Types } from 'mongoose';
-import { Param } from '@nestjs/common';
-import { Delete } from '@nestjs/common';
+import * as AWS from 'aws-sdk';
 
-@Controller('travel')
+@Controller('api/travel')
 export class TravelController {
   constructor(
     private readonly travelService: TravelService,
-    private readonly personService: PersonService,
+    private readonly personService: PersonService
   ) {}
 
   @Post('create')
   @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   async createTravel(
-    @Body() createTravelDto: CreateTravelDto,
-    @UploadedFiles() files: any[],
+    @Body() createTravelDto: any,
+    @UploadedFiles() files: any[]
   ) {
-    // Travel 객체 생성
-    const createdTravel = await this.travelService.create(createTravelDto);
+    // Parse JSON strings
+    const location = JSON.parse(createTravelDto.location);
+    const people = JSON.parse(createTravelDto.people) as CreatePersonDto[];
 
-    // Person 객체 생성 및 Travel 객체에 추가
-    const personIds: Types.ObjectId[] = [];
-    const people = JSON.parse(
-      createTravelDto.people as any,
-    ) as CreatePersonDto[];
+    // Create Travel object
+    const createdTravel = await this.travelService.create({
+      ...createTravelDto,
+      location,
+      people: [],
+    });
 
-    for (const [index, person] of people.entries()) {
-      person.profileImage = files[index]?.location;
-      person.travelId = createdTravel._id; // travelId를 추가
+    // Create Person objects and add to Travel
+    const personPromises = people.map(async (person, index) => {
+      const file = files[index];
+      if (!file || !file.location) {
+        console.error('File location is missing for file:', file);
+        throw new Error('File location is missing');
+      }
+      person.profileImage = file.location;
+      person.travelId = createdTravel._id; // Add travelId
       const createdPerson = await this.personService.create(person);
-      personIds.push(createdPerson._id);
-    }
+      return createdPerson;
+    });
 
-    createdTravel.people = personIds;
-    await this.travelService.update(createdTravel._id, { people: personIds });
+    const persons = await Promise.all(personPromises);
+
+    // Add persons to the travel document and save
+    createdTravel.people = persons.map((person) => ({
+      _id: person._id,
+      name: person.name,
+      profileImage: person.profileImage,
+      travelId: person.travelId,
+      travelImage: person.travelImage,
+    }));
+    await createdTravel.save();
 
     return createdTravel;
   }
 
   @Get(':travelId')
-  async getTravel(
-    @Param('travelId') travelId: Types.ObjectId
-  ) {
+  async getTravel(@Param('travelId') travelId: Types.ObjectId) {
     return await this.travelService.getTravel(travelId);
   }
 
   @Delete(':travelId')
-  async deleteTravel(
-    @Param('travelId') travelId: Types.ObjectId
-  ) {
+  async deleteTravel(@Param('travelId') travelId: Types.ObjectId) {
     return await this.travelService.deleteTravel(travelId);
   }
 
@@ -68,5 +82,4 @@ export class TravelController {
   async getTravels() {
     return await this.travelService.getTravels();
   }
-
 }

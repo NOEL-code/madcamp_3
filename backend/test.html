@@ -11,7 +11,7 @@
       id="uploadForm"
       enctype="multipart/form-data"
       method="POST"
-      action="http://localhost:3000/travel/create"
+      action="http://localhost:3000/api/travel/create"
     >
       <label for="month">Month:</label>
       <input
@@ -59,13 +59,13 @@
       /><br /><br />
 
       <label for="people">People (JSON format):</label><br />
-      <textarea id="people" name="people" rows="5" cols="50">
+      <textarea id="people" name="people" rows="5" cols="50" required>
 [
-            {"name": "stev", "image": "image1.jpg"},
-            {"name": "john", "image": "image2.jpg"},
-            {"name": "doe", "image": "image3.jpg"},
-            {"name": "jane", "image": "image4.jpg"}
-        ]</textarea
+  {"name": "stev", "image": "image1.jpg"},
+  {"name": "john", "image": "image2.jpg"},
+  {"name": "doe", "image": "image3.jpg"},
+  {"name": "jane", "image": "image4.jpg"}
+]</textarea
       ><br /><br />
 
       <label for="images">Images:</label><br />
@@ -86,15 +86,15 @@
         required
       /><br /><br />
 
-      <label for="location">Location:</label><br>
-      <textarea id="location" name="location" rows="10" cols="50">
-      {
-        "label": "R",
-        "name": "Rio de Janeiro",
-        "lat": -22.9068,
-        "lng": -43.1729
-      }
-      </textarea><br><br>
+      <label for="location">Location:</label><br />
+      <textarea id="location" name="location" rows="10" cols="50" required>
+{
+  "label": "R",
+  "name": "Rio de Janeiro",
+  "lat": -22.9068,
+  "lng": -43.1729
+}</textarea
+      ><br /><br />
 
       <button type="submit">Upload</button>
     </form>

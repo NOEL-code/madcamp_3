@@ -15,7 +15,7 @@ export class Person {
   profileImage: string;
 
   @Prop({ required: false })
-  travelImage: string;
+  travelImage: string[];
 }
 
 export type PersonDocument = Person & Document;

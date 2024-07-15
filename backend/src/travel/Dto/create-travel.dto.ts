@@ -1,6 +1,42 @@
-import { Json } from 'aws-sdk/clients/robomaker';
-import { IsNotEmpty, IsNumber, IsString, IsArray, IsJSON } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsArray,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 import { Types } from 'mongoose';
+
+class LocationDto {
+  @IsNotEmpty()
+  @IsString()
+  label: string;
+
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  lat: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  lng: number;
+}
+
+export class CreatePersonDto {
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  profileImage: string;
+
+  travelId?: Types.ObjectId;
+}
 
 export class CreateTravelDto {
   @IsNotEmpty()
@@ -25,26 +61,16 @@ export class CreateTravelDto {
 
   @IsNotEmpty()
   @IsArray()
-  @IsString({ each: true })
-  people: string[];
+  @ValidateNested({ each: true })
+  @Type(() => CreatePersonDto)
+  people: CreatePersonDto[];
 
   @IsNotEmpty()
   @IsString()
   country: string;
 
   @IsNotEmpty()
-  @IsJSON()
-  location: Json;
-}
-
-export class CreatePersonDto {
-  @IsNotEmpty()
-  @IsString()
-  name: string;
-
-  @IsNotEmpty()
-  @IsString()
-  profileImage: string;
-
-  travelId?: Types.ObjectId; // travelId 추가
+  @ValidateNested()
+  @Type(() => LocationDto)
+  location: LocationDto;
 }
