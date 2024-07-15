@@ -14,7 +14,6 @@ import { TravelService } from './travel.service';
 import { multerOptions } from '../../upload.config';
 import { PersonService } from '../person/person.service';
 import { Types } from 'mongoose';
-import * as AWS from 'aws-sdk';
 
 @Controller('api/travel')
 export class TravelController {
@@ -29,43 +28,55 @@ export class TravelController {
     @Body() createTravelDto: any,
     @UploadedFiles() files: any[]
   ) {
-    // Parse JSON strings
-    const location = JSON.parse(createTravelDto.location);
-    const people = JSON.parse(createTravelDto.people) as CreatePersonDto[];
+    try {
+      const { location, people, ...otherDto } = createTravelDto;
 
-    // Create Travel object
-    const createdTravel = await this.travelService.create({
-      ...createTravelDto,
-      location,
-      people: [],
-    });
+      // Ensure location and people are correctly structured
+      const parsedLocation =
+        typeof location === 'string' ? JSON.parse(location) : location;
+      const parsedPeople =
+        typeof people === 'string'
+          ? JSON.parse(people)
+          : (people as CreatePersonDto[]);
 
-    // Create Person objects and add to Travel
-    const personPromises = people.map(async (person, index) => {
-      const file = files[index];
-      if (!file || !file.location) {
-        console.error('File location is missing for file:', file);
-        throw new Error('File location is missing');
-      }
-      person.profileImage = file.location;
-      person.travelId = createdTravel._id; // Add travelId
-      const createdPerson = await this.personService.create(person);
-      return createdPerson;
-    });
+      // Create Travel object
+      const createdTravel = await this.travelService.create({
+        ...otherDto,
+        location: parsedLocation,
+        people: [],
+      });
 
-    const persons = await Promise.all(personPromises);
+      // Create Person objects and add to Travel
+      const personPromises = parsedPeople.map(async (person, index) => {
+        const file = files.find((f) => f.fieldname === `images`);
+        if (!file || !file.location) {
+          console.error('File location is missing for file:', file);
+          throw new Error('File location is missing');
+        }
+        person.profileImage = file.location; // Use location instead of path
+        person.travelId = createdTravel._id; // Add travelId
+        const createdPerson = await this.personService.create(person);
+        return createdPerson;
+      });
 
-    // Add persons to the travel document and save
-    createdTravel.people = persons.map((person) => ({
-      _id: person._id,
-      name: person.name,
-      profileImage: person.profileImage,
-      travelId: person.travelId,
-      travelImage: person.travelImage,
-    }));
-    await createdTravel.save();
+      const persons = await Promise.all(personPromises);
 
-    return createdTravel;
+      // Add persons to the travel document and save
+      createdTravel.people = persons.map((person) => ({
+        _id: person._id,
+        name: person.name,
+        profileImage: person.profileImage,
+        travelId: person.travelId,
+        travelImage: person.travelImage,
+      }));
+      await createdTravel.save();
+
+      console.log(createdTravel);
+      return createdTravel;
+    } catch (error) {
+      console.error('Error creating travel:', error);
+      throw error;
+    }
   }
 
   @Get(':travelId')

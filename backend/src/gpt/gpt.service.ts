@@ -4,7 +4,7 @@ import OpenAI from 'openai';
 //세 줄 추가요
 import { InjectModel, Schema } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Travel, TravelDocument } from '../travel/Schemas/travel.schema';
+import { Travel, TravelDocument } from '../travel/schemas/travel.schema';
 
 @Injectable()
 export class GptService {

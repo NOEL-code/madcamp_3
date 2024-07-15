@@ -8,14 +8,14 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
-import Icon from './assets/images/back-arrow-icon.png'; // Ensure this path is correct
-import backGroundImage from './assets/images/background-collection.png';
-import brazilFlag from './assets/images/brazil-flag.png'; // Ensure this path is correct
-import australiaFlag from './assets/images/australia-flag.png'; // Ensure this path is correct
-import singaporeFlag from './assets/images/singapore-flag.png'; // Ensure this path is correct
-import cameraIcon from './assets/images/camera-icon.png'; // Ensure this path is correct
-import penIcon from './assets/images/pen-icon.png'; // Ensure this path is correct
-import heartIcon from './assets/images/heart-icon.png'; // Ensure this path is correct
+import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
+import backGroundImage from '../assets/images/background-collection.png';
+import brazilFlag from '../assets/images/brazil-flag.png'; // Ensure this path is correct
+import australiaFlag from '../assets/images/australia-flag.png'; // Ensure this path is correct
+import singaporeFlag from '../assets/images/singapore-flag.png'; // Ensure this path is correct
+import cameraIcon from '../assets/images/camera-icon.png'; // Ensure this path is correct
+import penIcon from '../assets/images/pen-icon.png'; // Ensure this path is correct
+import heartIcon from '../assets/images/heart-icon.png'; // Ensure this path is correct
 
 const Collection = ({navigation}) => {
   const goBack = () => {
