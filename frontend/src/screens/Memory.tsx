@@ -32,6 +32,10 @@ const Memory = ({ navigation }) => {
     }
   };
 
+  const showPics = {
+    //사람을 클릭하면 그 사람과 관련된 사진을 보여주는 함수.
+  };
+
   const openImage = (image) => {
     setSelectedImage(image);
     setIsFullScreen(true);
@@ -58,31 +62,31 @@ const Memory = ({ navigation }) => {
           <View style={styles.body}>
             <View style={styles.profiles}>
               <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                <TouchableOpacity style={styles.backButton} onPress={showPics}>
                   <Image source={profileIcon} style={styles.actionIcon} />
                   <Text style={styles.name}>싱송</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                <TouchableOpacity style={styles.backButton} onPress={showPics}>
                   <Image source={profileIcon} style={styles.actionIcon} />
                   <Text style={styles.name}>슝슝</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                <TouchableOpacity style={styles.backButton} onPress={showPics}>
                   <Image source={profileIcon} style={styles.actionIcon} />
                   <Text style={styles.name}>솬솬</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                <TouchableOpacity style={styles.backButton} onPress={showPics}>
                   <Image source={profileIcon} style={styles.actionIcon} />
                   <Text style={styles.name}>졍졍</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                <TouchableOpacity style={styles.backButton} onPress={showPics}>
                   <Image source={profileIcon} style={styles.actionIcon} />
                   <Text style={styles.name}>미분류</Text>
                 </TouchableOpacity>
