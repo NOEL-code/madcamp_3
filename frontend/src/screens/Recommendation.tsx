@@ -18,6 +18,7 @@ import note from '../assets/images/note.png';
 const RecommendationScreen = ({route, navigation}) => {
   const {data} = route.params;
 
+  console.log(data.gptResponse.daily_plans);
   if (!data) {
     return (
       <View style={styles.container}>
@@ -62,9 +63,13 @@ const RecommendationScreen = ({route, navigation}) => {
               <View style={styles.scheduleText}>
                 <Text style={styles.title}>{data.country}</Text>
                 <Text style={styles.subtitle}>
-                  {data.duration} Days in {data.month},
+                  {data.duration} Day{data.duration > 1 ? 's' : ''} in{' '}
+                  {data.month},
                 </Text>
-                <Text style={styles.subtitle}>{data.totalPeople} People,</Text>
+                <Text style={styles.subtitle}>
+                  {data.totalPeople}{' '}
+                  {data.totalPeople > 1 ? 'People' : 'Person'},
+                </Text>
                 <Text style={styles.subtitle}>{data.budget} budget,</Text>
                 <Text style={styles.subtitle}>{data.type} type</Text>
               </View>
@@ -121,7 +126,7 @@ const RecommendationScreen = ({route, navigation}) => {
             <Image source={note} style={styles.noteImage} />
 
             <View style={styles.daysContainer}>
-              {data.gptResponse.daily_plan.map((plan, index) => (
+              {data.gptResponse.daily_plans.map((plan, index) => (
                 <TouchableOpacity
                   key={index}
                   style={index === 0 ? styles.activeDay : styles.day}>
@@ -133,11 +138,12 @@ const RecommendationScreen = ({route, navigation}) => {
               ))}
             </View>
             <View style={styles.horizontalLine} />
-            {data.gptResponse.daily_plan.map((plan, index) => (
+            {data.gptResponse.daily_plans.map((plan, index) => (
               <View key={index} style={styles.itineraryDetails}>
                 <Text style={styles.dayTitle}>
-                  Day {plan.day}: {plan.theme}
+                  Day {plan.day}: {plan.major_theme}
                 </Text>
+                <Text style={styles.concept}>Concept: {plan.title}</Text>
                 <View style={styles.activity}>
                   <Image
                     source={require('../assets/images/morning.png')}
@@ -297,6 +303,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     color: '#061549',
+  },
+  concept: {
+    fontStyle: 'italic',
+    color: '#061549',
+    marginBottom: 10,
   },
   scheduleDays: {
     color: '#061549',
