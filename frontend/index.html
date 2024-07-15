@@ -19,7 +19,7 @@
 
       #logo {
         position: absolute;
-        top: 3₩0px; /* Adjust this value to move the logo up or down */
+        top: 30px; /* Adjust this value to move the logo up or down */
         left: 50%;
         transform: translateX(-50%);
         z-index: 1000; /* Ensure the logo is above other elements */
@@ -37,19 +37,19 @@
 
       #bottom_logo {
         position: absolute;
-        top: 500px; /* Adjust this value to move the logo up or down */
+        top: 455px; /* Adjust this value to move the logo up or down */
         left: 50%;
         transform: translateX(-50%);
         z-index: 1000; /* Ensure the logo is above other elements */
-        width: 360px; /* Adjust the width of the logo as needed */
+        width: 330px; /* Adjust the width of the logo as needed */
       }
       #person_logo {
         position: absolute;
-        top: 540px; /* Adjust this value to move the logo up or down */
+        top: 480px; /* Adjust this value to move the logo up or down */
         left: 77%;
         transform: translateX(-50%);
         z-index: 1000; /* Ensure the logo is above other elements */
-        width: 120px; /* Adjust the width of the logo as needed */
+        width: 100px; /* Adjust the width of the logo as needed */
       }
     </style>
     <script src="//unpkg.com/globe.gl"></script>
@@ -64,12 +64,10 @@
       id="bottom_logo"
       src="https://htmltest1.s3.ap-northeast-2.amazonaws.com/textBuble.png"
       alt="bottom_logo" />
-
-    <img
+    <!-- <img
       id="person_logo"
       src="https://htmltest1.s3.ap-northeast-2.amazonaws.com/astronant.png"
-      alt="person_logo" />
-
+      alt="person_logo" /> -->
     <script type="module">
       import * as THREE from '//unpkg.com/three/build/three.module.js';
 
@@ -100,7 +98,7 @@
 
       // Auto-rotate
       world.controls().autoRotate = true;
-      world.controls().autoRotateSpeed = 0.35;
+      world.controls().autoRotateSpeed = 5;
 
       // Add clouds sphere
       const CLOUDS_IMG_URL = './clouds.png'; // from https://github.com/turban/webgl-earth
