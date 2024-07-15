@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import WebViewScreen from './screens/WebView';
 import SurveyScreen from './screens/Survey';
 import RecommendationScreen from './screens/Recommendation';
+import Collection from './screens/Collection';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,11 @@ const App = () => {
         <Stack.Screen
           name="Recommendation"
           component={RecommendationScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Collection"
+          component={Collection}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

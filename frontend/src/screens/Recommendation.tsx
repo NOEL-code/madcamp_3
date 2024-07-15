@@ -18,7 +18,7 @@ import note from '../assets/images/note.png';
 const RecommendationScreen = ({route, navigation}) => {
   const {data} = route.params;
 
-  console.log(data.gptResponse.daily_plans);
+  console.log(data.gptResponse.dailyPlans);
   if (!data) {
     return (
       <View style={styles.container}>
@@ -126,7 +126,7 @@ const RecommendationScreen = ({route, navigation}) => {
             <Image source={note} style={styles.noteImage} />
 
             <View style={styles.daysContainer}>
-              {data.gptResponse.daily_plans.map((plan, index) => (
+              {data.gptResponse.dailyPlans.map((plan, index) => (
                 <TouchableOpacity
                   key={index}
                   style={index === 0 ? styles.activeDay : styles.day}>
@@ -138,12 +138,11 @@ const RecommendationScreen = ({route, navigation}) => {
               ))}
             </View>
             <View style={styles.horizontalLine} />
-            {data.gptResponse.daily_plans.map((plan, index) => (
+            {data.gptResponse.dailyPlans.map((plan, index) => (
               <View key={index} style={styles.itineraryDetails}>
                 <Text style={styles.dayTitle}>
-                  Day {plan.day}: {plan.major_theme}
+                  Day {plan.day}: {plan.title}
                 </Text>
-                <Text style={styles.concept}>Concept: {plan.title}</Text>
                 <View style={styles.activity}>
                   <Image
                     source={require('../assets/images/morning.png')}
