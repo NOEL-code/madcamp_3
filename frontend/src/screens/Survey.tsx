@@ -67,9 +67,9 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
 
     profiles.forEach((profile, index) => {
       formData.append(`people[${index}][name]`, profile.name);
-      formData.append(`people[${index}][profileImage]`, {
-        uri: profile.imageUri.replace('file://', ''), // Adjust file URI
-        type: 'image/jpeg', // or the appropriate type based on your file
+      formData.append(`images`, {
+        uri: profile.imageUri,
+        type: 'image/jpeg',
         name: `profile-${index}.jpg`,
       });
     });

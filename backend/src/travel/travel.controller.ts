@@ -32,10 +32,7 @@ export class TravelController {
 
     // Ensure location and people are correctly structured
     const parsedLocation = JSON.parse(location);
-    const parsedPeople = people.map((person: any, index: number) => ({
-      ...JSON.parse(person),
-      profileImage: files[index]?.location || '', // Add file location
-    })) as CreatePersonDto[];
+    const parsedPeople = JSON.parse(people) as CreatePersonDto[];
 
     // Create Travel object
     const createdTravel = await this.travelService.create({
@@ -46,6 +43,14 @@ export class TravelController {
 
     // Create Person objects and add to Travel
     const personPromises = parsedPeople.map(async (person, index) => {
+      const file = files.find(
+        (f) => f.fieldname === `people[${index}][profileImage]`
+      );
+      if (!file || !file.location) {
+        console.error('File location is missing for file:', file);
+        throw new Error('File location is missing');
+      }
+      person.profileImage = file.location; // Use location instead of path
       person.travelId = createdTravel._id; // Add travelId
       const createdPerson = await this.personService.create(person);
       return createdPerson;
