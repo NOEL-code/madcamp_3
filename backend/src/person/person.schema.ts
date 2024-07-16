@@ -1,9 +1,20 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-@Schema({ timestamps: true }) // Enable timestamps
+@Schema()
+export class TravelImage {
+  @Prop({ required: true })
+  url: string;
+
+  @Prop({ required: true, default: Date.now })
+  createdAt: Date;
+}
+
+export const TravelImageSchema = SchemaFactory.createForClass(TravelImage);
+
+@Schema()
 export class Person {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId; // _id 속성 추가
 
   @Prop({ type: Types.ObjectId, required: true })
   travelId: Types.ObjectId;
@@ -14,13 +25,8 @@ export class Person {
   @Prop({ required: true })
   profileImage: string;
 
-  @Prop([
-    {
-      url: { type: String, required: true },
-      createdAt: { type: Date, default: Date.now },
-    },
-  ])
-  travelImage: { url: string; createdAt: Date }[];
+  @Prop({ type: [TravelImageSchema], default: [] })
+  travelImage: TravelImage[];
 }
 
 export type PersonDocument = Person & Document;

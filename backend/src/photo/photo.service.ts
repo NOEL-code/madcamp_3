@@ -36,11 +36,24 @@ export class PhotoService {
     travelId: Types.ObjectId,
     travelImage: string
   ): Promise<NoMatchPhoto> {
-    const noMatchPhoto = new this.noMatchPhotoModel({ travelId, travelImage });
-    return noMatchPhoto.save(); // createdAt will be automatically set by Mongoose
+    try {
+      const noMatchPhoto = new this.noMatchPhotoModel({
+        travelId,
+        travelImage,
+      });
+      return noMatchPhoto.save(); // createdAt will be automatically set by Mongoose
+    } catch (error) {
+      console.error('Error saving no match photo:', error);
+      throw new Error('Error saving no match photo');
+    }
   }
 
   async findNoMatchPhotosByTravelId(travelId: string): Promise<NoMatchPhoto[]> {
-    return this.noMatchPhotoModel.find({ travelId }).exec();
+    try {
+      return this.noMatchPhotoModel.find({ travelId }).exec();
+    } catch (error) {
+      console.error('Error finding no match photos by travel ID:', error);
+      throw new Error('Error finding no match photos by travel ID');
+    }
   }
 }

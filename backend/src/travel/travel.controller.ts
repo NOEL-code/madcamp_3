@@ -48,7 +48,7 @@ export class TravelController {
 
       // Create Person objects and add to Travel
       const personPromises = parsedPeople.map(async (person, index) => {
-        const file = files[index];
+        const file = files.find((f) => f.fieldname === `images`);
         if (!file || !file.location) {
           console.error('File location is missing for file:', file);
           throw new Error('File location is missing');

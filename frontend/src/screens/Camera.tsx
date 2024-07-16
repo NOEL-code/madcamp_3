@@ -69,6 +69,8 @@ const Camera = ({route, navigation}) => {
           formData.append('travelId', travelId);
 
           try {
+            setCurrentPhotoCount(currentPhotoCount - 1);
+
             const serverResponse = await axios.post(
               'http://192.249.29.3:3000/api/photo/create',
               formData,
@@ -79,7 +81,6 @@ const Camera = ({route, navigation}) => {
               },
             );
             console.log('Server response: ', serverResponse.data);
-            setCurrentPhotoCount(currentPhotoCount - 1);
           } catch (error) {
             console.error('Error uploading photo: ', error);
           }

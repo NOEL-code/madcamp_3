@@ -24,9 +24,14 @@ export class PersonService {
     personId: Types.ObjectId,
     imageUrl: string
   ): Promise<Person> {
-    const travelImage = { url: imageUrl, createdAt: new Date() };
-    return this.personModel
-      .findByIdAndUpdate(personId, { $push: { travelImage } }, { new: true })
-      .exec();
+    try {
+      const travelImage = { url: imageUrl, createdAt: new Date() };
+      return this.personModel
+        .findByIdAndUpdate(personId, { $push: { travelImage } }, { new: true })
+        .exec();
+    } catch (error) {
+      console.error('Error updating person travel images:', error);
+      throw new Error('Error updating person travel images');
+    }
   }
 }
