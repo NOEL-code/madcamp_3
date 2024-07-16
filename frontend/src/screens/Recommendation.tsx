@@ -231,16 +231,18 @@ const styles = StyleSheet.create({
     borderRadius: 17,
   },
   scheduleText: {
-    marginLeft: 20,
+    marginLeft: 12,
   },
   title: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 25,
     color: '#142148',
     textAlign: 'center',
+    marginRight: 20,
   },
   subtitle: {
-    fontFamily: 'HS_SummerWaterLight',
+    fontFamily:'MapoBackpacking',
+    marginRight:20,
     fontSize: 16,
     textAlign: 'center',
   },
@@ -289,33 +291,31 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   dayText: {
+    fontFamily: 'MapoBackpacking',
     color: '#061549',
   },
   activeDayText: {
+    fontFamily: 'MapoBackpacking',
     color: '#fff',
   },
   horizontalLine: {
     borderBottomColor: '#061549',
     borderBottomWidth: 2,
-    marginTop: 15,
+    marginTop: 10,
   },
   itineraryDetails: {
-    paddingTop: 20,
+    paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 50,
   },
   dayTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'MapoBackpacking',
+    fontSize: 20,
     marginBottom: 5,
     color: '#061549',
   },
-  concept: {
-    fontStyle: 'italic',
-    color: '#061549',
-    marginBottom: 10,
-  },
   scheduleDays: {
+    fontFamily: 'MapoBackpacking',
     color: '#061549',
   },
   activity: {
@@ -346,8 +346,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   closeButtonText: {
+    fontFamily: 'HS_SummerWaterLight',
     color: '#fff',
-    fontSize: 18,
+    paddingTop:5,
+    fontSize: 15,
   },
   errorText: {
     color: 'red',
