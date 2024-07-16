@@ -118,6 +118,7 @@ const Memory = ({route, navigation}) => {
               <Text style={styles.name}>미분류</Text>
             </TouchableOpacity>
           </View>
+          
           <ScrollView contentContainerStyle={styles.photosContainer}>
             {selectedPerson ? (
               <View style={styles.photosSection}>
@@ -221,13 +222,17 @@ const styles = StyleSheet.create({
   },
   sidebar: {
     width: 80,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    height: 540,
+    backgroundColor: 'rgba(196,196,196,0.3)',
     alignItems: 'center',
     paddingVertical: 20,
+    marginLeft: 15,
+    borderRadius: 15,
+    marginBottom: 15,
   },
   profile: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom:20,
   },
   profileIcon: {
     width: 50,
@@ -240,19 +245,25 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#fff',
     textAlign: 'center',
+    marginTop: 5,
   },
   photosContainer: {
-    padding: 10,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    width: 240,
+    height: 540,
+    backgroundColor: 'rgba(196,196,196,0.3)',
+    alignItems: 'center',
+
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginLeft: 10,
+    borderRadius: 15,
+    marginBottom: 15,
   },
   photosSection: {
     width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginVertical: 10,
+    justifyContent: 'flex-start',
   },
   pic: {
     width: 100,
