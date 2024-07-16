@@ -1,35 +1,36 @@
 import {
-  Body,
   Controller,
   Post,
+  Body,
   UploadedFiles,
   UseInterceptors,
-  Delete,
-  Param,
-  Get,
+  BadRequestException,
   InternalServerErrorException,
+  Get,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { CreateTravelDto } from './dto/create-travel.dto';
 import { TravelService } from './travel.service';
 import { multerOptions } from '../../upload.config';
-import { PersonService } from '../person/person.service';
 import { Types } from 'mongoose';
 
 @Controller('api/travel')
 export class TravelController {
-  constructor(
-    private readonly travelService: TravelService,
-    private readonly personService: PersonService
-  ) {}
+  constructor(private readonly travelService: TravelService) {}
 
   @Post('create')
-  @UseInterceptors(FilesInterceptor('people', 10, multerOptions))
+  @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
   async createTravel(
     @Body() createTravelDto: CreateTravelDto,
     @UploadedFiles() files: any[]
   ) {
     try {
+      if (!files || files.length === 0) {
+        throw new BadRequestException('No files uploaded');
+      }
+
       const createdTravel = await this.travelService.create(
         createTravelDto,
         files
@@ -49,10 +50,5 @@ export class TravelController {
   @Delete(':travelId')
   async deleteTravel(@Param('travelId') travelId: Types.ObjectId) {
     return await this.travelService.deleteTravel(travelId);
-  }
-
-  @Get()
-  async getTravels() {
-    return await this.travelService.getTravels();
   }
 }

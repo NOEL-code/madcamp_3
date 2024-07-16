@@ -35,7 +35,7 @@ export class CreatePersonDto {
   @IsString()
   profileImage: string;
 
-  travelId?: Types.ObjectId;
+  travelId?: string; // ObjectId 대신 문자열로 정의
 }
 
 export class CreateTravelDto {
