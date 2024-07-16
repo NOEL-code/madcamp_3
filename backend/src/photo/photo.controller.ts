@@ -60,7 +60,7 @@ export class PhotoController {
         );
 
         if (isVerified) {
-          await this.personService.updatePersonTravelImages(
+          await this.travelService.updatePersonTravelImages(
             person._id,
             imageUrl
           );
@@ -68,7 +68,6 @@ export class PhotoController {
         }
       }
 
-      // If no matching person is found, save to NoMatchPhoto
       await this.photoService.saveNoMatchPhoto(
         createPhotoDto.travelId,
         imageUrl

@@ -43,7 +43,7 @@ const Planned = ({route, navigation}) => {
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <TouchableOpacity style={styles.backButton} onPress={goBack}>
+            <TouchableOpacity style={styles.backButton} onPress={goCollection}>
               <Image source={backIcon} style={styles.icon} />
             </TouchableOpacity>
             <Text style={styles.screenTitle}>Planned</Text>

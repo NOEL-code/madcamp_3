@@ -22,7 +22,14 @@ export class TravelService {
 
     const prompt = this.createGptPrompt(createdTravel);
     const gptResponse = await this.gptService.generateText(prompt);
-    createdTravel.gptResponse = JSON.parse(gptResponse);
+
+    // Ensure gptResponse is properly parsed
+    try {
+      createdTravel.gptResponse = JSON.parse(gptResponse);
+    } catch (error) {
+      console.error('Error parsing gptResponse:', error, gptResponse);
+      throw new Error('Failed to parse GPT response');
+    }
 
     return createdTravel.save();
   }
@@ -38,14 +45,14 @@ export class TravelService {
     "dailyPlans": [
       {
         "day": 1,
-        "title": "Relaxation and Nature Immersion"
+        "title": "Relaxation and Nature Immersion",
         "morning": "Visit the famous Copacabana Beach for a peaceful walk along the shore.",
         "afternoon": "Explore the lush Tijuca National Park and take a refreshing dip in a waterfall.",
         "evening": "Enjoy a relaxing sunset yoga session on Ipanema Beach."
       },
       {
         "day": 2,
-        "title" : "Cultural Exploration and Spiritual Renewal"
+        "title" : "Cultural Exploration and Spiritual Renewal",
         "morning": "Explore the historic city center of Salvador, Bahia, visiting Pelourinho to admire colorful architecture.",
         "afternoon": "Visit the São Francisco Church and Convent of Salvador, known for its intricate golden interior",
         "evening": "Attend a traditional capoeira show to appreciate the rhythmic martial art and cultural significance of Brazil."
@@ -92,5 +99,18 @@ export class TravelService {
       console.error('Error decrementing remainPhotoCount:', error);
       return false;
     }
+  }
+
+  async updatePersonTravelImages(
+    personId: Types.ObjectId,
+    imageUrl: string
+  ): Promise<PersonDocument> {
+    return this.personModel
+      .findByIdAndUpdate(
+        personId,
+        { $push: { travelImage: imageUrl } },
+        { new: true }
+      )
+      .exec();
   }
 }
