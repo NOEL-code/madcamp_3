@@ -19,7 +19,8 @@ import heartIcon from '../assets/images/heart-icon.png'; // Ensure this path is 
 import axios from 'axios';
 
 const Collection = ({navigation}) => {
-  const [travelData, setTravelData] = useState([]);
+  const [expiredTravelData, setExpiredTravelData] = useState([]);
+  const [ongoingTravelData, setOngoingTravelData] = useState([]);
 
   const goBack = () => {
     if (navigation) {
@@ -55,7 +56,14 @@ const Collection = ({navigation}) => {
           'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel',
         );
         console.log(response.data);
-        setTravelData(response.data);
+
+        const expired = response.data.filter(
+          trip => trip.remainPhotoCount === 0,
+        );
+        const ongoing = response.data.filter(trip => trip.remainPhotoCount > 0);
+
+        setExpiredTravelData(expired);
+        setOngoingTravelData(ongoing);
       } catch (err) {
         console.error(err);
       }
@@ -64,7 +72,7 @@ const Collection = ({navigation}) => {
   }, []);
 
   const renderPlannedTrips = () => {
-    return travelData.map((trip, index) => (
+    return ongoingTravelData.map((trip, index) => (
       <View key={index} style={styles.tripBox}>
         <View style={styles.tripInfo}>
           <View style={styles.tripActions}>
@@ -89,7 +97,7 @@ const Collection = ({navigation}) => {
   };
 
   const renderHistoryTrips = () => {
-    return travelData.map((trip, index) => (
+    return expiredTravelData.map((trip, index) => (
       <View key={index} style={styles.historyBox}>
         <View style={styles.historyInfo}>
           <Text style={styles.historyTitle}>{trip.country}</Text>
