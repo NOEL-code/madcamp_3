@@ -69,6 +69,8 @@ export class CreateTravelDto {
   @IsString()
   country: string;
 
+  remainPhotoCount: number;
+
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => LocationDto)

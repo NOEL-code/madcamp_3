@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="WebView">
+      <Stack.Navigator initialRouteName="Camera">
         <Stack.Screen
           name="WebView"
           component={WebViewScreen}
