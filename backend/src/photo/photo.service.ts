@@ -37,6 +37,10 @@ export class PhotoService {
     travelImage: string
   ): Promise<NoMatchPhoto> {
     const noMatchPhoto = new this.noMatchPhotoModel({ travelId, travelImage });
-    return noMatchPhoto.save();
+    return noMatchPhoto.save(); // createdAt will be automatically set by Mongoose
+  }
+
+  async findNoMatchPhotosByTravelId(travelId: string): Promise<NoMatchPhoto[]> {
+    return this.noMatchPhotoModel.find({ travelId }).exec();
   }
 }

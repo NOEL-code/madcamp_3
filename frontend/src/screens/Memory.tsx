@@ -1,26 +1,40 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
   TouchableOpacity,
-  ImageBackground,
   ScrollView,
+  ImageBackground,
   Modal,
 } from 'react-native';
-import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
+import axios from 'axios';
+import Icon from '../assets/images/back-arrow-icon.png';
 import profileIcon from '../assets/images/profile-icon.png';
 import backGroundImage from '../assets/images/background.png';
-import me0 from '../assets/images/me0.jpg';
-import me1 from '../assets/images/me1.jpg';
-import me2 from '../assets/images/me2.jpg';
-import me3 from '../assets/images/me3.jpg';
 
-const Memory = ({navigation}) => {
-  // Add navigation prop if using react-navigation
+const Memory = ({route, navigation}) => {
+  const {trip} = route.params;
+  const {travelId, country, people} = trip;
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [uncategorizedPhotos, setUncategorizedPhotos] = useState([]);
+
+  useEffect(() => {
+    fetchNoMatchPhotos();
+  }, []);
+
+  const fetchNoMatchPhotos = async () => {
+    try {
+      const response = await axios.get(
+        `http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/photo/nomatch/${travelId}`,
+      );
+      setUncategorizedPhotos(response.data);
+    } catch (error) {
+      console.error('Error fetching no match photos: ', error);
+    }
+  };
 
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen);
@@ -28,12 +42,8 @@ const Memory = ({navigation}) => {
 
   const goBack = () => {
     if (navigation) {
-      navigation.navigate('Collection'); // Navigate back if navigation is available
+      navigation.navigate('Collection');
     }
-  };
-
-  const showPics = {
-    //사람을 클릭하면 그 사람과 관련된 사진을 보여주는 함수.
   };
 
   const openImage = image => {
@@ -46,71 +56,61 @@ const Memory = ({navigation}) => {
     setIsFullScreen(false);
   };
 
+  const formatDate = dateString => {
+    const options = {year: 'numeric', month: 'long', day: 'numeric'};
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <View style={styles.mainContainer}>
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity style={styles.backButton} onPress={goBack}>
-              <Image source={Icon} style={styles.icon} />
-            </TouchableOpacity>
-            <View style={styles.introduction}>
-              <Text style={styles.screenTitle}>Singapore</Text>
-              <Text style={styles.dateTitle}>24.01.10~24.01.13</Text>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={goBack}>
+            <Image source={Icon} style={styles.icon} />
+          </TouchableOpacity>
+          <View style={styles.introduction}>
+            <Text style={styles.screenTitle}>{country}</Text>
+            <Text style={styles.dateTitle}>24.01.10~24.01.13</Text>
+          </View>
+        </View>
+        <View style={styles.body}>
+          <View style={styles.sidebar}>
+            {people.map(person => (
+              <View key={person._id} style={styles.profile}>
+                <Image
+                  source={{uri: person.profileImage}}
+                  style={styles.profileIcon}
+                />
+                <Text style={styles.name}>{person.name}</Text>
+              </View>
+            ))}
+            <View style={styles.profile}>
+              <Image source={profileIcon} style={styles.profileIcon} />
+              <Text style={styles.name}>미분류</Text>
             </View>
           </View>
-          <View style={styles.body}>
-            <View style={styles.profiles}>
-              <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={showPics}>
-                  <Image source={profileIcon} style={styles.actionIcon} />
-                  <Text style={styles.name}>싱송</Text>
-                </TouchableOpacity>
+          <ScrollView contentContainerStyle={styles.photosContainer}>
+            {people.map(person => (
+              <View key={person._id} style={styles.photosSection}>
+                {person.travelImage.map((photo, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => openImage({uri: photo})}>
+                    <Image source={{uri: photo}} style={styles.pic} />
+                  </TouchableOpacity>
+                ))}
               </View>
-              <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={showPics}>
-                  <Image source={profileIcon} style={styles.actionIcon} />
-                  <Text style={styles.name}>슝슝</Text>
+            ))}
+            <View style={styles.photosSection}>
+              {uncategorizedPhotos.map((photo, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => openImage({uri: photo.travelImage})}>
+                  <Image source={{uri: photo.travelImage}} style={styles.pic} />
                 </TouchableOpacity>
-              </View>
-              <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={showPics}>
-                  <Image source={profileIcon} style={styles.actionIcon} />
-                  <Text style={styles.name}>솬솬</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={showPics}>
-                  <Image source={profileIcon} style={styles.actionIcon} />
-                  <Text style={styles.name}>졍졍</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.profile}>
-                <TouchableOpacity style={styles.backButton} onPress={showPics}>
-                  <Image source={profileIcon} style={styles.actionIcon} />
-                  <Text style={styles.name}>미분류</Text>
-                </TouchableOpacity>
-              </View>
+              ))}
             </View>
-            <View style={styles.pictures}>
-              <View style={styles.pictureRow}>
-                <TouchableOpacity onPress={() => openImage(me0)}>
-                  <Image source={me0} style={styles.pic} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => openImage(me1)}>
-                  <Image source={me1} style={styles.pic} />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.pictureRow}>
-                <TouchableOpacity onPress={() => openImage(me2)}>
-                  <Image source={me2} style={styles.pic} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => openImage(me3)}>
-                  <Image source={me3} style={styles.pic} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
+          </ScrollView>
         </View>
       </ImageBackground>
 
@@ -126,15 +126,13 @@ const Memory = ({navigation}) => {
           )}
         </View>
       </Modal>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    marginBottom: 40,
-    padding: 20,
   },
   backgroundImage: {
     flex: 1,
@@ -143,7 +141,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    padding: 15,
   },
   backButton: {
     padding: 10,
@@ -152,74 +150,69 @@ const styles = StyleSheet.create({
   icon: {
     width: 40,
     height: 40,
-    tintColor: '#fff', // Optional: Change the icon color
+    tintColor: '#fff',
   },
   screenTitle: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 30,
-    marginTop: 10,
-    marginLeft: 45,
     color: '#fff',
     textAlign: 'center',
   },
   dateTitle: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 15,
-    marginLeft: 40,
     color: '#fff',
     textAlign: 'center',
   },
   introduction: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin:0,
+    flex: 1,
   },
-  profiles: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'space-evenly',
+  body: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  sidebar: {
+    width: 80,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    alignItems: 'center',
+    paddingVertical: 20,
   },
   profile: {
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    marginBottom: 20,
+  },
+  profileIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginBottom: 5,
   },
   name: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 15,
-    marginTop: 5,
     color: '#fff',
     textAlign: 'center',
   },
-  actionIcon: {
-    width: 50,
-    height: 50,
-  },
-  body: {
+  photosContainer: {
+    padding: 10,
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  photosSection: {
     width: '100%',
-    height: '100%',
-    alignItems: 'stretch',
-  },
-  pictures: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'rgba(196,196,196,0.3)',
-    borderRadius: 35,
-    marginVertical: 30,
-    padding: 20,
-  },
-  pictureRow: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginBottom: 5,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginVertical: 10,
   },
   pic: {
     width: 100,
     height: 100,
-    borderRadius: 15,
-    marginHorizontal: 10,
+    borderRadius: 10,
+    margin: 5,
     resizeMode: 'cover',
   },
   modalBackground: {

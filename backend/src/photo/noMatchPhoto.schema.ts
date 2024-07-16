@@ -1,13 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-@Schema()
+@Schema({ timestamps: true }) // This will automatically add createdAt and updatedAt fields
 export class NoMatchPhoto {
-  @Prop({ required: true, type: Types.ObjectId })
+  @Prop({ type: Types.ObjectId, required: true })
   travelId: Types.ObjectId;
 
   @Prop({ required: true })
   travelImage: string;
+
+  @Prop()
+  createdAt: Date; // This field will be automatically managed by Mongoose
 }
 
 export type NoMatchPhotoDocument = NoMatchPhoto & Document;

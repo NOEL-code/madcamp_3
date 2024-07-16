@@ -6,7 +6,7 @@ import SurveyScreen from './screens/Survey';
 import RecommendationScreen from './screens/Recommendation';
 import Collection from './screens/Collection';
 import Camera from './screens/Camera';
-import TripPlanner from './screens/TripPlanner';
+import Planned from './screens/Planned';
 import Memory from './screens/Memory';
 
 const Stack = createStackNavigator();
@@ -42,7 +42,7 @@ const App = () => {
         />
         <Stack.Screen
           name="Planned"
-          component={TripPlanner}
+          component={Planned}
           options={{headerShown: false}}
         />
         <Stack.Screen

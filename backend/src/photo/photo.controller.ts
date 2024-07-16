@@ -6,6 +6,8 @@ import {
   UseInterceptors,
   BadRequestException,
   InternalServerErrorException,
+  Param,
+  Get,
 } from '@nestjs/common';
 import { PersonService } from '../person/person.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -21,6 +23,13 @@ export class PhotoController {
     private readonly photoService: PhotoService,
     private readonly travelService: TravelService
   ) {}
+
+  @Get('/nomatch/:travelId')
+  async findNoMatchPhoto(@Param('travelId') travelId: string) {
+    const noMatchPhotos =
+      await this.photoService.findNoMatchPhotosByTravelId(travelId);
+    return noMatchPhotos;
+  }
 
   @Post('create')
   @UseInterceptors(FileInterceptor('image', multerOptions))

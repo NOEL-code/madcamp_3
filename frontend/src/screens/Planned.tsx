@@ -10,12 +10,16 @@ import {
   ScrollView,
 } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
+import retry from '../assets/images/undo.png';
 import backGroundImage from '../assets/images/background.png';
 import note from '../assets/images/note.png';
+import backIcon from '../assets/images/back-arrow-icon.png';
 
-const TripPlanner = ({navigation}) => {
-  // Add navigation prop if using react-navigation
+const Planned = ({route, navigation}) => {
+  const data = route.params.trip;
+
+  console.log('Data:', data);
+
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const toggleFullScreen = () => {
@@ -24,7 +28,13 @@ const TripPlanner = ({navigation}) => {
 
   const goBack = () => {
     if (navigation) {
-      navigation.goBack(); // Navigate back if navigation is available
+      navigation.navigate('WebView'); // Navigate back if navigation is available
+    }
+  };
+
+  const goCollection = () => {
+    if (navigation) {
+      navigation.navigate('Collection'); // Navigate back if navigation is available
     }
   };
 
@@ -34,9 +44,12 @@ const TripPlanner = ({navigation}) => {
         <View style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity style={styles.backButton} onPress={goBack}>
-              <Image source={Icon} style={styles.icon} />
+              <Image source={backIcon} style={styles.icon} />
             </TouchableOpacity>
             <Text style={styles.screenTitle}>Planned</Text>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={goCollection}></TouchableOpacity>
           </View>
           <View style={styles.scheduleContainer}>
             <View style={styles.schedule}>
@@ -47,47 +60,63 @@ const TripPlanner = ({navigation}) => {
                 style={styles.flag}
               />
               <View style={styles.scheduleText}>
-                <Text style={styles.title}>Brazil</Text>
-                <Text style={styles.subtitle}>4 Days in July,</Text>
-                <Text style={styles.subtitle}>4 People,</Text>
-                <Text style={styles.subtitle}>General budget,</Text>
-                <Text style={styles.subtitle}>Healing type</Text>
+                <Text style={styles.title}>{data?.country}</Text>
+                <Text style={styles.subtitle}>
+                  {data?.duration} Day{data?.duration > 1 ? 's' : ''} in{' '}
+                  {data?.month},
+                </Text>
+                <Text style={styles.subtitle}>
+                  {data?.totalPeople}{' '}
+                  {data?.totalPeople > 1 ? 'People' : 'Person'},
+                </Text>
+                <Text style={styles.subtitle}>{data?.budget} budget,</Text>
+                <Text style={styles.subtitle}>{data?.type} type</Text>
               </View>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.mapContainer}
-            onPress={toggleFullScreen}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: -23.5505,
-                longitude: -46.6333,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}>
-              <Marker
-                coordinate={{latitude: -23.5505, longitude: -46.6333}}
-                title={'São Paulo'}
-                description={'Arrival point'}
-              />
-            </MapView>
-          </TouchableOpacity>
+          {data?.location && (
+            <TouchableOpacity
+              style={styles.mapContainer}
+              onPress={toggleFullScreen}>
+              <MapView
+                style={styles.map}
+                initialRegion={{
+                  latitude: data.location.lat,
+                  longitude: data.location.lng,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}>
+                <Marker
+                  coordinate={{
+                    latitude: data.location.lat,
+                    longitude: data.location.lng,
+                  }}
+                  title={data.location.name}
+                  description={'Arrival point'}
+                />
+              </MapView>
+            </TouchableOpacity>
+          )}
           <Modal visible={isFullScreen} animationType="slide">
             <View style={styles.fullScreenContainer}>
               <MapView
                 style={styles.fullScreenMap}
                 initialRegion={{
-                  latitude: -23.5505,
-                  longitude: -46.6333,
+                  latitude: data?.location?.lat,
+                  longitude: data?.location?.lng,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 }}>
-                <Marker
-                  coordinate={{latitude: -23.5505, longitude: -46.6333}}
-                  title={'São Paulo'}
-                  description={'Arrival point'}
-                />
+                {data?.location && (
+                  <Marker
+                    coordinate={{
+                      latitude: data.location.lat,
+                      longitude: data.location.lng,
+                    }}
+                    title={data.location.name}
+                    description={'Arrival point'}
+                  />
+                )}
               </MapView>
               <TouchableOpacity
                 style={styles.closeButton}
@@ -98,52 +127,47 @@ const TripPlanner = ({navigation}) => {
           </Modal>
           <View style={styles.itinerary}>
             <Image source={note} style={styles.noteImage} />
-
             <View style={styles.daysContainer}>
-              {['Day 1', 'Day 2', 'Day 3', 'Day 4'].map((day, index) => (
+              {data?.gptResponse?.dailyPlans?.map((plan, index) => (
                 <TouchableOpacity
                   key={index}
                   style={index === 0 ? styles.activeDay : styles.day}>
                   <Text
                     style={index === 0 ? styles.activeDayText : styles.dayText}>
-                    {day}
+                    Day {plan.day}
                   </Text>
                 </TouchableOpacity>
               ))}
             </View>
             <View style={styles.horizontalLine} />
-            <View style={styles.itineraryDetails}>
-              <Text style={styles.dayTitle}>
-                Day 1: Arrival in Rio de Janeiro
-              </Text>
-              <View style={styles.activity}>
-                <Image
-                  source={require('../assets/images/morning.png')}
-                  style={styles.activityIcon}
-                />
-                <Text style={styles.scheduleDays}>
-                  Arrival at the airport followed by hotel check-in.
+            {data?.gptResponse?.dailyPlans?.map((plan, index) => (
+              <View key={index} style={styles.itineraryDetails}>
+                <Text style={styles.dayTitle}>
+                  Day {plan.day}: {plan.title}
                 </Text>
+                <View style={styles.activity}>
+                  <Image
+                    source={require('../assets/images/morning.png')}
+                    style={styles.activityIcon}
+                  />
+                  <Text style={styles.scheduleDays}>{plan.morning}</Text>
+                </View>
+                <View style={styles.activity}>
+                  <Image
+                    source={require('../assets/images/afternoon.png')}
+                    style={styles.activityIcon}
+                  />
+                  <Text style={styles.scheduleDays}>{plan.afternoon}</Text>
+                </View>
+                <View style={styles.activity}>
+                  <Image
+                    source={require('../assets/images/evening.png')}
+                    style={styles.activityIcon}
+                  />
+                  <Text style={styles.scheduleDays}>{plan.evening}</Text>
+                </View>
               </View>
-              <View style={styles.activity}>
-                <Image
-                  source={require('../assets/images/afternoon.png')}
-                  style={styles.activityIcon}
-                />
-                <Text style={styles.scheduleDays}>
-                  Visit Copacabana Beach and Ipanema Beach.
-                </Text>
-              </View>
-              <View style={styles.activity}>
-                <Image
-                  source={require('../assets/images/evening.png')}
-                  style={styles.activityIcon}
-                />
-                <Text style={styles.scheduleDays}>
-                  Enjoy local cuisine at Leftover Restaurant.
-                </Text>
-              </View>
-            </View>
+            ))}
           </View>
         </View>
       </ImageBackground>
@@ -164,28 +188,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    textAlign: 'center',
   },
   backButton: {
     padding: 10,
-    marginRight: 20,
   },
   icon: {
     width: 40,
-    height: 40,
+    height: 30,
     tintColor: '#fff', // Optional: Change the icon color
   },
   screenTitle: {
     fontFamily: 'HS_SummerWaterLight',
-    fontSize: 30,
-    paddingTop: 15,
-    marginLeft: 50,
+    fontSize: 25,
+    marginTop: 10,
+    marginLeft: 65,
+    marginRight: 10,
     color: '#fff',
     textAlign: 'center',
   },
   scheduleContainer: {
     position: 'relative', // Added for absolute positioning of noteImage
     borderRadius: 35,
-    marginVertical: 5,
+    marginVertical: 10,
     marginBottom: -30,
     zIndex: 1,
   },
@@ -203,16 +228,18 @@ const styles = StyleSheet.create({
     borderRadius: 17,
   },
   scheduleText: {
-    marginLeft: 17,
+    marginLeft: 12,
   },
   title: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 25,
     color: '#142148',
     textAlign: 'center',
+    marginRight: 20,
   },
   subtitle: {
     fontFamily: 'MapoBackpacking',
+    marginRight: 20,
     fontSize: 16,
     textAlign: 'center',
   },
@@ -280,9 +307,8 @@ const styles = StyleSheet.create({
   },
   dayTitle: {
     fontFamily: 'MapoBackpacking',
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 5,
-    textAlign: 'center',
     color: '#061549',
   },
   scheduleDays: {
@@ -318,10 +344,16 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontFamily: 'HS_SummerWaterLight',
-    paddingTop: 5,
     color: '#fff',
+    paddingTop: 5,
     fontSize: 15,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 
-export default TripPlanner;
+export default Planned;
