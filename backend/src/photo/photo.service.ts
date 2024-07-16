@@ -20,6 +20,7 @@ export class PhotoService {
       const response = await axios.post('http://192.249.29.3:5005/verify', {
         img1_path: profileImage,
         img2_path: travelImage,
+        enforce_detection: false,
       });
       console.log('DeepFace response:', response.data);
       return response.data.verified;
