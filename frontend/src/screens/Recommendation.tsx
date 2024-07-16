@@ -39,6 +39,12 @@ const RecommendationScreen = ({route, navigation}) => {
     }
   };
 
+  const goCollection = () => {
+    if (navigation) {
+      navigation.navigate('Collection'); // Navigate back if navigation is available
+    }
+  };
+
   return (
     <ScrollView>
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
@@ -48,7 +54,7 @@ const RecommendationScreen = ({route, navigation}) => {
               <Image source={retry} style={styles.icon} />
             </TouchableOpacity>
             <Text style={styles.screenTitle}>Planned</Text>
-            <TouchableOpacity style={styles.backButton} onPress={goBack}>
+            <TouchableOpacity style={styles.backButton} onPress={goCollection}>
               <Image source={calendar} style={styles.icon} />
             </TouchableOpacity>
           </View>
