@@ -94,7 +94,7 @@ const Memory = ({route, navigation}) => {
           </TouchableOpacity>
           <View style={styles.introduction}>
             <Text style={styles.screenTitle}>{country}</Text>
-            <Text style={styles.dateTitle}>24.01.10~24.01.13</Text>
+            {/* <Text style={styles.dateTitle}>24.01.10~24.01.13</Text> */}
           </View>
         </View>
         <View style={styles.body}>
@@ -118,7 +118,7 @@ const Memory = ({route, navigation}) => {
               <Text style={styles.name}>미분류</Text>
             </TouchableOpacity>
           </View>
-          
+
           <ScrollView contentContainerStyle={styles.photosContainer}>
             {selectedPerson ? (
               <View style={styles.photosSection}>
@@ -132,7 +132,7 @@ const Memory = ({route, navigation}) => {
               </View>
             ) : (
               <>
-                {categorizedPhotos.map(person => (
+                {/* {categorizedPhotos.map(person => (
                   <View key={person._id} style={styles.photosSection}>
                     {person.travelImage.map((photo, index) => (
                       <TouchableOpacity
@@ -142,7 +142,7 @@ const Memory = ({route, navigation}) => {
                       </TouchableOpacity>
                     ))}
                   </View>
-                ))}
+                ))} */}
                 <View style={styles.photosSection}>
                   {uncategorizedPhotos.map((photo, index) => (
                     <TouchableOpacity
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   },
   profile: {
     alignItems: 'center',
-    marginBottom:20,
+    marginBottom: 20,
   },
   profileIcon: {
     width: 50,

@@ -4,9 +4,6 @@ import { Document } from 'mongoose';
 @Schema()
 export class Location {
   @Prop({ required: true })
-  label: string;
-
-  @Prop({ required: true })
   name: string;
 
   @Prop({ required: true })

@@ -11,10 +11,6 @@ import { Types } from 'mongoose';
 class LocationDto {
   @IsNotEmpty()
   @IsString()
-  label: string;
-
-  @IsNotEmpty()
-  @IsString()
   name: string;
 
   @IsNotEmpty()
