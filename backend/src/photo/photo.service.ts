@@ -27,7 +27,7 @@ export class PhotoService {
         'Error verifying image:',
         error.response ? error.response.data : error.message
       );
-      throw error;
+      return false;
     }
   }
 
