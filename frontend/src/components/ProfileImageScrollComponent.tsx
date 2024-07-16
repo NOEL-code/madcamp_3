@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   profileName: {
+    fontFamily: 'MapoBackpacking',
     color: '#fff',
     textAlign: 'center',
   },

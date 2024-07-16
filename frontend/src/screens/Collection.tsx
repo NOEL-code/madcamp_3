@@ -147,13 +147,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 40,
-    height: 30,
+    height: 40,
     tintColor: '#fff', // Optional: Change the icon color
   },
   screenTitle: {
+    fontFamily: 'HS_SummerWaterLight',
     fontSize: 30,
+    marginTop: 15,
     marginLeft: 35,
-    fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
   },
@@ -165,16 +166,15 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   sectionTitle: {
+    fontFamily: 'HS_SummerWaterLight',
     fontSize: 20,
-    marginTop: 10,
-    fontWeight: 'bold',
     color: '#fff',
     marginLeft: 13,
   },
   tripBox: {
     backgroundColor: 'rgba(196,196,196,0.3)',
     borderRadius: 35,
-    marginVertical: 10,
+    marginVertical: 8,
     padding: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   heartIcon: {
-    width: 20, // Adjusted width
+    width: 25, // Adjusted width
     height: 20, // Adjusted height
     marginLeft: 5, // Adjusted margin
   },
