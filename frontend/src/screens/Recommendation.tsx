@@ -41,7 +41,7 @@ const RecommendationScreen = ({route, navigation}) => {
 
   const goCollection = () => {
     if (navigation) {
-      navigation.navigate('Collection');
+      navigation.navigate('Collection'); // Navigate back if navigation is available
     }
   };
 

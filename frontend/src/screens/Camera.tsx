@@ -9,8 +9,8 @@ import {
   ScrollView,
 } from 'react-native';
 
-import backGroundImage from './assets/images/b_camera.png';
-import cameraImg from './assets/images/cameraImg.png';
+import backGroundImage from '../assets/images/b_camera.png';
+import cameraImg from '../assets/images/cameraImg.png';
 
 const Camera = ({navigation}) => {
     // Add navigation prop if using react-navigation - 일단 몰라서 따라 쓰기

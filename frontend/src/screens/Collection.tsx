@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -16,12 +16,91 @@ import singaporeFlag from '../assets/images/singapore-flag.png'; // Ensure this 
 import cameraIcon from '../assets/images/camera-icon.png'; // Ensure this path is correct
 import penIcon from '../assets/images/pen-icon.png'; // Ensure this path is correct
 import heartIcon from '../assets/images/heart-icon.png'; // Ensure this path is correct
+import axios from 'axios';
 
 const Collection = ({navigation}) => {
+  const [travelData, setTravelData] = useState([]);
+
   const goBack = () => {
     if (navigation) {
       navigation.goBack(); // Navigate back if navigation is available
     }
+  };
+
+  const goCamera = (_id, remainPhotoCount) => { //여행 id랑 remain 우짜고를 prop으로 보내주면 됨.
+    if (navigation) {
+      console.log('촬영하러 고고');
+      // Navigate to Camera and pass response data (especially _id & remainphotocount)
+      navigation.navigate('Camera', {travelId: _id, count: remainPhotoCount});
+    }
+  };
+
+  const goPlanned = (_id) => {
+    if (navigation) {
+      console.log('계획 보러 고고');
+      // Navigate to TripPlanner and pass travelId
+      navigation.navigate('Planned', {travelId: _id});
+    }
+  };
+
+  const goMemory = (_id) => {
+    if (navigation) {
+      console.log('갤러리 보러 고고');
+      // Navigate to Memory and pass travelId
+      navigation.navigate('Memory', {travelId: _id});
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel',
+        );
+        console.log(response.data);
+        setTravelData(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const renderPlannedTrips = () => {
+    return travelData.map((trip, index) => (
+      <View key={index} style={styles.tripBox}>
+        <View style={styles.tripInfo}>
+          <View style={styles.tripActions}>
+            <Text style={styles.tripTitle}>{trip.country}</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.iconButton} onPress={goCamera(trip._id, trip.remainPhotoCount)}>
+                <Image source={cameraIcon} style={styles.actionIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton} onPress={goPlanned(trip._id)}>
+                <Image source={penIcon} style={styles.actionIcon} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Image source={brazilFlag} style={styles.flag} />
+        </View>
+      </View>
+    ));
+  };
+
+  const renderHistoryTrips = () => {
+    return travelData.map((trip, index) => (
+      <View key={index} style={styles.historyBox}>
+        <View style={styles.historyInfo}>
+          <Text style={styles.historyTitle}>{trip.country}</Text>
+          <Text style={styles.historyDate}>2024.01.10-2024.01.13</Text>
+          <TouchableOpacity style={styles.memoryButton} onPress={goMemory(trip._id)}>
+            <Text style={styles.memoryText}>Memory</Text>
+            <Image source={heartIcon} style={styles.heartIcon} />
+          </TouchableOpacity>
+        </View>
+        <Image source={brazilFlag} style={styles.flag} />
+      </View>
+    ));
   };
 
   return (
@@ -36,53 +115,11 @@ const Collection = ({navigation}) => {
           </View>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Planned</Text>
-            <View style={styles.tripBox}>
-              <View style={styles.tripInfo}>
-                <View style={styles.tripActions}>
-                  <Text style={styles.tripTitle}>Brazil</Text>
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.iconButton}>
-                      <Image source={cameraIcon} style={styles.actionIcon} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconButton}>
-                      <Image source={penIcon} style={styles.actionIcon} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <Image source={brazilFlag} style={styles.flag} />
-              </View>
-            </View>
-            <View style={styles.tripBox}>
-              <View style={styles.tripInfo}>
-                <View style={styles.tripActions}>
-                  <Text style={styles.tripTitle}>Australia</Text>
-                  <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.iconButton}>
-                      <Image source={cameraIcon} style={styles.actionIcon} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconButton}>
-                      <Image source={penIcon} style={styles.actionIcon} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <Image source={australiaFlag} style={styles.flag} />
-              </View>
-            </View>
+            {renderPlannedTrips()}
           </View>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>History</Text>
-            <View style={styles.historyBox}>
-              <View style={styles.historyInfo}>
-                <Text style={styles.historyTitle}>Singapore</Text>
-                <Text style={styles.historyDate}>2024.01.10-2024.01.13</Text>
-                <TouchableOpacity style={styles.memoryButton}>
-                  <Text style={styles.memoryText}>Memory</Text>
-                  <Image source={heartIcon} style={styles.heartIcon} />
-                </TouchableOpacity>
-              </View>
-
-              <Image source={singaporeFlag} style={styles.flag} />
-            </View>
+            {renderHistoryTrips()}
           </View>
         </View>
       </ImageBackground>
