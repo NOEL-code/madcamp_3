@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: 10,
-    marginRight: 20,
   },
   icon: {
     width: 40,
@@ -203,10 +202,11 @@ const styles = StyleSheet.create({
     tintColor: '#fff', // Optional: Change the icon color
   },
   screenTitle: {
-    fontSize: 30,
-    marginLeft: 40,
-    marginRight: 55,
-    fontWeight: 'bold',
+    fontFamily: 'HS_SummerWaterLight',
+    fontSize: 25,
+    marginTop:10,
+    marginLeft:15,
+    marginRight:10,
     color: '#fff',
     textAlign: 'center',
   },
@@ -234,12 +234,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   title: {
+    fontFamily: 'HS_SummerWaterLight',
     fontSize: 25,
-    fontWeight: 'bold',
     color: '#142148',
     textAlign: 'center',
   },
   subtitle: {
+    fontFamily: 'HS_SummerWaterLight',
     fontSize: 16,
     textAlign: 'center',
   },

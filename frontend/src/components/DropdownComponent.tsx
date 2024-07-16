@@ -56,10 +56,11 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   label: {
+    fontFamily: 'HS_SummerWaterLight',
     color: '#fff',
     marginLeft: 10,
-    marginRight: 50,
-    fontSize: 18,
+    marginRight: 40,
+    fontSize: 25,
   },
   picker: {
     flex: 1,
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   dropdownSelectedText: {
-    marginLeft: 20,
+    marginLeft: 15,
     color: '#fff',
     fontSize: 16,
   },

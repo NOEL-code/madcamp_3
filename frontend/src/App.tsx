@@ -6,13 +6,15 @@ import SurveyScreen from './screens/Survey';
 import RecommendationScreen from './screens/Recommendation';
 import Collection from './screens/Collection';
 import Camera from './screens/Camera';
+import TripPlanner from './screens/TripPlanner';
+import Memory from './screens/Memory';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Camera">
+      <Stack.Navigator initialRouteName="App">
         <Stack.Screen
           name="WebView"
           component={WebViewScreen}
@@ -36,6 +38,16 @@ const App = () => {
         <Stack.Screen
           name="Camera"
           component={Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Planned"
+          component={TripPlanner}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Memory"
+          component={Memory}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

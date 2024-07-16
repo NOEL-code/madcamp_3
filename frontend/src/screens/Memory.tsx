@@ -9,13 +9,13 @@ import {
   ScrollView,
   Modal,
 } from 'react-native';
-import Icon from './assets/images/back-arrow-icon.png'; // Ensure this path is correct
-import profileIcon from './assets/images/profile-icon.png';
-import backGroundImage from './assets/images/background.png';
-import me0 from './assets/images/me0.jpg';
-import me1 from './assets/images/me1.jpg';
-import me2 from './assets/images/me2.jpg';
-import me3 from './assets/images/me3.jpg';
+import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
+import profileIcon from '../assets/images/profile-icon.png';
+import backGroundImage from '../assets/images/background.png';
+import me0 from '../assets/images/me0.jpg';
+import me1 from '../assets/images/me1.jpg';
+import me2 from '../assets/images/me2.jpg';
+import me3 from '../assets/images/me3.jpg';
 
 const Memory = ({ navigation }) => {
   // Add navigation prop if using react-navigation

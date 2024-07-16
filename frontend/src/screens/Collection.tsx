@@ -27,6 +27,30 @@ const Collection = ({navigation}) => {
     }
   };
 
+  const goCamera = (_id, remainPhotoCount) => { //여행 id랑 remain 우짜고를 prop으로 보내주면 됨.
+    if (navigation) {
+      console.log('촬영하러 고고');
+      // Navigate to Camera and pass response data (especially _id & remainphotocount)
+      navigation.navigate('Camera', {travelId: _id, count: remainPhotoCount});
+    }
+  };
+
+  const goPlanned = (_id) => {
+    if (navigation) {
+      console.log('계획 보러 고고');
+      // Navigate to TripPlanner and pass travelId
+      navigation.navigate('Planned', {travelId: _id});
+    }
+  };
+
+  const goMemory = (_id) => {
+    if (navigation) {
+      console.log('갤러리 보러 고고');
+      // Navigate to Memory and pass travelId
+      navigation.navigate('Memory', {travelId: _id});
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,10 +73,10 @@ const Collection = ({navigation}) => {
           <View style={styles.tripActions}>
             <Text style={styles.tripTitle}>{trip.country}</Text>
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.iconButton}>
+              <TouchableOpacity style={styles.iconButton} onPress={goCamera(trip._id, trip.remainPhotoCount)}>
                 <Image source={cameraIcon} style={styles.actionIcon} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.iconButton}>
+              <TouchableOpacity style={styles.iconButton} onPress={goPlanned(trip._id)}>
                 <Image source={penIcon} style={styles.actionIcon} />
               </TouchableOpacity>
             </View>
@@ -69,7 +93,7 @@ const Collection = ({navigation}) => {
         <View style={styles.historyInfo}>
           <Text style={styles.historyTitle}>{trip.country}</Text>
           <Text style={styles.historyDate}>2024.01.10-2024.01.13</Text>
-          <TouchableOpacity style={styles.memoryButton}>
+          <TouchableOpacity style={styles.memoryButton} onPress={goMemory(trip._id)}>
             <Text style={styles.memoryText}>Memory</Text>
             <Image source={heartIcon} style={styles.heartIcon} />
           </TouchableOpacity>
