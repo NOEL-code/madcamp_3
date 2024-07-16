@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { NoMatchPhoto, NoMatchPhotoDocument } from './noMatchPhoto.shcema';
+import { NoMatchPhoto, NoMatchPhotoDocument } from './noMatchPhoto.schema';
 import axios from 'axios';
 
 @Injectable()

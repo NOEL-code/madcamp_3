@@ -11,12 +11,12 @@ import { GptModule } from 'src/gpt/gpt.module';
   imports: [
     MongooseModule.forFeature([{ name: Travel.name, schema: TravelSchema }]),
     MongooseModule.forFeature([{ name: Person.name, schema: PersonSchema }]),
-    forwardRef ( ()=> GptModule ),
+    forwardRef(() => GptModule),
   ],
   controllers: [TravelController],
   providers: [TravelService, PersonService],
-  //추가함
   exports: [
+    TravelService,
     MongooseModule.forFeature([{ name: Travel.name, schema: TravelSchema }]),
   ],
 })

@@ -3,11 +3,10 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 import { GptService } from './gpt.service';
 import { GptController } from './gpt.controller';
-//여기 추가
 import { TravelModule } from '../travel/travel.module';
 
 @Module({
-  imports: [HttpModule, ConfigModule, forwardRef( () => TravelModule) ],
+  imports: [HttpModule, ConfigModule, forwardRef(() => TravelModule)],
   providers: [GptService],
   controllers: [GptController],
   exports: [GptService],

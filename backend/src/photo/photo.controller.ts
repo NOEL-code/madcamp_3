@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { PersonService } from '../person/person.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from '../../upload.config'; // Ensure correct path
+import { multerOptions } from '../../upload.config';
 import { CreatePhotoDto } from './create-photo.dto';
 import { PhotoService } from './photo.service';
 import { TravelService } from '../travel/travel.service';
