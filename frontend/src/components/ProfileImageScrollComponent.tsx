@@ -38,7 +38,11 @@ const ProfileImageScrollComponent: React.FC<
             <TouchableOpacity onPress={() => selectImage(index)}>
               <Image
                 style={styles.profileImage}
-                source={person.imageUri ? { uri: person.imageUri } : require('../assets/images/add.png')} // Replace with actual profile images
+                source={
+                  person.imageUri
+                    ? {uri: person.imageUri}
+                    : require('../assets/images/add.png')
+                } // Replace with actual profile images
               />
             </TouchableOpacity>
             <TextInput

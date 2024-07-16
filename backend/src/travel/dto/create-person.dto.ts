@@ -1,12 +1,7 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreatePersonDto {
-  @IsNotEmpty()
-  @IsString()
+  travelId?: Types.ObjectId;
   name: string;
-  //
-  //
-  @IsNotEmpty()
-  @IsString()
   profileImage: string;
 }

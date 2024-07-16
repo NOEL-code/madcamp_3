@@ -15,21 +15,33 @@ export class TravelService {
     @InjectModel(Person.name) private personModel: Model<PersonDocument>
   ) {}
 
-  async create(createTravelDto: CreateTravelDto): Promise<TravelDocument> {
-    const createdTravel = new this.travelModel(createTravelDto);
-    console.log(createTravelDto);
+  async create(
+    createTravelDto: CreateTravelDto,
+    files: any[]
+  ): Promise<TravelDocument> {
+    const { people, ...otherDto } = createTravelDto;
+    const createdTravel = new this.travelModel(otherDto);
+    await createdTravel.save();
+
+    const personPromises = people.map(async (person, index) => {
+      const file = files.find(
+        (f) => f.fieldname === `people[${index}][profileImage]`
+      );
+      if (!file || !file.location) {
+        throw new Error(`Profile image for person ${index} is missing`);
+      }
+      person.profileImage = file.location;
+      person.travelId = new Types.ObjectId(createdTravel._id.toString()); // Ensure travelId is an ObjectId
+      return new this.personModel(person).save();
+    });
+
+    const persons = await Promise.all(personPromises);
+    createdTravel.people = persons.map((person) => person._id);
     await createdTravel.save();
 
     const prompt = this.createGptPrompt(createdTravel);
     const gptResponse = await this.gptService.generateText(prompt);
-
-    // Ensure gptResponse is properly parsed
-    try {
-      createdTravel.gptResponse = JSON.parse(gptResponse);
-    } catch (error) {
-      console.error('Error parsing gptResponse:', error, gptResponse);
-      throw new Error('Failed to parse GPT response');
-    }
+    createdTravel.gptResponse = JSON.parse(gptResponse);
 
     return createdTravel.save();
   }
@@ -105,10 +117,11 @@ export class TravelService {
     personId: Types.ObjectId,
     imageUrl: string
   ): Promise<PersonDocument> {
+    const travelImage = { url: imageUrl, createdAt: new Date() };
     return this.personModel
       .findByIdAndUpdate(
         personId,
-        { $push: { travelImage: imageUrl } },
+        { $push: { travelImage: travelImage } },
         { new: true }
       )
       .exec();

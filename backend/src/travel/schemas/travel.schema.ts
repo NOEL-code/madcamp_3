@@ -1,12 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Person, PersonSchema } from '../../person/person.schema';
-import { Location, LocationSchema } from './location.schema';
+import { Person } from '../../person/person.schema';
 
 @Schema()
 export class Travel {
-  _id: Types.ObjectId;
-
   @Prop({ required: true })
   month: string;
 
@@ -22,20 +19,25 @@ export class Travel {
   @Prop({ required: true })
   type: string;
 
-  @Prop({ type: [PersonSchema], default: [] }) // Embedded array of Person objects
-  people: Person[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Person' }] })
+  people: Types.ObjectId[];
 
   @Prop({ required: true })
   country: string;
 
-  @Prop({ type: LocationSchema, required: true }) // Use Location schema
-  location: Location;
+  @Prop({ required: true, type: Object })
+  location: {
+    label: string;
+    name: string;
+    lat: number;
+    lng: number;
+  };
 
   @Prop({ required: true })
   remainPhotoCount: number;
 
-  @Prop({ type: Object }) // gptResponse를 객체 타입으로 추가
-  gptResponse: Record<string, any>;
+  @Prop({ type: Object })
+  gptResponse: any;
 }
 
 export type TravelDocument = Travel & Document;

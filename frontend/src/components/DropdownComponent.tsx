@@ -35,7 +35,7 @@ const DropdownComponent: React.FC<DropdownComponentProps> = ({
         placeholderStyle={styles.dropdownPlaceholder}
         selectedTextStyle={styles.dropdownSelectedText}
         containerStyle={[styles.dropdownContainer, pickerStyle]}
-        itemContainerStyle={styles.dropdownItemContainer} // 추가된 부분
+        itemContainerStyle={styles.dropdownItemContainer}
         itemTextStyle={styles.dropdownItemText}
       />
     </View>
@@ -118,9 +118,8 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   icon: {
-    width:30,
-    height:30,
-
+    width: 30,
+    height: 30,
   },
 });
 

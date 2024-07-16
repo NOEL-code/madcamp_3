@@ -64,19 +64,20 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
     formData.append('budget', budget);
     formData.append('type', type);
     formData.append('country', country);
-    formData.append('remainPhotoCount', 10);
+    formData.append('remainPhotoCount', '10');
     formData.append('location', JSON.stringify(location));
 
     profiles.forEach((profile, index) => {
       formData.append(`people[${index}][name]`, profile.name);
-      formData.append(`images`, {
+      formData.append(`people[${index}][profileImage]`, {
         uri: profile.imageUri,
         type: 'image/jpeg',
         name: `profile-${index}.jpg`,
       });
     });
 
-    console.log('post 시작');
+    console.log('FormData:', formData);
+
     try {
       const response = await axios.post(
         'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel/create',
@@ -164,6 +165,7 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
                 const newPeopleCount = parseInt(item.value);
                 setPeopleCount(newPeopleCount);
               }}
+              containerStyle={[styles.pickerContainer, styles.shadow]} // Added containerStyle here
               pickerStyle={styles.pickerStyle}
               imageIcon={peopleIcon}
             />
@@ -238,7 +240,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
   },
-
   shadow: {
     shadowOffset: {width: 0, height: 5},
     shadowOpacity: 0.5,
