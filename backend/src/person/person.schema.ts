@@ -14,7 +14,7 @@ export const TravelImageSchema = SchemaFactory.createForClass(TravelImage);
 
 @Schema()
 export class Person {
-  _id: Types.ObjectId; // _id 속성 추가
+  _id: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, required: true })
   travelId: Types.ObjectId;

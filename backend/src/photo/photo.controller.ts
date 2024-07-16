@@ -60,7 +60,7 @@ export class PhotoController {
         );
 
         if (isVerified) {
-          await this.travelService.updatePersonTravelImages(
+          await this.personService.updatePersonTravelImages(
             person._id,
             imageUrl
           );

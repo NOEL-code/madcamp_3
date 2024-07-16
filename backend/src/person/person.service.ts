@@ -29,7 +29,7 @@ export class PersonService {
       return this.personModel
         .findByIdAndUpdate(
           personId,
-          { $push: { travelImage: travelImage } }, // Ensure travelImage is an object
+          { $push: { travelImage: travelImage } },
           { new: true }
         )
         .exec();
