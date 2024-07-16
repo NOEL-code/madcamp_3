@@ -161,7 +161,7 @@ const RecommendationScreen = ({route, navigation}) => {
                     source={require('../assets/images/afternoon.png')}
                     style={styles.activityIcon}
                   />
-                  <Text style={yles.scheduleDays}>{plan.afternoon}</Text>
+                  <Text style={styles.scheduleDays}>{plan.afternoon}</Text>
                 </View>
                 <View style={styles.activity}>
                   <Image
