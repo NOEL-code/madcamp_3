@@ -27,7 +27,11 @@ export class PersonService {
     try {
       const travelImage: TravelImage = { url: imageUrl, createdAt: new Date() };
       return this.personModel
-        .findByIdAndUpdate(personId, { $push: { travelImage } }, { new: true })
+        .findByIdAndUpdate(
+          personId,
+          { $push: { travelImage: travelImage } }, // Ensure travelImage is an object
+          { new: true }
+        )
         .exec();
     } catch (error) {
       console.error('Error updating person travel images:', error);
