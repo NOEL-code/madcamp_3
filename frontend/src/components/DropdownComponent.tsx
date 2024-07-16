@@ -24,7 +24,7 @@ const DropdownComponent: React.FC<DropdownComponentProps> = ({
   return (
     <View style={[styles.pickerContainer, containerStyle]}>
       <Text style={styles.label}>{label}</Text>
-      <Image source={imageIcon} />
+      <Image source={imageIcon} style={styles.icon} />
       <Dropdown
         data={data}
         labelField="label"
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HS_SummerWaterLight',
     color: '#fff',
     marginLeft: 10,
-    marginRight: 40,
+    marginRight: 25,
     fontSize: 25,
   },
   picker: {
@@ -85,6 +85,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   dropdownSelectedText: {
+    fontFamily: 'MapoBackpacking',
+    padding: 5,
     marginLeft: 15,
     color: '#fff',
     fontSize: 16,
@@ -108,12 +110,17 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   dropdownItemText: {
+    fontFamily: 'MapoBackpacking',
     color: '#fff',
-    fontWeight: '400',
     fontSize: 15,
   },
   placeholderStyle: {
     color: '#fff',
+  },
+  icon: {
+    width:30,
+    height:30,
+
   },
 });
 
