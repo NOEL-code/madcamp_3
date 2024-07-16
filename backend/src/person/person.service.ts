@@ -24,12 +24,9 @@ export class PersonService {
     personId: Types.ObjectId,
     imageUrl: string
   ): Promise<Person> {
+    const travelImage = { url: imageUrl, createdAt: new Date() };
     return this.personModel
-      .findByIdAndUpdate(
-        personId,
-        { $push: { travelImage: imageUrl } },
-        { new: true }
-      )
+      .findByIdAndUpdate(personId, { $push: { travelImage } }, { new: true })
       .exec();
   }
 }

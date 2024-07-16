@@ -16,23 +16,39 @@ import backGroundImage from '../assets/images/background.png';
 
 const Memory = ({route, navigation}) => {
   const {trip} = route.params;
-  const {travelId, country, people} = trip;
+  const {_id, country} = trip;
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [uncategorizedPhotos, setUncategorizedPhotos] = useState([]);
+  const [categorizedPhotos, setCategorizedPhotos] = useState([]);
+  const [selectedPerson, setSelectedPerson] = useState(null);
 
+  console.log(_id);
   useEffect(() => {
     fetchNoMatchPhotos();
+    fetchTravelPhotos();
   }, []);
 
   const fetchNoMatchPhotos = async () => {
     try {
       const response = await axios.get(
-        `http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/photo/nomatch/${travelId}`,
+        `http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/photo/nomatch/${_id}`,
       );
       setUncategorizedPhotos(response.data);
     } catch (error) {
       console.error('Error fetching no match photos: ', error);
+    }
+  };
+
+  const fetchTravelPhotos = async () => {
+    try {
+      const response = await axios.get(
+        `http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/person/images/${_id}`,
+      );
+      console.log(response.data); // Log the response data to inspect it
+      setCategorizedPhotos(response.data);
+    } catch (error) {
+      console.error('Error fetching travel photos: ', error);
     }
   };
 
@@ -61,6 +77,14 @@ const Memory = ({route, navigation}) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const handleProfileClick = person => {
+    if (selectedPerson && selectedPerson._id === person._id) {
+      setSelectedPerson(null); // Deselect if the same person is clicked again
+    } else {
+      setSelectedPerson(person);
+    }
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
@@ -75,41 +99,63 @@ const Memory = ({route, navigation}) => {
         </View>
         <View style={styles.body}>
           <View style={styles.sidebar}>
-            {people.map(person => (
-              <View key={person._id} style={styles.profile}>
+            {categorizedPhotos.map(person => (
+              <TouchableOpacity
+                key={person._id}
+                onPress={() => handleProfileClick(person)}
+                style={styles.profile}>
                 <Image
                   source={{uri: person.profileImage}}
                   style={styles.profileIcon}
                 />
                 <Text style={styles.name}>{person.name}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
-            <View style={styles.profile}>
+            <TouchableOpacity
+              onPress={() => setSelectedPerson(null)}
+              style={styles.profile}>
               <Image source={profileIcon} style={styles.profileIcon} />
               <Text style={styles.name}>미분류</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <ScrollView contentContainerStyle={styles.photosContainer}>
-            {people.map(person => (
-              <View key={person._id} style={styles.photosSection}>
-                {person.travelImage.map((photo, index) => (
+            {selectedPerson ? (
+              <View style={styles.photosSection}>
+                {selectedPerson.travelImage.map((photo, index) => (
                   <TouchableOpacity
                     key={index}
-                    onPress={() => openImage({uri: photo})}>
-                    <Image source={{uri: photo}} style={styles.pic} />
+                    onPress={() => openImage({uri: photo.url})}>
+                    <Image source={{uri: photo.url}} style={styles.pic} />
                   </TouchableOpacity>
                 ))}
               </View>
-            ))}
-            <View style={styles.photosSection}>
-              {uncategorizedPhotos.map((photo, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => openImage({uri: photo.travelImage})}>
-                  <Image source={{uri: photo.travelImage}} style={styles.pic} />
-                </TouchableOpacity>
-              ))}
-            </View>
+            ) : (
+              <>
+                {categorizedPhotos.map(person => (
+                  <View key={person._id} style={styles.photosSection}>
+                    {person.travelImage.map((photo, index) => (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => openImage({uri: photo.url})}>
+                        <Image source={{uri: photo.url}} style={styles.pic} />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ))}
+                <View style={styles.photosSection}>
+                  {uncategorizedPhotos.map((photo, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => openImage({uri: photo.travelImage})}>
+                      <Image
+                        source={{uri: photo.travelImage}}
+                        style={styles.pic}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </>
+            )}
           </ScrollView>
         </View>
       </ImageBackground>

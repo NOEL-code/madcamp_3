@@ -97,6 +97,7 @@ const Collection = ({navigation}) => {
     ));
   };
 
+  console.log('ex[ired', expiredTravelData);
   const renderHistoryTrips = () => {
     return expiredTravelData.map((trip, index) => (
       <View key={index} style={styles.historyBox}>
