@@ -44,15 +44,6 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
     );
   }, [peopleCount]);
 
-  const handleUpdateProfile = (
-    index: number,
-    newProfile: {name: string; imageUri: string},
-  ) => {
-    const updatedProfiles = [...profiles];
-    updatedProfiles[index] = newProfile;
-    setProfiles(updatedProfiles);
-  };
-
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('month', month);
@@ -69,18 +60,16 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
 
     profiles.forEach((profile, index) => {
       formData.append(`people[${index}][name]`, profile.name);
-      formData.append(`people[${index}][profileImage]`, {
+      formData.append(`profileImage`, {
         uri: profile.imageUri,
         type: 'image/jpeg',
         name: `profile-${index}.jpg`,
       });
     });
 
-    console.log('FormData:', formData);
-
     try {
       const response = await axios.post(
-        'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel/create',
+        'http://192.249.29.3:3000/api/travel/create',
         formData,
         {
           headers: {
@@ -89,7 +78,6 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
         },
       );
       console.log('Travel created successfully:', response.data);
-      // Navigate to RecommendationScreen and pass response data
       navigation.navigate('Recommendation', {data: response.data});
     } catch (error) {
       if (error.response) {

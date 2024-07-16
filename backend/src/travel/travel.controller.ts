@@ -21,7 +21,7 @@ export class TravelController {
   constructor(private readonly travelService: TravelService) {}
 
   @Post('create')
-  @UseInterceptors(FilesInterceptor('images', 10, multerOptions))
+  @UseInterceptors(FilesInterceptor('profileImage', 10, multerOptions)) // 'profileImage'로 수정
   async createTravel(
     @Body() createTravelDto: CreateTravelDto,
     @UploadedFiles() files: any[]
