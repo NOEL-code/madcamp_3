@@ -28,6 +28,7 @@ type SurveyScreenProps = {
 
 const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
   const {country, location} = route.params;
+
   const [month, setMonth] = useState<string>('January');
   const [peopleCount, setPeopleCount] = useState<number>(4);
   const [duration, setDuration] = useState<string>('1 Day');
