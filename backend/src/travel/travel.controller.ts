@@ -43,7 +43,6 @@ export class TravelController {
       const createdTravel = await this.travelService.create({
         ...otherDto,
         location: parsedLocation,
-        remainPhotoCount: 3,
         people: [],
       });
 

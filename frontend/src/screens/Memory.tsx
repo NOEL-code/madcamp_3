@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,7 +17,7 @@ import me1 from '../assets/images/me1.jpg';
 import me2 from '../assets/images/me2.jpg';
 import me3 from '../assets/images/me3.jpg';
 
-const Memory = ({ navigation }) => {
+const Memory = ({navigation}) => {
   // Add navigation prop if using react-navigation
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -28,7 +28,7 @@ const Memory = ({ navigation }) => {
 
   const goBack = () => {
     if (navigation) {
-      navigation.goBack(); // Navigate back if navigation is available
+      navigation.navigate('Collection'); // Navigate back if navigation is available
     }
   };
 
@@ -36,7 +36,7 @@ const Memory = ({ navigation }) => {
     //사람을 클릭하면 그 사람과 관련된 사진을 보여주는 함수.
   };
 
-  const openImage = (image) => {
+  const openImage = image => {
     setSelectedImage(image);
     setIsFullScreen(true);
   };
@@ -47,7 +47,7 @@ const Memory = ({ navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
         <View style={styles.container}>
           <View style={styles.header}>
@@ -116,7 +116,9 @@ const Memory = ({ navigation }) => {
 
       <Modal visible={isFullScreen} transparent={true}>
         <View style={styles.modalBackground}>
-          <TouchableOpacity style={styles.modalCloseButton} onPress={closeImage}>
+          <TouchableOpacity
+            style={styles.modalCloseButton}
+            onPress={closeImage}>
             <Text style={styles.modalCloseText}>X</Text>
           </TouchableOpacity>
           {selectedImage && (

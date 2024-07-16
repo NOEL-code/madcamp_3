@@ -31,6 +31,9 @@ export class Travel {
   @Prop({ type: LocationSchema, required: true }) // Use Location schema
   location: Location;
 
+  @Prop({ required: true })
+  remainPhotoCount: number;
+
   @Prop({ type: Object }) // gptResponse를 객체 타입으로 추가
   gptResponse: Record<string, any>;
 }

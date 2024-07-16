@@ -64,6 +64,7 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
     formData.append('budget', budget);
     formData.append('type', type);
     formData.append('country', country);
+    formData.append('remainPhotoCount', 10);
     formData.append('location', JSON.stringify(location));
 
     profiles.forEach((profile, index) => {

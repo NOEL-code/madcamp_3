@@ -17,7 +17,7 @@ export class PhotoService {
   ): Promise<boolean> {
     try {
       console.log('인증 시작');
-      const response = await axios.post('http://192.168.236.183:5005/verify', {
+      const response = await axios.post('http://192.249.29.3:5005/verify', {
         img1_path: profileImage,
         img2_path: travelImage,
       });

@@ -17,6 +17,7 @@ export class TravelService {
 
   async create(createTravelDto: CreateTravelDto): Promise<TravelDocument> {
     const createdTravel = new this.travelModel(createTravelDto);
+    console.log(createTravelDto);
     await createdTravel.save();
 
     const prompt = this.createGptPrompt(createdTravel);

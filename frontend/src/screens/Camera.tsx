@@ -81,7 +81,7 @@ const Camera = ({route, navigation}) => {
 
           try {
             const serverResponse = await axios.post(
-              'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/photo/create',
+              'http://192.249.29.3:3000/api/photo/create',
               formData,
               {
                 headers: {
