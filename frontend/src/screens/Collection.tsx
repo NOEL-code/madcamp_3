@@ -103,7 +103,7 @@ const Collection = ({navigation}) => {
       <View key={index} style={styles.historyBox}>
         <View style={styles.historyInfo}>
           <Text style={styles.historyTitle}>{trip.country}</Text>
-          <Text style={styles.historyDate}>2024.01.10-2024.01.13</Text>
+          <Text style={styles.historyDate}>24.01.10 - 24.01.13</Text>
           <TouchableOpacity
             style={styles.memoryButton}
             onPress={() => goMemory(trip)}>
@@ -117,26 +117,28 @@ const Collection = ({navigation}) => {
   };
 
   return (
-    <ScrollView>
-      <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <TouchableOpacity style={styles.backButton} onPress={goBack}>
-              <Image source={Icon} style={styles.icon} />
-            </TouchableOpacity>
-            <Text style={styles.screenTitle}>Collection</Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Planned</Text>
-            {renderPlannedTrips()}
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>History</Text>
-            {renderHistoryTrips()}
-          </View>
+    <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={goBack}>
+            <Image source={Icon} style={styles.icon} />
+          </TouchableOpacity>
+          <Text style={styles.screenTitle}>Collection</Text>
         </View>
-      </ImageBackground>
-    </ScrollView>
+        <Text style={styles.plannedsecTitle}>Planned</Text>
+        <View style={styles.plansection}>
+          <ScrollView>
+            {renderPlannedTrips()}
+          </ScrollView>
+        </View>
+        <Text style={styles.historysecTitle}>History</Text>
+        <View style={styles.historysection}>
+          <ScrollView horizontal pagingEnabled>
+            {renderHistoryTrips()}
+          </ScrollView>
+        </View>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -171,17 +173,33 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-  section: {
-    marginTop: 10,
+  plansection: {
+    height: 320,
+    marginTop: 0,
     elevation: 10,
     shadowOpacity: 10,
     shadowColor: 'rgba(196,196,196,0.3)',
     shadowRadius: 10,
   },
-  sectionTitle: {
+  historysection: {
+    height: 170,
+    elevation: 10,
+    shadowOpacity: 10,
+    shadowColor: 'rgba(196,196,196,0.3)',
+    shadowRadius: 10,
+  },
+  plannedsecTitle: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 20,
     color: '#fff',
+    marginTop:5,
+    marginLeft: 13,
+  },
+  historysecTitle: {
+    fontFamily: 'HS_SummerWaterLight',
+    fontSize: 20,
+    color: '#fff',
+    marginTop: 10,
     marginLeft: 13,
   },
   tripBox: {
@@ -201,8 +219,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tripTitle: {
+    fontFamily: 'MapoBackpacking',
     fontSize: 24,
-    fontWeight: 'bold',
     color: '#fff',
     marginBottom: 10,
     marginLeft: 10,
@@ -225,10 +243,12 @@ const styles = StyleSheet.create({
     height: 50,
   },
   historyBox: {
+    width: 325,
     backgroundColor: 'rgba(255, 255, 255, 0.87)',
     borderRadius: 35,
     marginVertical: 10,
-    padding: 25,
+    marginHorizontal:2,
+    padding: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -238,24 +258,28 @@ const styles = StyleSheet.create({
   },
   historyTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'MapoBackpacking',
     color: '#344675',
+    marginLeft:5,
   },
   historyDate: {
-    marginTop: 4,
+    fontFamily: 'MapoBackpacking',
+    marginTop: 2,
+    marginBottom: 1,
     fontSize: 12,
     color: '#344675',
+    marginLeft: 6,
   },
   memoryButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(233,32,32,0.75)',
-    borderRadius: 16,
+    borderRadius: 12,
     padding: 7,
-    paddingTop: 10,
-    width: 110,
+    width: 116,
     height: 40,
-    marginTop: 7,
+    marginTop: 5,
+    marginLeft:2,
   },
   memoryText: {
     color: '#fff',
@@ -264,7 +288,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     width: 25, // Adjusted width
     height: 20, // Adjusted height
-    marginLeft: 5, // Adjusted margin
+    marginLeft: 6, // Adjusted margin
   },
 });
 
