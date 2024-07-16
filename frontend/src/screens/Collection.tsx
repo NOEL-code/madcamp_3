@@ -53,9 +53,7 @@ const Collection = ({navigation}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel',
-        );
+        const response = await axios.get('http://192.249.29.3:3000/api/travel');
         console.log(response.data);
 
         const expired = response.data.filter(
@@ -127,9 +125,7 @@ const Collection = ({navigation}) => {
         </View>
         <Text style={styles.plannedsecTitle}>Planned</Text>
         <View style={styles.plansection}>
-          <ScrollView>
-            {renderPlannedTrips()}
-          </ScrollView>
+          <ScrollView>{renderPlannedTrips()}</ScrollView>
         </View>
         <Text style={styles.historysecTitle}>History</Text>
         <View style={styles.historysection}>
@@ -192,7 +188,7 @@ const styles = StyleSheet.create({
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 20,
     color: '#fff',
-    marginTop:5,
+    marginTop: 5,
     marginLeft: 13,
   },
   historysecTitle: {
@@ -247,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.87)',
     borderRadius: 35,
     marginVertical: 10,
-    marginHorizontal:2,
+    marginHorizontal: 2,
     padding: 30,
     flexDirection: 'row',
     alignItems: 'center',
@@ -260,7 +256,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'MapoBackpacking',
     color: '#344675',
-    marginLeft:5,
+    marginLeft: 5,
   },
   historyDate: {
     fontFamily: 'MapoBackpacking',
@@ -279,7 +275,7 @@ const styles = StyleSheet.create({
     width: 116,
     height: 40,
     marginTop: 5,
-    marginLeft:2,
+    marginLeft: 2,
   },
   memoryText: {
     color: '#fff',

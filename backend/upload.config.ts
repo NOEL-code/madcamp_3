@@ -22,5 +22,5 @@ export const multerOptions = {
       cb(null, `${Date.now().toString()}-${file.originalname}`);
     },
   }),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB file size limit
+  limits: { fileSize: 5 * 1024 * 1024 * 3 }, // 5 MB file size limit
 };

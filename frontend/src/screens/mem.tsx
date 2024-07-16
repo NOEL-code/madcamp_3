@@ -53,9 +53,7 @@ const Collection = ({navigation}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel',
-        );
+        const response = await axios.get('http://192.249.29.3:3000/api/travel');
         console.log(response.data);
 
         const expired = response.data.filter(

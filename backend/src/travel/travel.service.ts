@@ -105,10 +105,16 @@ export class TravelService {
     personId: Types.ObjectId,
     imageUrl: string
   ): Promise<PersonDocument> {
+    console.log('구경 왔어요');
+    const newImage = {
+      url: imageUrl,
+      createdAt: new Date(),
+    };
+
     return this.personModel
       .findByIdAndUpdate(
         personId,
-        { $push: { travelImage: imageUrl } },
+        { $push: { travelImage: newImage } },
         { new: true }
       )
       .exec();

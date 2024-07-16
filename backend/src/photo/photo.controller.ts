@@ -60,6 +60,9 @@ export class PhotoController {
         );
 
         if (isVerified) {
+          console.log('여기서 오류임 ㅋ');
+          console.log(person._id, imageUrl);
+
           await this.travelService.updatePersonTravelImages(
             person._id,
             imageUrl

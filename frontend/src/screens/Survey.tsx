@@ -79,7 +79,7 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
     console.log('post 시작');
     try {
       const response = await axios.post(
-        'http://ec2-43-202-52-115.ap-northeast-2.compute.amazonaws.com:3000/api/travel/create',
+        'http://192.249.29.3:3000/api/travel/create',
         formData,
         {
           headers: {
