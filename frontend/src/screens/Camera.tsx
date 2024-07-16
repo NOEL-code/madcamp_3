@@ -19,7 +19,8 @@ import axios from 'axios';
 const Camera = ({route, navigation}) => {
   // const {data} = route.params;
   // const travelId = data._id;
-  const travelId = '6695fa5135f9194e98726388';
+  const travelId = '6695f8c935f9194e98726372';
+
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [remainPhotoCount, setRemainPhotoCount] = useState(
     // data.remainPhotoCount,

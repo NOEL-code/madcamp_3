@@ -44,6 +44,7 @@ export class PhotoController {
       );
 
       for (const person of persons) {
+        console.log('횟수');
         const isVerified = await this.photoService.verifyImage(
           person.profileImage,
           imageUrl
