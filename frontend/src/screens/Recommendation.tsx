@@ -35,7 +35,7 @@ const RecommendationScreen = ({route, navigation}) => {
 
   const goBack = () => {
     if (navigation) {
-      navigation.goBack(); // Navigate back if navigation is available
+      navigation.navigate('WebView'); // Navigate back if navigation is available
     }
   };
 
@@ -53,7 +53,7 @@ const RecommendationScreen = ({route, navigation}) => {
             <TouchableOpacity style={styles.backButton} onPress={goBack}>
               <Image source={retry} style={styles.icon} />
             </TouchableOpacity>
-            <Text style={styles.screenTitle}>Planned</Text>
+            <Text style={styles.screenTitle}>Recommendation</Text>
             <TouchableOpacity style={styles.backButton} onPress={goCollection}>
               <Image source={calendar} style={styles.icon} />
             </TouchableOpacity>
@@ -161,7 +161,7 @@ const RecommendationScreen = ({route, navigation}) => {
                     source={require('../assets/images/afternoon.png')}
                     style={styles.activityIcon}
                   />
-                  <Text style={styles.scheduleDays}>{plan.afternoon}</Text>
+                  <Text style={yles.scheduleDays}>{plan.afternoon}</Text>
                 </View>
                 <View style={styles.activity}>
                   <Image

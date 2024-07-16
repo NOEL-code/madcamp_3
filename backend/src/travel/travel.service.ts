@@ -72,4 +72,24 @@ export class TravelService {
   async getTravels(): Promise<TravelDocument[]> {
     return this.travelModel.find().exec();
   }
+
+  async decrementRemainPhotoCount(travelId: string): Promise<boolean> {
+    try {
+      const result = await this.travelModel.findOneAndUpdate(
+        { _id: travelId, remainPhotoCount: { $gt: 0 } }, // Ensure remainPhotoCount is greater than 0
+        { $inc: { remainPhotoCount: -1 } },
+        { new: true } // Return the updated document
+      );
+
+      // If result is null, the travelId doesn't exist or remainPhotoCount was 0
+      if (result) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Error decrementing remainPhotoCount:', error);
+      return false;
+    }
+  }
 }

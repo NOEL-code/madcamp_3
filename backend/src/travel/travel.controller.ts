@@ -9,7 +9,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { CreateTravelDto, CreatePersonDto } from './dto/create-travel.dto';
+import { CreatePersonDto } from './dto/create-travel.dto';
 import { TravelService } from './travel.service';
 import { multerOptions } from '../../upload.config';
 import { PersonService } from '../person/person.service';
@@ -43,6 +43,7 @@ export class TravelController {
       const createdTravel = await this.travelService.create({
         ...otherDto,
         location: parsedLocation,
+        remainPhotoCount: 3,
         people: [],
       });
 
