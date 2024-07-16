@@ -224,11 +224,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 24,
+    fontFamily: 'HS_SummerWaterLight',
+    fontSize: 30,
     color: '#fff',
-    fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 16,
+    marginTop: 8,
   },
   peopleContainer: {
     height: 200,
@@ -279,8 +279,9 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   submitButtonText: {
+    fontFamily: 'HS_SummerWaterLight',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
   },
 });
 

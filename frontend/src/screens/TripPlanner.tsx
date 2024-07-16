@@ -10,9 +10,9 @@ import {
   ScrollView,
 } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import Icon from './assets/images/back-arrow-icon.png'; // Ensure this path is correct
-import backGroundImage from './assets/images/background.png';
-import note from './assets/images/note.png';
+import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
+import backGroundImage from '../assets/images/background.png';
+import note from '../assets/images/note.png';
 
 const TripPlanner = ({navigation}) => {
   // Add navigation prop if using react-navigation
@@ -118,7 +118,7 @@ const TripPlanner = ({navigation}) => {
               </Text>
               <View style={styles.activity}>
                 <Image
-                  source={require('./assets/images/morning.png')}
+                  source={require('../assets/images/morning.png')}
                   style={styles.activityIcon}
                 />
                 <Text style={styles.scheduleDays}>
@@ -127,7 +127,7 @@ const TripPlanner = ({navigation}) => {
               </View>
               <View style={styles.activity}>
                 <Image
-                  source={require('./assets/images/afternoon.png')}
+                  source={require('../assets/images/afternoon.png')}
                   style={styles.activityIcon}
                 />
                 <Text style={styles.scheduleDays}>
@@ -136,7 +136,7 @@ const TripPlanner = ({navigation}) => {
               </View>
               <View style={styles.activity}>
                 <Image
-                  source={require('./assets/images/evening.png')}
+                  source={require('../assets/images/evening.png')}
                   style={styles.activityIcon}
                 />
                 <Text style={styles.scheduleDays}>
