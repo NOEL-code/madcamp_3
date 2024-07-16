@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,9 +6,10 @@ import {
   Animated,
   TouchableWithoutFeedback,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigationTypes';
 import brazil from '../assets/images/brazil-flag.png';
@@ -94,6 +95,17 @@ const WebViewScreen = () => {
     });
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      // Reset animation states when the screen gains focus
+      shakeAnim.setValue(0);
+      dartX.setValue(0);
+      dartY.setValue(0);
+      flagScale.setValue(0);
+      flagOpacity.setValue(0);
+    }, [shakeAnim, dartX, dartY, flagScale, flagOpacity]),
+  );
+
   return (
     <View style={styles.container}>
       <WebView
@@ -102,10 +114,16 @@ const WebViewScreen = () => {
         }}
         style={styles.webview}
       />
-      <Image
-        source={require('../assets/images/astronant.png')}
-        style={[styles.image, styles.astronaut]}
-      />
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Collection')}
+        style={styles.astronautContainer}>
+        <Image
+          source={require('../assets/images/astronant.png')}
+          style={styles.astronaut}
+        />
+      </TouchableOpacity>
+
       <TouchableWithoutFeedback onPress={startAnimation}>
         <Animated.View
           style={[
@@ -150,11 +168,16 @@ const styles = StyleSheet.create({
   image: {
     position: 'absolute',
   },
-  astronaut: {
-    width: 107,
-    height: 170,
+  astronautContainer: {
+    position: 'absolute',
     top: '71%',
     left: '65%',
+    width: 107,
+    height: 170,
+  },
+  astronaut: {
+    width: '100%',
+    height: '100%',
   },
   dart: {
     width: 60,
