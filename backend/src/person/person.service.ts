@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreatePersonDto } from '../travel/dto/create-person.dto';
-import { Person, PersonDocument } from './person.schema';
+import { Person, PersonDocument, TravelImage } from './person.schema';
 
 @Injectable()
 export class PersonService {
@@ -25,7 +25,7 @@ export class PersonService {
     imageUrl: string
   ): Promise<Person> {
     try {
-      const travelImage = { url: imageUrl, createdAt: new Date() };
+      const travelImage: TravelImage = { url: imageUrl, createdAt: new Date() };
       return this.personModel
         .findByIdAndUpdate(personId, { $push: { travelImage } }, { new: true })
         .exec();
