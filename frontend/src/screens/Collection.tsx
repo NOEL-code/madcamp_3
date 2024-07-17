@@ -157,21 +157,19 @@ const Collection = ({navigation}) => {
   console.log('expired', expiredTravelData);
   const renderHistoryTrips = () => {
     return expiredTravelData.map((trip, index) => (
-      <View key={index} style={styles.historyBox}>
-        <Pressable onLongPress={() => onLongPress(trip._id)}>
-          <View style={styles.historyInfo}>
-            <Text style={styles.historyTitle}>{trip.country}</Text>
-            <Text style={styles.historyDate}>24.01.10 - 24.01.13</Text>
-            <TouchableOpacity
-              style={styles.memoryButton}
-              onPress={() => goMemory(trip)}>
-              <Text style={styles.memoryText}>Memory</Text>
-              <Image source={heartIcon} style={styles.heartIcon} />
-            </TouchableOpacity>
-          </View>
-          <Image source={countryFlags[trip.country]} style={styles.flag} />
-        </Pressable>
-      </View>
+      <Pressable key={index} onLongPress={() => onLongPress(trip._id)} style={styles.historyBox}>
+        <View style={styles.historyInfo}>
+          <Text style={styles.historyTitle}>{trip.country}</Text>
+          <Text style={styles.historyDate}>24.01.10 - 24.01.13</Text>
+          <TouchableOpacity
+            style={styles.memoryButton}
+            onPress={() => goMemory(trip)}>
+            <Text style={styles.memoryText}>Memory</Text>
+            <Image source={heartIcon} style={styles.heartIcon} />
+          </TouchableOpacity>
+        </View>
+        <Image source={countryFlags[trip.country]} style={styles.flag} />
+      </Pressable>
     ));
   };
 
@@ -203,6 +201,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
+    paddingTop: 8,
   },
   backgroundImage: {
     flex: 1,
@@ -212,6 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginBottom:8,
   },
   backButton: {
     padding: 10,
