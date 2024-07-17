@@ -15,6 +15,29 @@ import calendar from '../assets/images/calendar_check.png';
 import backGroundImage from '../assets/images/background.png';
 import note from '../assets/images/note.png';
 
+const countryFlags = {
+  Brazil: require('../assets/images/brazil-flag.png'),
+  Australia: require('../assets/images/australia-flag.png'),
+  Japan: require('../assets/images/japan-flag.png'),
+  France: require('../assets/images/france-flag.png'),
+  Italy: require('../assets/images/italy-flag.jpg'), // jpg
+  Spain: require('../assets/images/spain-flag.jpg'), // jpg
+  Canada: require('../assets/images/canada-flag.png'),
+  Turkey: require('../assets/images/turkey-flag.png'),
+  Greece: require('../assets/images/greece-flag.png'),
+  Norway: require('../assets/images/norway-flag.jpg'), // jpg
+  Denmark: require('../assets/images/denmark-flag.jpg'), // jpg
+  Ireland: require('../assets/images/ireland-flag.png'),
+  Vietnam: require('../assets/images/vietnam-flag.jpg'), // jpg
+  Malaysia: require('../assets/images/malaysia-flag.png'),
+  Philippines: require('../assets/images/philippines-flag.jpg'), // jpg
+  Singapore: require('../assets/images/singapore-flag.png'),
+  Morocco: require('../assets/images/morocco-flag.png'),
+  Kenya: require('../assets/images/kenya-flag.jpg'), // jpg
+  Nigeria: require('../assets/images/nigeria-flag.png'),
+  Tanzania: require('../assets/images/tanzania-flag.png'),
+};
+
 const RecommendationScreen = ({route, navigation}) => {
   const {data} = route.params;
 
@@ -46,8 +69,6 @@ const RecommendationScreen = ({route, navigation}) => {
     }
   };
 
-
-
   return (
     <ScrollView>
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
@@ -63,12 +84,7 @@ const RecommendationScreen = ({route, navigation}) => {
           </View>
           <View style={styles.scheduleContainer}>
             <View style={styles.schedule}>
-              <Image
-                source={{
-                  uri: 'https://htmltest1.s3.ap-northeast-2.amazonaws.com/download.png',
-                }}
-                style={styles.flag}
-              />
+              <Image source={countryFlags[data.country]} style={styles.flag} />
               <View style={styles.scheduleText}>
                 <Text style={styles.title}>{data.country}</Text>
                 <Text style={styles.subtitle}>
@@ -142,44 +158,48 @@ const RecommendationScreen = ({route, navigation}) => {
                   style={index === activeDay ? styles.activeDay : styles.day}
                   onPress={() => setActiveDay(index)}>
                   <Text
-                    style={index === activeDay ? styles.activeDayText : styles.dayText}>
+                    style={
+                      index === activeDay
+                        ? styles.activeDayText
+                        : styles.dayText
+                    }>
                     Day {plan.day}
                   </Text>
-              </TouchableOpacity>
+                </TouchableOpacity>
               ))}
             </View>
             <View style={styles.horizontalLine} />
-            {data.gptResponse.dailyPlans.filter((_, index) => index === activeDay).map((plan, index) => (
-              <View key={index} style={styles.itineraryDetails}>
-                <Text style={styles.dayTitle}>
-                  Day {plan.day}: {plan.title}
-                </Text>
-                <View style={styles.activity}>
-                  <Image
-                    source={require('../assets/images/morning.png')}
-                    style={styles.activityIcon}
-                  />
-                  <Text style={styles.scheduleDays}>{plan.morning}</Text>
+            {data.gptResponse.dailyPlans
+              .filter((_, index) => index === activeDay)
+              .map((plan, index) => (
+                <View key={index} style={styles.itineraryDetails}>
+                  <Text style={styles.dayTitle}>
+                    Day {plan.day}: {plan.title}
+                  </Text>
+                  <View style={styles.activity}>
+                    <Image
+                      source={require('../assets/images/morning.png')}
+                      style={styles.activityIcon}
+                    />
+                    <Text style={styles.scheduleDays}>{plan.morning}</Text>
+                  </View>
+                  <View style={styles.activity}>
+                    <Image
+                      source={require('../assets/images/afternoon.png')}
+                      style={styles.activityIcon}
+                    />
+                    <Text style={styles.scheduleDays}>{plan.afternoon}</Text>
+                  </View>
+                  <View style={styles.activity}>
+                    <Image
+                      source={require('../assets/images/evening.png')}
+                      style={styles.activityIcon}
+                    />
+                    <Text style={styles.scheduleDays}>{plan.evening}</Text>
+                  </View>
                 </View>
-                <View style={styles.activity}>
-                  <Image
-                    source={require('../assets/images/afternoon.png')}
-                    style={styles.activityIcon}
-                  />
-                  <Text style={styles.scheduleDays}>{plan.afternoon}</Text>
-                </View>
-                <View style={styles.activity}>
-                  <Image
-                    source={require('../assets/images/evening.png')}
-                    style={styles.activityIcon}
-                  />
-                  <Text style={styles.scheduleDays}>{plan.evening}</Text>
-                </View>
-              </View>
-            ))}
-
+              ))}
           </View>
-
         </View>
       </ImageBackground>
     </ScrollView>
@@ -211,9 +231,9 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 25,
-    marginTop:10,
-    marginLeft:15,
-    marginRight:10,
+    marginTop: 10,
+    marginLeft: 15,
+    marginRight: 10,
     color: '#fff',
     textAlign: 'center',
   },
@@ -248,8 +268,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   subtitle: {
-    fontFamily:'MapoBackpacking',
-    marginRight:20,
+    fontFamily: 'MapoBackpacking',
+    marginRight: 20,
     fontSize: 16,
     textAlign: 'center',
   },
@@ -355,7 +375,7 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontFamily: 'HS_SummerWaterLight',
     color: '#fff',
-    paddingTop:5,
+    paddingTop: 5,
     fontSize: 15,
   },
   errorText: {

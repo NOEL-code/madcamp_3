@@ -15,6 +15,29 @@ import backGroundImage from '../assets/images/background.png';
 import note from '../assets/images/note.png';
 import backIcon from '../assets/images/back-arrow-icon.png';
 
+const countryFlags = {
+  Brazil: require('../assets/images/brazil-flag.png'),
+  Australia: require('../assets/images/australia-flag.png'),
+  Japan: require('../assets/images/japan-flag.png'),
+  France: require('../assets/images/france-flag.png'),
+  Italy: require('../assets/images/italy-flag.jpg'), // jpg
+  Spain: require('../assets/images/spain-flag.jpg'), // jpg
+  Canada: require('../assets/images/canada-flag.png'),
+  Turkey: require('../assets/images/turkey-flag.png'),
+  Greece: require('../assets/images/greece-flag.png'),
+  Norway: require('../assets/images/norway-flag.jpg'), // jpg
+  Denmark: require('../assets/images/denmark-flag.jpg'), // jpg
+  Ireland: require('../assets/images/ireland-flag.png'),
+  Vietnam: require('../assets/images/vietnam-flag.jpg'), // jpg
+  Malaysia: require('../assets/images/malaysia-flag.png'),
+  Philippines: require('../assets/images/philippines-flag.jpg'), // jpg
+  Singapore: require('../assets/images/singapore-flag.png'),
+  Morocco: require('../assets/images/morocco-flag.png'),
+  Kenya: require('../assets/images/kenya-flag.jpg'), // jpg
+  Nigeria: require('../assets/images/nigeria-flag.png'),
+  Tanzania: require('../assets/images/tanzania-flag.png'),
+};
+
 const Planned = ({route, navigation}) => {
   const data = route.params.trip;
 
@@ -53,12 +76,7 @@ const Planned = ({route, navigation}) => {
           </View>
           <View style={styles.scheduleContainer}>
             <View style={styles.schedule}>
-              <Image
-                source={{
-                  uri: 'https://htmltest1.s3.ap-northeast-2.amazonaws.com/download.png',
-                }}
-                style={styles.flag}
-              />
+              <Image source={countryFlags[data.country]} style={styles.flag} />
               <View style={styles.scheduleText}>
                 <Text style={styles.title}>{data?.country}</Text>
                 <Text style={styles.subtitle}>

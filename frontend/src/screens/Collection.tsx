@@ -12,13 +12,33 @@ import {
 } from 'react-native';
 import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
 import backGroundImage from '../assets/images/background-collection.png';
-import brazilFlag from '../assets/images/brazil-flag.png'; // Ensure this path is correct
-import australiaFlag from '../assets/images/australia-flag.png'; // Ensure this path is correct
-import singaporeFlag from '../assets/images/singapore-flag.png'; // Ensure this path is correct
 import cameraIcon from '../assets/images/camera-icon.png'; // Ensure this path is correct
 import penIcon from '../assets/images/pen-icon.png'; // Ensure this path is correct
 import heartIcon from '../assets/images/heart-icon.png'; // Ensure this path is correct
 import axios from 'axios';
+
+const countryFlags = {
+  Brazil: require('../assets/images/brazil-flag.png'),
+  Australia: require('../assets/images/australia-flag.png'),
+  Japan: require('../assets/images/japan-flag.png'),
+  France: require('../assets/images/france-flag.png'),
+  Italy: require('../assets/images/italy-flag.jpg'), // jpg
+  Spain: require('../assets/images/spain-flag.jpg'), // jpg
+  Canada: require('../assets/images/canada-flag.png'),
+  Turkey: require('../assets/images/turkey-flag.png'),
+  Greece: require('../assets/images/greece-flag.png'),
+  Norway: require('../assets/images/norway-flag.jpg'), // jpg
+  Denmark: require('../assets/images/denmark-flag.jpg'), // jpg
+  Ireland: require('../assets/images/ireland-flag.png'),
+  Vietnam: require('../assets/images/vietnam-flag.jpg'), // jpg
+  Malaysia: require('../assets/images/malaysia-flag.png'),
+  Philippines: require('../assets/images/philippines-flag.jpg'), // jpg
+  Singapore: require('../assets/images/singapore-flag.png'),
+  Morocco: require('../assets/images/morocco-flag.png'),
+  Kenya: require('../assets/images/kenya-flag.jpg'), // jpg
+  Nigeria: require('../assets/images/nigeria-flag.png'),
+  Tanzania: require('../assets/images/tanzania-flag.png'),
+};
 
 const Collection = ({navigation}) => {
   const [expiredTravelData, setExpiredTravelData] = useState([]);
@@ -127,7 +147,7 @@ const Collection = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <Image source={brazilFlag} style={styles.flag} />
+            <Image source={countryFlags[trip.country]} style={styles.flag} />
           </View>
         </Pressable>
       </View>
@@ -149,7 +169,7 @@ const Collection = ({navigation}) => {
               <Image source={heartIcon} style={styles.heartIcon} />
             </TouchableOpacity>
           </View>
-          <Image source={brazilFlag} style={styles.flag} />
+          <Image source={countryFlags[trip.country]} style={styles.flag} />
         </Pressable>
       </View>
     ));
