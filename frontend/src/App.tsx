@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import WebViewScreen from './screens/WebView';
@@ -8,10 +8,17 @@ import Collection from './screens/Collection';
 import Camera from './screens/Camera';
 import Planned from './screens/Planned';
 import Memory from './screens/Memory';
+import SplashScreen from "react-native-splash-screen";
 
 const Stack = createStackNavigator();
 
 const App = () => {
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000); //스플래시 활성화 시간
+  });
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="App">

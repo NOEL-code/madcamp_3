@@ -44,6 +44,7 @@ const Planned = ({route, navigation}) => {
   console.log('Data:', data);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [activeDay, setActiveDay] = useState(0); //추가함
 
   const toggleFullScreen = () => {
     setIsFullScreen(!isFullScreen);
@@ -143,22 +144,25 @@ const Planned = ({route, navigation}) => {
               </TouchableOpacity>
             </View>
           </Modal>
+
           <View style={styles.itinerary}>
             <Image source={note} style={styles.noteImage} />
             <View style={styles.daysContainer}>
               {data?.gptResponse?.dailyPlans?.map((plan, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={index === 0 ? styles.activeDay : styles.day}>
+                  style={index === activeDay ? styles.activeDay : styles.day}
+                  onPress={() => setActiveDay(index)}>
                   <Text
-                    style={index === 0 ? styles.activeDayText : styles.dayText}>
+                    style={index === activeDay ? styles.activeDayText : styles.dayText}>
                     Day {plan.day}
                   </Text>
                 </TouchableOpacity>
               ))}
             </View>
             <View style={styles.horizontalLine} />
-            {data?.gptResponse?.dailyPlans?.map((plan, index) => (
+
+            {data.gptResponse.dailyPlans.filter((_, index) => index === activeDay).map((plan, index) => (
               <View key={index} style={styles.itineraryDetails}>
                 <Text style={styles.dayTitle}>
                   Day {plan.day}: {plan.title}
@@ -286,7 +290,7 @@ const styles = StyleSheet.create({
   },
   daysContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     marginLeft: 16,
     marginTop: 8,
     marginRight: 16,
