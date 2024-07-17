@@ -111,21 +111,62 @@ const Collection = ({navigation}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://192.249.29.3:3000/api/travel');
-        console.log(response.data);
-
         const expired = response.data.filter(
           trip => trip.remainPhotoCount === 0,
         );
         const ongoing = response.data.filter(trip => trip.remainPhotoCount > 0);
 
-        setExpiredTravelData(expired);
+        setExpiredTravelData(
+          await Promise.all(
+            expired.map(async trip => ({
+              ...trip,
+              dateRange: await fetchDatesForTrip(trip._id),
+            })),
+          ),
+        );
+
         setOngoingTravelData(ongoing);
       } catch (err) {
         console.error(err);
       }
     };
+
+    const fetchDatesForTrip = async tripId => {
+      try {
+        const uncategorizedPhotos = await axios.get(
+          `http://192.249.29.3:3000/api/photo/nomatch/${tripId}`,
+        );
+        const categorizedPhotos = await axios.get(
+          `http://192.249.29.3:3000/api/person/images/${tripId}`,
+        );
+
+        const allPhotos = [
+          ...uncategorizedPhotos.data.map(photo => new Date(photo.createdAt)),
+          ...categorizedPhotos.data.flatMap(person =>
+            person.travelImage.map(image => new Date(image.createdAt)),
+          ),
+        ];
+
+        const sortedDates = allPhotos.sort((a, b) => a - b);
+        return {
+          startDate: sortedDates[0],
+          endDate: sortedDates[sortedDates.length - 1],
+        };
+      } catch (error) {
+        console.error('Error fetching dates for trip: ', error);
+      }
+    };
+
     fetchData();
   }, []);
+
+  const formatDate = date => {
+    if (!date) return '';
+    const year = String(date.getFullYear()).slice(2);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
+  };
 
   const renderPlannedTrips = () => {
     return ongoingTravelData.map((trip, index) => (
@@ -154,25 +195,31 @@ const Collection = ({navigation}) => {
     ));
   };
 
-  console.log('expired', expiredTravelData);
   const renderHistoryTrips = () => {
-    return expiredTravelData.map((trip, index) => (
-      <View key={index} style={styles.historyBox}>
-        <Pressable onLongPress={() => onLongPress(trip._id)}>
-          <View style={styles.historyInfo}>
-            <Text style={styles.historyTitle}>{trip.country}</Text>
-            <Text style={styles.historyDate}>24.01.10 - 24.01.13</Text>
-            <TouchableOpacity
-              style={styles.memoryButton}
-              onPress={() => goMemory(trip)}>
-              <Text style={styles.memoryText}>Memory</Text>
-              <Image source={heartIcon} style={styles.heartIcon} />
-            </TouchableOpacity>
-          </View>
+    return expiredTravelData.map((trip, index) => {
+      const startDate = formatDate(trip.dateRange?.startDate);
+      const endDate = formatDate(trip.dateRange?.endDate);
+
+      return (
+        <View key={index} style={styles.historyBox}>
+          <Pressable onLongPress={() => onLongPress(trip._id)}>
+            <View style={styles.historyInfo}>
+              <Text style={styles.historyTitle}>{trip.country}</Text>
+              <Text style={styles.historyDate}>
+                {startDate} ~ {endDate}
+              </Text>
+              <TouchableOpacity
+                style={styles.memoryButton}
+                onPress={() => goMemory(trip)}>
+                <Text style={styles.memoryText}>Memory</Text>
+                <Image source={heartIcon} style={styles.heartIcon} />
+              </TouchableOpacity>
+            </View>
+          </Pressable>
           <Image source={countryFlags[trip.country]} style={styles.flag} />
-        </Pressable>
-      </View>
-    ));
+        </View>
+      );
+    });
   };
 
   return (
