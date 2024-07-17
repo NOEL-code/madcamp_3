@@ -201,23 +201,24 @@ const Collection = ({navigation}) => {
       const endDate = formatDate(trip.dateRange?.endDate);
 
       return (
-        <View key={index} style={styles.historyBox}>
-          <Pressable onLongPress={() => onLongPress(trip._id)}>
-            <View style={styles.historyInfo}>
-              <Text style={styles.historyTitle}>{trip.country}</Text>
-              <Text style={styles.historyDate}>
-                {startDate} ~ {endDate}
-              </Text>
-              <TouchableOpacity
-                style={styles.memoryButton}
-                onPress={() => goMemory(trip)}>
-                <Text style={styles.memoryText}>Memory</Text>
-                <Image source={heartIcon} style={styles.heartIcon} />
-              </TouchableOpacity>
-            </View>
-          </Pressable>
+        <Pressable
+          key={index}
+          onLongPress={() => onLongPress(trip._id)}
+          style={styles.historyBox}>
+          <View style={styles.historyInfo}>
+            <Text style={styles.historyTitle}>{trip.country}</Text>
+            <Text style={styles.historyDate}>
+              {startDate} ~ {endDate}
+            </Text>
+            <TouchableOpacity
+              style={styles.memoryButton}
+              onPress={() => goMemory(trip)}>
+              <Text style={styles.memoryText}>Memory</Text>
+              <Image source={heartIcon} style={styles.heartIcon} />
+            </TouchableOpacity>
+          </View>
           <Image source={countryFlags[trip.country]} style={styles.flag} />
-        </View>
+        </Pressable>
       );
     });
   };
@@ -250,6 +251,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
+    paddingTop: 8,
   },
   backgroundImage: {
     flex: 1,
@@ -259,6 +261,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginBottom: 8,
   },
   backButton: {
     padding: 10,

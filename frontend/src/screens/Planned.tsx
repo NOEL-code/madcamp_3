@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
+    paddingTop: 8,
   },
   backgroundImage: {
     flex: 1,
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 40,
-    height: 30,
+    height: 40,
     tintColor: '#fff', // Optional: Change the icon color
   },
   screenTitle: {
