@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  Pressable,
+  Alert,
 } from 'react-native';
 import Icon from '../assets/images/back-arrow-icon.png'; // Ensure this path is correct
 import backGroundImage from '../assets/images/background-collection.png';
@@ -50,6 +52,41 @@ const Collection = ({navigation}) => {
     }
   };
 
+  const fetchDeleteData = async (id: string) => {
+    try {
+      const response = await axios.delete(
+        `http://192.249.29.3:3000/api/travel/${id}`,
+      );
+
+      console.log(response.data);
+
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const result = await fetchDeleteData(id);
+    if (result) {
+      setExpiredTravelData(expiredTravelData.filter(trip => trip._id !== id));
+      setOngoingTravelData(ongoingTravelData.filter(trip => trip._id !== id));
+    }
+  };
+
+  const onLongPress = (id: string) => {
+    Alert.alert('Are you sure Delete this trip?', '', [
+      {
+        text: 'yes',
+        onPress: () => handleDelete(id),
+      },
+      {
+        style: 'cancel',
+        text: 'no',
+      },
+    ]);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,43 +110,47 @@ const Collection = ({navigation}) => {
   const renderPlannedTrips = () => {
     return ongoingTravelData.map((trip, index) => (
       <View key={index} style={styles.tripBox}>
-        <View style={styles.tripInfo}>
-          <View style={styles.tripActions}>
-            <Text style={styles.tripTitle}>{trip.country}</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.iconButton}
-                onPress={() => goCamera(trip._id, trip.remainPhotoCount)}>
-                <Image source={cameraIcon} style={styles.actionIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.iconButton}
-                onPress={() => goPlanned(trip)}>
-                <Image source={penIcon} style={styles.actionIcon} />
-              </TouchableOpacity>
+        <Pressable onLongPress={() => onLongPress(trip._id)}>
+          <View style={styles.tripInfo}>
+            <View style={styles.tripActions}>
+              <Text style={styles.tripTitle}>{trip.country}</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => goCamera(trip._id, trip.remainPhotoCount)}>
+                  <Image source={cameraIcon} style={styles.actionIcon} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.iconButton}
+                  onPress={() => goPlanned(trip)}>
+                  <Image source={penIcon} style={styles.actionIcon} />
+                </TouchableOpacity>
+              </View>
             </View>
+            <Image source={brazilFlag} style={styles.flag} />
           </View>
-          <Image source={brazilFlag} style={styles.flag} />
-        </View>
+        </Pressable>
       </View>
     ));
   };
 
-  console.log('ex[ired', expiredTravelData);
+  console.log('expired', expiredTravelData);
   const renderHistoryTrips = () => {
     return expiredTravelData.map((trip, index) => (
       <View key={index} style={styles.historyBox}>
-        <View style={styles.historyInfo}>
-          <Text style={styles.historyTitle}>{trip.country}</Text>
-          <Text style={styles.historyDate}>24.01.10 - 24.01.13</Text>
-          <TouchableOpacity
-            style={styles.memoryButton}
-            onPress={() => goMemory(trip)}>
-            <Text style={styles.memoryText}>Memory</Text>
-            <Image source={heartIcon} style={styles.heartIcon} />
-          </TouchableOpacity>
-        </View>
-        <Image source={brazilFlag} style={styles.flag} />
+        <Pressable onLongPress={() => onLongPress(trip._id)}>
+          <View style={styles.historyInfo}>
+            <Text style={styles.historyTitle}>{trip.country}</Text>
+            <Text style={styles.historyDate}>24.01.10 - 24.01.13</Text>
+            <TouchableOpacity
+              style={styles.memoryButton}
+              onPress={() => goMemory(trip)}>
+              <Text style={styles.memoryText}>Memory</Text>
+              <Image source={heartIcon} style={styles.heartIcon} />
+            </TouchableOpacity>
+          </View>
+          <Image source={brazilFlag} style={styles.flag} />
+        </Pressable>
       </View>
     ));
   };
