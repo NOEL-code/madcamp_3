@@ -103,7 +103,10 @@ const Memory = ({route, navigation}) => {
               <TouchableOpacity
                 key={person._id}
                 onPress={() => handleProfileClick(person)}
-                style={styles.profile}>
+                style={[
+                  styles.profile,
+                  selectedPerson && selectedPerson._id === person._id && styles.selectedProfile,
+                ]}>
                 <Image
                   source={{uri: person.profileImage}}
                   style={styles.profileIcon}
@@ -113,7 +116,10 @@ const Memory = ({route, navigation}) => {
             ))}
             <TouchableOpacity
               onPress={() => setSelectedPerson(null)}
-              style={styles.profile}>
+              style={[
+                styles.profile,
+                selectedPerson === null && styles.selectedProfile,
+              ]}>
               <Image source={profileIcon} style={styles.profileIcon} />
               <Text style={styles.name}>미분류</Text>
             </TouchableOpacity>
@@ -225,27 +231,31 @@ const styles = StyleSheet.create({
     height: 540,
     backgroundColor: 'rgba(196,196,196,0.3)',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 10,
     marginLeft: 15,
     borderRadius: 15,
     marginBottom: 15,
   },
   profile: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
+  },
+  selectedProfile: {
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    borderRadius: 15,
   },
   profileIcon: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    marginBottom: 5,
+    marginVertical:5,
+    marginHorizontal: 5,
   },
   name: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 15,
     color: '#fff',
     textAlign: 'center',
-    marginTop: 5,
   },
   photosContainer: {
     width: 240,

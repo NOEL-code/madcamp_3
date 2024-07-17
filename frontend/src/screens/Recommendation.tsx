@@ -149,6 +149,7 @@ const RecommendationScreen = ({route, navigation}) => {
               ))}
             </View>
             <View style={styles.horizontalLine} />
+            
             {data.gptResponse.dailyPlans.filter((_, index) => index === activeDay).map((plan, index) => (
               <View key={index} style={styles.itineraryDetails}>
                 <Text style={styles.dayTitle}>
