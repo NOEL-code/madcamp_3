@@ -19,7 +19,7 @@ import axios from 'axios';
 
 const countryFlags = {
   Brazil: require('../assets/images/brazil-flag.png'),
-  Australia: require('../assets/images/australia-flag.png'),
+  Australia: require('../assets/images/australia-flag.jpg'),
   Japan: require('../assets/images/japan-flag.png'),
   France: require('../assets/images/france-flag.png'),
   Italy: require('../assets/images/italy-flag.jpg'), // jpg

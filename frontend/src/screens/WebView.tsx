@@ -22,7 +22,7 @@ type WebViewScreenNavigationProp = StackNavigationProp<
 
 const countries = [ //20개
   { country: 'Brazil', location: { name: 'Brasilia', lat: -15.8267, lng: -47.9218 }, image: require('../assets/images/brazil-flag.png') },
-  { country: 'Australia', location: { name: 'Canberra', lat: -35.2809, lng: 149.1300 }, image: require('../assets/images/australia-flag.png') },
+  { country: 'Australia', location: { name: 'Canberra', lat: -35.2809, lng: 149.1300 }, image: require('../assets/images/australia-flag.jpg') },//jpg
   { country: 'Japan', location: { name: 'Tokyo', lat: 35.6762, lng: 139.6503 }, image: require('../assets/images/japan-flag.png') },
   { country: 'France', location: { name: 'Paris', lat: 48.8566, lng: 2.3522 }, image: require('../assets/images/france-flag.png') },
   { country: 'Italy', location: { name: 'Rome', lat: 41.9028, lng: 12.4964 }, image: require('../assets/images/italy-flag.jpg') }, //jpg

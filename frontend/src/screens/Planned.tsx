@@ -11,13 +11,13 @@ import {
 } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import retry from '../assets/images/undo.png';
-import backGroundImage from '../assets/images/background.png';
+import backGroundImage from '../assets/images/background-collection.png';
 import note from '../assets/images/note.png';
 import backIcon from '../assets/images/back-arrow-icon.png';
 
 const countryFlags = {
   Brazil: require('../assets/images/brazil-flag.png'),
-  Australia: require('../assets/images/australia-flag.png'),
+  Australia: require('../assets/images/australia-flag.jpg'),
   Japan: require('../assets/images/japan-flag.png'),
   France: require('../assets/images/france-flag.png'),
   Italy: require('../assets/images/italy-flag.jpg'), // jpg
