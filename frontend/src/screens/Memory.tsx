@@ -21,21 +21,13 @@ const Memory = ({route, navigation}) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uncategorizedPhotos, setUncategorizedPhotos] = useState([]);
   const [categorizedPhotos, setCategorizedPhotos] = useState([]);
-  const [allPhotos, setAllPhotos] = useState([]);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
   const [selectedPerson, setSelectedPerson] = useState(null);
 
+  console.log(_id);
   useEffect(() => {
     fetchNoMatchPhotos();
     fetchTravelPhotos();
   }, []);
-
-  useEffect(() => {
-    if (categorizedPhotos.length > 0 && uncategorizedPhotos.length > 0) {
-      combineAndSortPhotos();
-    }
-  }, [categorizedPhotos, uncategorizedPhotos]);
 
   const fetchNoMatchPhotos = async () => {
     try {
@@ -53,45 +45,11 @@ const Memory = ({route, navigation}) => {
       const response = await axios.get(
         `http://192.249.29.3:3000/api/person/images/${_id}`,
       );
+      console.log(response.data); // Log the response data to inspect it
       setCategorizedPhotos(response.data);
     } catch (error) {
       console.error('Error fetching travel photos: ', error);
     }
-  };
-
-  const combineAndSortPhotos = () => {
-    let combinedPhotos = [];
-
-    categorizedPhotos.forEach(person => {
-      person.travelImage.forEach(image => {
-        combinedPhotos.push({
-          ...image,
-          person: person.name,
-          profileImage: person.profileImage,
-        });
-      });
-    });
-
-    uncategorizedPhotos.forEach(image => {
-      combinedPhotos.push({
-        ...image,
-        person: '미분류',
-        profileImage: profileIcon,
-      });
-    });
-
-    combinedPhotos.sort(
-      (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    );
-
-    if (combinedPhotos.length > 0) {
-      setStartDate(formatDate(combinedPhotos[0].createdAt));
-      setEndDate(
-        formatDate(combinedPhotos[combinedPhotos.length - 1].createdAt),
-      );
-    }
-
-    setAllPhotos(combinedPhotos);
   };
 
   const toggleFullScreen = () => {
@@ -136,9 +94,7 @@ const Memory = ({route, navigation}) => {
           </TouchableOpacity>
           <View style={styles.introduction}>
             <Text style={styles.screenTitle}>{country}</Text>
-            <Text style={styles.dateTitle}>
-              {startDate} ~ {endDate}
-            </Text>
+            {/* <Text style={styles.dateTitle}>24.01.10~24.01.13</Text> */}
           </View>
         </View>
         <View style={styles.body}>
@@ -147,7 +103,12 @@ const Memory = ({route, navigation}) => {
               <TouchableOpacity
                 key={person._id}
                 onPress={() => handleProfileClick(person)}
-                style={styles.profile}>
+                style={[
+                  styles.profile,
+                  selectedPerson &&
+                    selectedPerson._id === person._id &&
+                    styles.selectedProfile,
+                ]}>
                 <Image
                   source={{uri: person.profileImage}}
                   style={styles.profileIcon}
@@ -157,7 +118,10 @@ const Memory = ({route, navigation}) => {
             ))}
             <TouchableOpacity
               onPress={() => setSelectedPerson(null)}
-              style={styles.profile}>
+              style={[
+                styles.profile,
+                selectedPerson === null && styles.selectedProfile,
+              ]}>
               <Image source={profileIcon} style={styles.profileIcon} />
               <Text style={styles.name}>미분류</Text>
             </TouchableOpacity>
@@ -175,20 +139,31 @@ const Memory = ({route, navigation}) => {
                 ))}
               </View>
             ) : (
-              <View style={styles.photosSection}>
-                {allPhotos.map((photo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() =>
-                      openImage({uri: photo.travelImage || photo.url})
-                    }>
-                    <Image
-                      source={{uri: photo.travelImage || photo.url}}
-                      style={styles.pic}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
+              <>
+                {/* {categorizedPhotos.map(person => (
+                  <View key={person._id} style={styles.photosSection}>
+                    {person.travelImage.map((photo, index) => (
+                      <TouchableOpacity
+                        key={index}
+                        onPress={() => openImage({uri: photo.url})}>
+                        <Image source={{uri: photo.url}} style={styles.pic} />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ))} */}
+                <View style={styles.photosSection}>
+                  {uncategorizedPhotos.map((photo, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => openImage({uri: photo.travelImage})}>
+                      <Image
+                        source={{uri: photo.travelImage}}
+                        style={styles.pic}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </>
             )}
           </ScrollView>
         </View>
@@ -258,27 +233,31 @@ const styles = StyleSheet.create({
     height: 540,
     backgroundColor: 'rgba(196,196,196,0.3)',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 10,
     marginLeft: 15,
     borderRadius: 15,
     marginBottom: 15,
   },
   profile: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
+  },
+  selectedProfile: {
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    borderRadius: 15,
   },
   profileIcon: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    marginBottom: 5,
+    marginVertical: 5,
+    marginHorizontal: 5,
   },
   name: {
     fontFamily: 'HS_SummerWaterLight',
     fontSize: 15,
     color: '#fff',
     textAlign: 'center',
-    marginTop: 5,
   },
   photosContainer: {
     width: 240,
