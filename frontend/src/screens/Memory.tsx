@@ -7,6 +7,7 @@ import {
   ScrollView,
   ImageBackground,
   Modal,
+  Image,
 } from 'react-native';
 import axios from 'axios';
 import FastImage from 'react-native-fast-image';
@@ -103,7 +104,7 @@ const Memory = ({route, navigation}) => {
       <ImageBackground source={backGroundImage} style={styles.backgroundImage}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={goBack}>
-            <FastImage source={Icon} style={styles.icon} />
+            <Image source={Icon} style={styles.icon} />
           </TouchableOpacity>
           <View style={styles.introduction}>
             <Text style={styles.screenTitle}>{country}</Text>
@@ -276,9 +277,11 @@ const styles = StyleSheet.create({
   },
   noImageText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 30,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 50,
+    marginLeft: 52,
+    fontFamily: 'HS_SummerWaterLight',
   },
   modalBackground: {
     flex: 1,
