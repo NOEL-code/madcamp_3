@@ -1,3 +1,88 @@
+## Dar함께 T래블
+
+<br/><br/>
+  
+![DarT_Logo_1024](https://github.com/user-attachments/assets/28bd9617-daba-4719-b931-553fc2fbdf58)
+
+> 다트를 던져서 나오는 나라로 여행을 떠나는 낭만적인 청춘을 위한 여행 모바일 어플리케이션
+<br/>
+
+## 프로젝트 소개
+
+> 몰입캠프 3주차 과정 우수작 선정
+<br/><br/>
+> 개발기간: 1주
+<br/><br/>
+> 개발인원: 2명
+<br/><br/>
+> 사용 API: ChatGpt Open API
+> <br/><br/>
+> 사용 얼굴인식 모듈: [GitHub - serengil/deepface: A Lightweight Face Recognition and Facial Attribute Analysis (Age, Gender, Emotion and Race) Library for Python](https://github.com/serengil/deepface)
+
+
+<br/>
+
+## Member
+|                                   신서원                                   |                                    정우성                                    |
+|:-----------------------------------------------------------------------:|:-------------------------------------------------------------------------:|
+| <img src = "https://avatars.githubusercontent.com/sswilove1" width=150px> | <img src = "https://avatars.githubusercontent.com/NOEL-code" width=150px> |
+|                 [@sswilove1](https://github.com/sswilove1)                  |                [@NOEL-code](https://github.com/NOEL-code)                 |
+
+
+## 주요 서비스
+
+### 연말정산
+
+연말정산 미리보기를 통하여 절세 솔루션 제공
+
+### ETF, 펀드 추천
+
+개인 투자성향, 선호 종목, 인기 or 핫 주식 포함 종목 등 다양한 조건에 맞춰 개인 맞춤형 종목 추천
+
+<br/>
+<br/>
+
+
+## Stack
+
+- Programming Language: ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white)  ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=Python&logoColor=white)
+- Frontend : ![HTML](https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=HTML5&logoColor=white) ![CSS](https://img.shields.io/badge/-CSS-1572B6?style=flat&logo=CSS3&logoColor=white) ![React Native](https://img.shields.io/badge/-React%20Native-61DAFB?style=flat&logo=React&logoColor=white)
+- Backend : ![Node.js](https://img.shields.io/badge/-Node.js-339933?style=flat&logo=Node.js&logoColor=white) ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white) ![Flask](https://img.shields.io/badge/-Flask-000000?style=flat&logo=Flask&logoColor=white) ![Nest.js](https://img.shields.io/badge/-Nest.js-E0234E?style=flat&logo=NestJS&logoColor=white) 
+- Infra : ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat&logo=Docker&logoColor=white) ![AWS](https://img.shields.io/badge/-AWS-232F3E?style=flat&logo=Amazon%20AWS&logoColor=white)
+## 프로젝트 시작하기
+
+
+#### Version
+
+```
+Node.js v22.4.0.
+npm v10.8.1.
+```
+
+#### Installation
+```
+$ git clone https://github.com/NOEL-code/madcamp_3
+$ cd madcamp_3
+```
+
+#### fontend
+
+```
+$ cd frontend
+$ npm install
+$ npx react-native run-android
+```
+
+#### backend
+
+```
+$ cd backend
+$ npm install
+$ npm run start
+```
+
+
+
 ## Outline
 
 ---
@@ -8,7 +93,6 @@
 
 DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을 위한 여행 어플입니다.
 
-![DarT_Logo_1024.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/3095a4a8-bb95-4383-990a-5616e63fd61f/85c7945c-1334-4514-bc05-72203764555a.png)
 
 ### DarT는…🙊
 
@@ -29,21 +113,11 @@ DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을
 - Docker
 - Figma, Adobe Illustrator
 
-## Team
-
----
-
-카이스트 전산학부 21학번 [신서원](https://www.notion.so/ba22e603e89542588598858d591466e4?pvs=21)
-
-[sswilove1 - Overview](https://github.com/sswilove1)
-
-한양대학교 정보시스템학과 21학번 [ 정우성](https://www.notion.so/629dec9f14034fb48f243ab8e4c7d46a?pvs=21)  
-
-[NOEL-code - Overview](https://github.com/NOEL-code)
-
 ## Details
 
 ---
+
+
 
 ### 1. Home🌏
 
@@ -51,7 +125,7 @@ DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을
 
 [사진들]
 
-- 지구 애니메이션: ~~한 방법으로 구현하였습니다. 여러 방향으로 돌려볼 수 있고, 기본적으로는 자전축을 기준으로 회전 중인 지구를 띄워줍니다.
+- 지구 애니메이션: 여러 방향으로 돌려볼 수 있고, 기본적으로는 자전축을 기준으로 회전 중인 지구를 띄워줍니다.
 - 다트: 클릭하면 다트가 화면으로 날아가고, 저장된 여러 나라 중에서 랜덤하게 여행갈 나라의 국기를 띄워줍니다.
 - 우주인: 클릭하면 3번에서 설명할 Collection 페이지로 연결됩니다.
 
@@ -90,11 +164,9 @@ DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을
 - 필름카메라처럼, 제한된 개수 내에서 여행 사진을 찍을 수 있습니다. 사진은 갤러리가 아닌 DB에 저장되므로, 개수를 다 채우기 전까지는 열람할 수 없습니다.
 - 사진 촬영 후, 그 여행에 등록된 인원들의 프로필 이미지와 촬영된 사진을 대조하여 사진을 분류합니다. 얼굴인식(Deepface)모듈을 사용하였습니다.
 
-[GitHub - serengil/deepface: A Lightweight Face Recognition and Facial Attribute Analysis (Age, Gender, Emotion and Race) Library for Python](https://github.com/serengil/deepface)
 
-- 사용 얼굴인식 모듈 Github -
 
-### 5. Memory💌
+### 5. Memory 💌
 
 - 완료된 여행의 사진을 사람별로 열람할 수 있는 페이지
 
@@ -103,12 +175,14 @@ DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을
 - 여행 일행들 별로 분류된 사진을 살펴볼 수 있습니다. 매치하는 정보가 없는 경우, 미분류 페이지로 들어가게 됩니다. 사람별로 매치되는 사진이 없는 경우 No Pictures라는 텍스트가 등장합니다.
 
 1. API 명세서
-    
-    ![스크린샷 2024-07-17 20.33.03.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/a2d8f600-7269-475e-83ae-89407c9be7df/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-07-17_20.33.03.png)
-    
+
+![API 명세서](https://github.com/user-attachments/assets/37fa078e-0734-4301-b26b-224c3d7f5dfa)
 
 ## 마무리
 
 이렇듯 DarT는, 낭만 랜덤 여행을 떠나는 청춘들이 ‘여행지 선정, 일정 계획, 추억 쌓기, 사진 분류’ 등을 더 잘 할 수 있도록 도우며 재미있는 추억을 쌓아줄 어플리케이션입니다. 체력과 낭만이 가득할 때에 저희 어플리케이션 사용해보시면서 발사되는 다트처럼 일상에서의 탈출을 하실 수 있길 바랍니다😊
 
-![배경_대지 1-06.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/24d6b7a7-ec49-4ec9-aade-4638cebab6a1/%EB%B0%B0%EA%B2%BD_%EB%8C%80%EC%A7%80_1-06.png)
+
+
+![배경](https://github.com/user-attachments/assets/794da3b3-6d3e-41c1-ab81-49030657ee52)
+
