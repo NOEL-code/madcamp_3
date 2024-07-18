@@ -28,21 +28,6 @@
 | <img src = "https://avatars.githubusercontent.com/sswilove1" width=150px> | <img src = "https://avatars.githubusercontent.com/NOEL-code" width=150px> |
 |                 [@sswilove1](https://github.com/sswilove1)                  |                [@NOEL-code](https://github.com/NOEL-code)                 |
 
-
-## 주요 서비스
-
-### 연말정산
-
-연말정산 미리보기를 통하여 절세 솔루션 제공
-
-### ETF, 펀드 추천
-
-개인 투자성향, 선호 종목, 인기 or 핫 주식 포함 종목 등 다양한 조건에 맞춰 개인 맞춤형 종목 추천
-
-<br/>
-<br/>
-
-
 ## Stack
 
 - Programming Language: ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white)  ![Python](https://img.shields.io/badge/-Python-3776AB?style=flat&logo=Python&logoColor=white)
@@ -172,9 +157,9 @@ DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을
 
 [사진들]
 
-- 여행 일행들 별로 분류된 사진을 살펴볼 수 있습니다. 매치하는 정보가 없는 경우, 미분류 페이지로 들어가게 됩니다. 사람별로 매치되는 사진이 없는 경우 No Pictures라는 텍스트가 등장합니다.
+- 여행 일행들 별로 분류된 사진을 살펴볼 수 있습니다. 매치하는 정보가 없는 경우, 미분류 페이지로 들어가게 됩니다. 사람별로 매치되는 사진이 없는 경우 No Image라는 텍스트가 등장합니다.
 
-1. API 명세서
+### 6. API 명세서 📄
 
 ![API 명세서](https://github.com/user-attachments/assets/37fa078e-0734-4301-b26b-224c3d7f5dfa)
 
