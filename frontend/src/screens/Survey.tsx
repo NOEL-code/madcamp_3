@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  ActivityIndicator, // Import ActivityIndicator for the loading screen
 } from 'react-native';
 import DropdownComponent from '../components/DropdownComponent';
 import ProfileImageScrollComponent from '../components/ProfileImageScrollComponent';
@@ -37,6 +38,7 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
   const [profiles, setProfiles] = useState<{name: string; imageUri: string}[]>(
     Array.from({length: peopleCount}, () => ({name: '', imageUri: ''})),
   );
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   useEffect(() => {
     setProfiles(
@@ -54,6 +56,7 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true); // Start loading
     const formData = new FormData();
     formData.append('month', month);
     formData.append('totalPeople', peopleCount.toString());
@@ -88,9 +91,11 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
         },
       );
       console.log('Travel created successfully:', response.data);
+      setIsLoading(false); // End loading
       // Navigate to RecommendationScreen and pass response data
       navigation.navigate('Recommendation', {data: response.data});
     } catch (error) {
+      setIsLoading(false); // End loading
       if (error.response) {
         console.error('Error response:', error.response);
       } else if (error.request) {
@@ -211,6 +216,11 @@ const SurveyScreen = ({route, navigation}: SurveyScreenProps) => {
           </TouchableOpacity>
         </ScrollView>
       </View>
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
     </ImageBackground>
   );
 };
@@ -282,6 +292,12 @@ const styles = StyleSheet.create({
     fontFamily: 'HS_SummerWaterLight',
     color: '#fff',
     fontSize: 18,
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

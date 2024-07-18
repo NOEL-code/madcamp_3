@@ -10,6 +10,7 @@ import {
   PermissionsAndroid,
   Alert,
   Platform,
+  ActivityIndicator, // Import ActivityIndicator for the loading screen
 } from 'react-native';
 import {launchCamera} from 'react-native-image-picker';
 import backGroundImage from '../assets/images/b_camera.png';
@@ -19,6 +20,7 @@ import axios from 'axios';
 const Camera = ({route, navigation}) => {
   const {travelId, remainPhotoCount} = route.params;
   const [currentPhotoCount, setCurrentPhotoCount] = useState(remainPhotoCount);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -68,6 +70,7 @@ const Camera = ({route, navigation}) => {
           });
           formData.append('travelId', travelId);
 
+          setIsLoading(true); // Start loading
           try {
             const serverResponse = await axios.post(
               'http://192.249.29.3:3000/api/photo/create',
@@ -80,8 +83,10 @@ const Camera = ({route, navigation}) => {
             );
             console.log('Server response: ', serverResponse.data);
             setCurrentPhotoCount(currentPhotoCount - 1);
+            setIsLoading(false); // End loading
           } catch (error) {
             console.error('Error uploading photo: ', error);
+            setIsLoading(false); // End loading
           }
         }
       });
@@ -98,6 +103,11 @@ const Camera = ({route, navigation}) => {
           <Image source={cameraImg} style={styles.cameraImg} />
         </TouchableOpacity>
       </ImageBackground>
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -124,6 +134,12 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     color: '#fff',
     textAlign: 'center',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
