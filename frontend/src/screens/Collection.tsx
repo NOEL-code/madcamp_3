@@ -75,7 +75,7 @@ const Collection = ({navigation}) => {
   const fetchDeleteData = async (id: string) => {
     try {
       const response = await axios.delete(
-        `http://192.249.29.3:3000/api/travel/${id}`,
+        `http://192.249.29.5:3000/api/travel/${id}`,
       );
 
       console.log(response.data);
@@ -110,7 +110,7 @@ const Collection = ({navigation}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.249.29.3:3000/api/travel');
+        const response = await axios.get('http://192.249.29.5:3000/api/travel');
         const expired = response.data.filter(
           trip => trip.remainPhotoCount === 0,
         );
@@ -134,10 +134,10 @@ const Collection = ({navigation}) => {
     const fetchDatesForTrip = async tripId => {
       try {
         const uncategorizedPhotos = await axios.get(
-          `http://192.249.29.3:3000/api/photo/nomatch/${tripId}`,
+          `http://192.249.29.5:3000/api/photo/nomatch/${tripId}`,
         );
         const categorizedPhotos = await axios.get(
-          `http://192.249.29.3:3000/api/person/images/${tripId}`,
+          `http://192.249.29.5:3000/api/person/images/${tripId}`,
         );
 
         const allPhotos = [

@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 40,
     height: 30,
-    tintColor: '#fff', // Optional: Change the icon color
+    tintColor: '#fff',
   },
   screenTitle: {
     fontFamily: 'HS_SummerWaterLight',

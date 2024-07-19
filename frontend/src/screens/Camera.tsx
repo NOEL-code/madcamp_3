@@ -73,7 +73,7 @@ const Camera = ({route, navigation}) => {
           setIsLoading(true); // Start loading
           try {
             const serverResponse = await axios.post(
-              'http://192.249.29.3:3000/api/photo/create',
+              'http://192.249.29.5:3000/api/photo/create',
               formData,
               {
                 headers: {

@@ -20,27 +20,108 @@ type WebViewScreenNavigationProp = StackNavigationProp<
   'WebView'
 >;
 
-const countries = [ //20개
-  { country: 'Brazil', location: { name: 'Brasilia', lat: -15.8267, lng: -47.9218 }, image: require('../assets/images/brazil-flag.png') },
-  { country: 'Australia', location: { name: 'Canberra', lat: -35.2809, lng: 149.1300 }, image: require('../assets/images/australia-flag.jpg') },//jpg
-  { country: 'Japan', location: { name: 'Tokyo', lat: 35.6762, lng: 139.6503 }, image: require('../assets/images/japan-flag.png') },
-  { country: 'France', location: { name: 'Paris', lat: 48.8566, lng: 2.3522 }, image: require('../assets/images/france-flag.png') },
-  { country: 'Italy', location: { name: 'Rome', lat: 41.9028, lng: 12.4964 }, image: require('../assets/images/italy-flag.jpg') }, //jpg
-  { country: 'Spain', location: { name: 'Madrid', lat: 40.4168, lng: -3.7038 }, image: require('../assets/images/spain-flag.jpg') }, //jpg
-  { country: 'Canada', location: { name: 'Ottawa', lat: 45.4215, lng: -75.6972 }, image: require('../assets/images/canada-flag.png') },
-  { country: 'Turkey', location: { name: 'Ankara', lat: 39.9334, lng: 32.8597 }, image: require('../assets/images/turkey-flag.png') },
-  { country: 'Greece', location: { name: 'Athens', lat: 37.9838, lng: 23.7275 }, image: require('../assets/images/greece-flag.png') },
-  { country: 'Norway', location: { name: 'Oslo', lat: 59.9139, lng: 10.7522 }, image: require('../assets/images/norway-flag.jpg') },//jpg
-  { country: 'Denmark', location: { name: 'Copenhagen', lat: 55.6761, lng: 12.5683 }, image: require('../assets/images/denmark-flag.jpg') },//jpg
-  { country: 'Ireland', location: { name: 'Dublin', lat: 53.3498, lng: -6.2603 }, image: require('../assets/images/ireland-flag.png') },
-  { country: 'Vietnam', location: { name: 'Hanoi', lat: 21.0285, lng: 105.8542 }, image: require('../assets/images/vietnam-flag.jpg') },//jpg
-  { country: 'Malaysia', location: { name: 'Kuala Lumpur', lat: 3.1390, lng: 101.6869 }, image: require('../assets/images/malaysia-flag.png') },
-  { country: 'Philippines', location: { name: 'Manila', lat: 14.5995, lng: 120.9842 }, image: require('../assets/images/philippines-flag.jpg') },//jpg
-  { country: 'Singapore', location: { name: 'Singapore', lat: 1.3521, lng: 103.8198 }, image: require('../assets/images/singapore-flag.png') },
-  { country: 'Morocco', location: { name: 'Rabat', lat: 34.0209, lng: -6.8417 }, image: require('../assets/images/morocco-flag.png') },
-  { country: 'Kenya', location: { name: 'Nairobi', lat: -1.2921, lng: 36.8219 }, image: require('../assets/images/kenya-flag.jpg') },//jpg
-  { country: 'Nigeria', location: { name: 'Abuja', lat: 9.0765, lng: 7.3986 }, image: require('../assets/images/nigeria-flag.png') },
-  { country: 'Tanzania', location: { name: 'Dodoma', lat: -6.1630, lng: 35.7516 }, image: require('../assets/images/tanzania-flag.png') },
+const countries = [
+  //20개
+  {
+    country: 'Brazil',
+    location: {name: 'Brasilia', lat: -15.8267, lng: -47.9218},
+    image: require('../assets/images/brazil-flag.png'),
+  },
+  {
+    country: 'Australia',
+    location: {name: 'Canberra', lat: -35.2809, lng: 149.13},
+    image: require('../assets/images/australia-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Japan',
+    location: {name: 'Tokyo', lat: 35.6762, lng: 139.6503},
+    image: require('../assets/images/japan-flag.png'),
+  },
+  {
+    country: 'France',
+    location: {name: 'Paris', lat: 48.8566, lng: 2.3522},
+    image: require('../assets/images/france-flag.png'),
+  },
+  {
+    country: 'Italy',
+    location: {name: 'Rome', lat: 41.9028, lng: 12.4964},
+    image: require('../assets/images/italy-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Spain',
+    location: {name: 'Madrid', lat: 40.4168, lng: -3.7038},
+    image: require('../assets/images/spain-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Canada',
+    location: {name: 'Ottawa', lat: 45.4215, lng: -75.6972},
+    image: require('../assets/images/canada-flag.png'),
+  },
+  {
+    country: 'Turkey',
+    location: {name: 'Ankara', lat: 39.9334, lng: 32.8597},
+    image: require('../assets/images/turkey-flag.png'),
+  },
+  {
+    country: 'Greece',
+    location: {name: 'Athens', lat: 37.9838, lng: 23.7275},
+    image: require('../assets/images/greece-flag.png'),
+  },
+  {
+    country: 'Norway',
+    location: {name: 'Oslo', lat: 59.9139, lng: 10.7522},
+    image: require('../assets/images/norway-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Denmark',
+    location: {name: 'Copenhagen', lat: 55.6761, lng: 12.5683},
+    image: require('../assets/images/denmark-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Ireland',
+    location: {name: 'Dublin', lat: 53.3498, lng: -6.2603},
+    image: require('../assets/images/ireland-flag.png'),
+  },
+  {
+    country: 'Vietnam',
+    location: {name: 'Hanoi', lat: 21.0285, lng: 105.8542},
+    image: require('../assets/images/vietnam-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Malaysia',
+    location: {name: 'Kuala Lumpur', lat: 3.139, lng: 101.6869},
+    image: require('../assets/images/malaysia-flag.png'),
+  },
+  {
+    country: 'Philippines',
+    location: {name: 'Manila', lat: 14.5995, lng: 120.9842},
+    image: require('../assets/images/philippines-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Singapore',
+    location: {name: 'Singapore', lat: 1.3521, lng: 103.8198},
+    image: require('../assets/images/singapore-flag.png'),
+  },
+  {
+    country: 'Morocco',
+    location: {name: 'Rabat', lat: 34.0209, lng: -6.8417},
+    image: require('../assets/images/morocco-flag.png'),
+  },
+  {
+    country: 'Kenya',
+    location: {name: 'Nairobi', lat: -1.2921, lng: 36.8219},
+    image: require('../assets/images/kenya-flag.jpg'),
+  }, //jpg
+  {
+    country: 'Nigeria',
+    location: {name: 'Abuja', lat: 9.0765, lng: 7.3986},
+    image: require('../assets/images/nigeria-flag.png'),
+  },
+  {
+    country: 'Tanzania',
+    location: {name: 'Dodoma', lat: -6.163, lng: 35.7516},
+    image: require('../assets/images/tanzania-flag.png'),
+  },
 ];
 
 const getRandomCountry = () => {

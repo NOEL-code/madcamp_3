@@ -32,24 +32,24 @@ const Memory = ({route, navigation}) => {
   const fetchNoMatchPhotos = async () => {
     try {
       const response = await axios.get(
-        `http://192.249.29.3:3000/api/photo/nomatch/${_id}`,
+        `http://192.249.29.5:3000/api/photo/nomatch/${_id}`,
       );
       setUncategorizedPhotos(response.data);
       console.log('Uncategorized Photos:', response.data);
     } catch (error) {
-      console.error('Error fetching no match photos: ', error);
+      console.error('Error fetching no match photos:', error);
     }
   };
 
   const fetchTravelPhotos = async () => {
     try {
       const response = await axios.get(
-        `http://192.249.29.3:3000/api/person/images/${_id}`,
+        `http://192.249.29.5:3000/api/person/images/${_id}`,
       );
       console.log('Travel Photos:', response.data);
       setCategorizedPhotos(response.data);
     } catch (error) {
-      console.error('Error fetching travel photos: ', error);
+      console.error('Error fetching travel photos:', error);
     }
   };
 
@@ -81,12 +81,32 @@ const Memory = ({route, navigation}) => {
     }
   };
 
-  const renderPhotos = photos => {
+  const renderUncategorizedPhotos = photos => {
     if (photos.length === 0) {
       return <Text style={styles.noImageText}>No Image</Text>;
     }
 
     return photos.map((photo, index) => (
+      <TouchableOpacity
+        key={index}
+        onPress={() => openImage({uri: photo.travelImage})}>
+        <FastImage
+          source={{uri: photo.travelImage}}
+          style={styles.pic}
+          onError={error =>
+            console.error('Image load error:', error.nativeEvent.error)
+          }
+        />
+      </TouchableOpacity>
+    ));
+  };
+
+  const renderCategorizedPhotos = person => {
+    if (person.travelImage.length === 0) {
+      return <Text style={styles.noImageText}>No Image</Text>;
+    }
+
+    return person.travelImage.map((photo, index) => (
       <TouchableOpacity key={index} onPress={() => openImage({uri: photo.url})}>
         <FastImage
           source={{uri: photo.url}}
@@ -108,7 +128,6 @@ const Memory = ({route, navigation}) => {
           </TouchableOpacity>
           <View style={styles.introduction}>
             <Text style={styles.screenTitle}>{country}</Text>
-            {/* <Text style={styles.dateTitle}>24.01.10~24.01.13</Text> */}
           </View>
         </View>
         <View style={styles.body}>
@@ -150,11 +169,11 @@ const Memory = ({route, navigation}) => {
           <ScrollView contentContainerStyle={styles.photosContainer}>
             {selectedPerson ? (
               <View style={styles.photosSection}>
-                {renderPhotos(selectedPerson.travelImage)}
+                {renderCategorizedPhotos(selectedPerson)}
               </View>
             ) : (
               <View style={styles.photosSection}>
-                {renderPhotos(uncategorizedPhotos)}
+                {renderUncategorizedPhotos(uncategorizedPhotos)}
               </View>
             )}
           </ScrollView>
