@@ -155,8 +155,9 @@ DarT는 Dart를 던져서 Dar같이 T래블을 떠날~ 낭만있는 청춘들을
 
 ![API 명세서](https://github.com/user-attachments/assets/37fa078e-0734-4301-b26b-224c3d7f5dfa)
 
-### 7. Infrastructure 
-<img width="312" alt="Image" src="https://github.com/user-attachments/assets/d130cf28-c2f8-486e-9167-9af6c9ee52d0" />
+### 7. 인프라 구조 
+
+<img width="400" alt="Image" src="https://github.com/user-attachments/assets/d130cf28-c2f8-486e-9167-9af6c9ee52d0" />
 
 ### 마무리
 
